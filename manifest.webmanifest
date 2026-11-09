@@ -1,0 +1,16 @@
+{
+  "name": "MILA HOUSE – מערכת הזמנות",
+  "short_name": "MILA HOUSE",
+  "lang": "he",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#5A4F4D",
+  "theme_color": "#5A4F4D",
+  "icons": [
+    {"src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}

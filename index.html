@@ -1,0 +1,1039 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MILA HOUSE</title>
+<meta name="theme-color" content="#5A4F4D">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MILA HOUSE">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="robots" content="noindex,nofollow">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Heebo:wght@400;500;600;700&display=swap">
+<style>html,body{margin:0;padding:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>
+/* Layout: staff console — sticky header, tab bar (bottom on phone / top on desktop); booking screen = form column + sticky price summary */
+:root{
+  --bg:#F7F4F0; --surface:#FFFFFF; --surface-2:#EFEAE4; --line:#DFD7CF;
+  --fg:#2A2422; --muted:#6F6560;
+  --basil:#5A4F4D; --basil-ink:#F9F3F0; --pomodoro:#9C5B3E; --pomodoro-ink:#FFFFFF; --parm:#C2A07A;
+  --head:#5A4F4D; --head-ink:#F9F3F0;
+  --ok:#4E7558; --ok-bg:#E6EFE6; --warn:#9A6614; --warn-bg:#F7EBD6; --bad:#A8423A; --bad-bg:#F6E2DF;
+  --event:#7B5468; --table:#5A4F4D;
+  --shadow:0 10px 30px rgba(42,36,34,.13);
+  --display:"Frank Ruhl Libre","David Libre",Georgia,serif;
+  --body:"Heebo","Assistant",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#171413; --surface:#201C1B; --surface-2:#2A2524; --line:#3A3331; --fg:#F3EDE8; --muted:#A99A92;
+  --basil:#CDBFB4; --basil-ink:#1C1817; --pomodoro:#D79A7C; --pomodoro-ink:#1C1817; --parm:#D7B49A;
+  --head:#2E2826; --head-ink:#F3EDE8;
+  --ok:#7FB08B; --ok-bg:#1F2E23; --warn:#E0A955; --warn-bg:#362A17; --bad:#E88A80; --bad-bg:#3A221F;
+  --event:#C49AB2; --table:#B7A79B; --shadow:0 10px 30px rgba(0,0,0,.5); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#171413; --surface:#201C1B; --surface-2:#2A2524; --line:#3A3331; --fg:#F3EDE8; --muted:#A99A92;
+  --basil:#CDBFB4; --basil-ink:#1C1817; --pomodoro:#D79A7C; --pomodoro-ink:#1C1817; --parm:#D7B49A;
+  --head:#2E2826; --head-ink:#F3EDE8;
+  --ok:#7FB08B; --ok-bg:#1F2E23; --warn:#E0A955; --warn-bg:#362A17; --bad:#E88A80; --bad-bg:#3A221F;
+  --event:#C49AB2; --table:#B7A79B; --shadow:0 10px 30px rgba(0,0,0,.5); color-scheme:dark}
+*{box-sizing:border-box}
+html,body{background:var(--bg)}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.55;direction:rtl;padding-bottom:90px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--head)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--parm);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.num{font-variant-numeric:tabular-nums}
+
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--head);color:var(--head-ink)}
+header.top .wrap{display:flex;align-items:center;gap:14px;padding-block:9px}
+.logo{display:flex;align-items:center;gap:10px;min-width:0}
+.logo{gap:14px}
+.logo img{height:46px;width:auto;display:block;flex:none}
+.logo .sub{font-size:12px;letter-spacing:.4px;opacity:.82;padding-inline-start:14px;border-inline-start:1px solid currentColor;line-height:1.2;white-space:nowrap}
+@media (max-width:420px){.logo .sub{display:none}}
+.tricolore{height:2px;background:linear-gradient(90deg,transparent,var(--parm) 20%,var(--parm) 80%,transparent);opacity:.9}.tricolore i{display:none}
+.spacer{flex:1}
+.me{font-size:12px;padding:4px 10px;border-radius:99px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);white-space:nowrap;max-width:44vw;overflow:hidden;text-overflow:ellipsis}
+
+nav.tabs{position:fixed;bottom:0;left:0;right:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);
+  padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));display:grid;grid-template-columns:repeat(5,1fr);gap:2px}
+nav.tabs button{background:none;border:0;border-radius:10px;padding:6px 2px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;color:var(--muted)}
+nav.tabs button svg{width:22px;height:22px}
+nav.tabs button[aria-current="page"]{color:var(--basil);font-weight:700;background:var(--surface-2)}
+nav.tabs button.cta{color:var(--pomodoro);font-weight:700}
+@media (min-width:900px){
+  body{padding-bottom:24px}
+  nav.tabs{position:static;border:0;background:transparent;display:flex;gap:6px;padding:0;margin-top:16px}
+  nav.tabs button{flex-direction:row;gap:8px;font-size:15px;padding:9px 16px;background:var(--surface);border:1px solid var(--line)}
+  nav.tabs button svg{width:18px;height:18px}
+  nav.tabs button[aria-current="page"]{background:var(--basil);color:var(--basil-ink);border-color:var(--basil)}
+  nav.tabs button.cta:not([aria-current="page"]){border-color:var(--pomodoro)}
+}
+main{padding-block:16px 24px}
+.view{display:grid;gap:16px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.2}
+h1{font-size:clamp(24px,4vw,34px);font-weight:700;letter-spacing:.2px}
+h2{font-size:21px;font-weight:700}
+h3{font-size:17px;font-weight:700}
+.lede{color:var(--muted);margin:2px 0 0;max-width:66ch}
+.eyebrow{font-size:12px;letter-spacing:1.2px;color:var(--pomodoro);font-weight:600}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:12px;align-content:start;min-width:0}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.grid2{display:grid;gap:16px}
+@media (min-width:900px){.grid2{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 14px;font-weight:600;display:inline-flex;align-items:center;gap:6px;line-height:1.2}
+.btn:hover{border-color:var(--basil)}
+.btn.primary{background:var(--basil);border-color:var(--basil);color:var(--basil-ink)}
+.btn.red{background:var(--pomodoro);border-color:var(--pomodoro);color:var(--pomodoro-ink)}
+.btn.ghost{background:transparent}
+.btn.sm{padding:6px 10px;font-size:13px}
+.btn.lg{padding:12px 18px;font-size:16px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.note{font-size:12px;color:var(--muted)}
+.btn.xl{border-color:var(--ok);color:var(--ok)}
+.btn.xl:hover{background:var(--ok-bg)}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (min-width:720px){.stats{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:11px 14px}
+.stat .k{font-size:12px;color:var(--muted)}
+.stat .v{font-family:var(--display);font-size:26px;font-weight:700;line-height:1.15;font-variant-numeric:tabular-nums}
+.stat .s{font-size:12px;color:var(--muted)}
+
+/* forms */
+.fgrid{display:grid;gap:12px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.fgrid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.fgrid .full{grid-column:1/-1}
+@media (max-width:560px){.fgrid,.fgrid.three{grid-template-columns:1fr 1fr}.fgrid .wide{grid-column:1/-1}}
+label.f,.f{display:grid;gap:4px;font-size:13px;font-weight:600;color:var(--muted);min-width:0}
+.inp{width:100%;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 11px;color:var(--fg);font-weight:400;font-size:15px;min-width:0}
+textarea.inp{min-height:64px;resize:vertical}
+.stepper{display:flex;align-items:stretch;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--bg)}
+.stepper button{border:0;background:var(--surface-2);width:40px;font-size:20px;font-weight:700}
+.stepper input{border:0;background:transparent;text-align:center;width:100%;min-width:0;font-weight:700;font-size:18px;font-variant-numeric:tabular-nums;padding:6px 0}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:thin}
+.chips button{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:6px 11px;line-height:1.25;text-align:center}
+.chips button small{display:block;font-size:11px;color:var(--muted)}
+.chips button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.chips button[aria-pressed="true"] small{color:inherit;opacity:.75}
+.chipgrid{display:flex;flex-wrap:wrap;gap:6px}
+.chipgrid button{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:6px 13px;font-size:13px;line-height:1.2}
+.chipgrid button[aria-pressed="true"]{background:var(--bad-bg);color:var(--bad);border-color:var(--bad)}
+.chipgrid.neutral button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.chipgrid button svg{vertical-align:-2px;margin-inline-start:3px}
+/* quick-jump step nav: keeps every section one tap away so nothing gets lost while scrolling */
+.stepnav{position:sticky;top:calc(env(safe-area-inset-top,0px) + 48px);z-index:20;display:flex;gap:6px;overflow-x:auto;padding:8px 0;margin:-4px 0 0;background:var(--bg)}
+.stepnav a{flex:none;display:flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:6px 13px 6px 9px;font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;scroll-snap-align:start}
+.stepnav a:hover,.stepnav a.active{color:var(--fg);border-color:var(--basil)}
+.stepnav a i{width:19px;height:19px;border-radius:50%;background:var(--surface-2);color:var(--fg);display:grid;place-items:center;font-size:11px;font-weight:700;font-style:normal;flex:none}
+.stepnav a.done i{background:var(--basil);color:var(--basil-ink)}
+.suggest{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--surface-2);border:1px dashed var(--basil);border-radius:10px;padding:9px 12px;font-size:13px}
+.suggest svg{flex:none;color:var(--basil)}
+.help-step{display:flex;gap:12px;align-items:flex-start}
+.help-step i{width:30px;height:30px;border-radius:50%;background:var(--basil);color:var(--basil-ink);display:grid;place-items:center;font-weight:700;font-style:normal;flex:none;font-family:var(--display)}
+.help-step div b{display:block;margin-bottom:2px}
+.help-step div span{color:var(--muted);font-size:13px}
+.helpbtn{border:0;background:rgba(255,255,255,.18);color:inherit;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:700;flex:none;font-size:14px}
+#step1,#step2,#step3,#step4{scroll-margin-top:132px}
+.seg{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.opt{border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 12px;text-align:right;display:grid;gap:2px;min-width:0}
+.opt b{font-size:15px}
+.opt span{font-size:12px;color:var(--muted)}
+.opt .p{font-weight:700;color:var(--basil);font-variant-numeric:tabular-nums}
+.opt[aria-pressed="true"]{border-color:var(--basil);background:var(--surface-2);box-shadow:inset 0 0 0 1px var(--basil)}
+.checks{display:grid;gap:6px}
+.check{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.check input[type=checkbox]{width:18px;height:18px;accent-color:var(--basil);flex:none}
+.check .grow{flex:1;min-width:0}
+.check small{color:var(--muted);display:block;font-size:12px}
+.check .p{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.mini{width:64px;flex:none;text-align:center}
+
+/* availability */
+.section-h{display:flex;align-items:center;gap:10px}
+.section-h .n{width:26px;height:26px;border-radius:50%;background:var(--fg);color:var(--bg);display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
+.areas{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.area{border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--surface);text-align:right;display:grid;gap:6px;min-width:0}
+.area .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.area b{font-size:15px;display:inline-flex;align-items:center;gap:7px}
+.area b svg{flex:none;opacity:.8}
+.area .bar{height:8px;border-radius:99px;background:var(--surface-2);overflow:hidden;display:flex}
+.area .bar i{display:block;height:100%}
+.area .bar .used{background:var(--muted);opacity:.55}
+.area .bar .new{background:var(--basil)}
+.area.full .bar .new{background:var(--bad)}
+.area .meta{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.area[aria-pressed="true"]{border-color:var(--basil);box-shadow:inset 0 0 0 1.5px var(--basil);background:var(--surface-2)}
+.area.full{opacity:.75}
+.badge{font-size:12px;font-weight:700;padding:2px 9px;border-radius:99px;white-space:nowrap}
+.badge.ok{background:var(--ok-bg);color:var(--ok)}.badge.warn{background:var(--warn-bg);color:var(--warn)}.badge.bad{background:var(--bad-bg);color:var(--bad)}
+.verdict{border-radius:12px;padding:12px 14px;display:flex;gap:10px;align-items:center;font-weight:600}
+.verdict.ok{background:var(--ok-bg);color:var(--ok)}.verdict.bad{background:var(--bad-bg);color:var(--bad)}.verdict.warn{background:var(--warn-bg);color:var(--warn)}
+.verdict svg{flex:none}
+
+/* summary paper */
+.paper{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;align-self:start;position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px)}
+.paper .ph{background:var(--fg);color:var(--bg);padding:12px 16px;display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+.paper .ph h3{color:inherit}
+.paper .ph small{opacity:.75}
+.paper .pb{padding:12px 16px 16px;display:grid;gap:10px}
+.lines{width:100%;border-collapse:collapse;font-size:14px}
+.lines td{padding:6px 0;border-bottom:1px dashed var(--line);vertical-align:top}
+.lines td:last-child{text-align:left;white-space:nowrap;font-variant-numeric:tabular-nums;padding-inline-start:10px}
+.lines td small{display:block;color:var(--muted);font-size:12px}
+.lines tr.sum td{border-bottom:0;color:var(--muted);padding:3px 0}
+.lines tr.total td{border-top:2px solid var(--fg);border-bottom:0;font-family:var(--display);font-weight:700;font-size:24px;padding-top:10px}
+.pp{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted);background:var(--surface-2);padding:7px 10px;border-radius:8px}
+.pp b{color:var(--fg);font-variant-numeric:tabular-nums}
+.reqchips{display:flex;gap:5px;flex-wrap:wrap}
+.rq{font-size:12px;padding:2px 8px;border-radius:6px;background:var(--warn-bg);color:var(--warn);font-weight:600;white-space:nowrap}
+.rq.al{background:var(--bad-bg);color:var(--bad)}
+@media (max-width:899px){.paper{position:static}}
+.savebar{position:fixed;left:0;right:0;bottom:calc(64px + env(safe-area-inset-bottom,0px));z-index:25;padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px))}
+.savebar .in{background:var(--fg);color:var(--bg);border-radius:14px;padding:9px 10px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow)}
+.savebar b{font-family:var(--display);font-size:20px;font-variant-numeric:tabular-nums}
+.savebar small{display:block;font-size:11px;opacity:.75}
+body.has-save{padding-bottom:160px}
+@media (min-width:900px){.savebar{display:none}body.has-save{padding-bottom:24px}}
+
+/* dish picker */
+.dishes{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.dish{display:grid;grid-template-columns:62px minmax(0,1fr) auto;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:6px;background:var(--surface)}
+.dish .pic{width:62px;height:48px;border-radius:8px;overflow:hidden}
+.dish .pic svg{width:100%;height:100%;display:block}
+.dish b{font-size:14px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dish span{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.qty button{background:var(--surface-2);border:0;width:28px;height:28px;font-size:17px;line-height:1}
+.qty span{min-width:24px;text-align:center;font-weight:700;font-variant-numeric:tabular-nums}
+.addbtn{border:1px solid var(--basil);color:var(--basil);background:transparent;border-radius:9px;width:30px;height:30px;font-size:18px;font-weight:700}
+details.fold{border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+details.fold>summary{cursor:pointer;padding:10px 12px;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:8px}
+details.fold>summary::-webkit-details-marker{display:none}
+details.fold>summary::after{content:"＋";color:var(--muted)}
+details.fold[open]>summary::after{content:"－"}
+details.fold>div{padding:0 12px 12px;display:grid;gap:10px}
+
+/* booking rows */
+.list{display:grid;gap:8px}
+.bk{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);text-align:right;width:100%}
+.bk:hover{border-color:var(--basil)}
+.bk .t{font-variant-numeric:tabular-nums;font-weight:700;min-width:54px;text-align:center;border-inline-end:1px solid var(--line);padding-inline-end:12px}
+.bk .t small{display:block;font-weight:400;color:var(--muted);font-size:11px}
+.bk .main{min-width:0;display:grid;gap:3px}
+.bk .main b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bk .main .sub{font-size:13px;color:var(--muted)}
+.bk .side{display:grid;gap:4px;justify-items:end}
+.bk .val{font-weight:700;font-variant-numeric:tabular-nums}
+.bk.cancel{opacity:.55}
+.bk.cancel .main b{text-decoration:line-through}
+.st{font-size:12px;padding:2px 8px;border-radius:6px;white-space:nowrap;font-weight:600}
+.st.s0{background:var(--warn-bg);color:var(--warn)}.st.s1{background:var(--ok-bg);color:var(--ok)}.st.s2{background:var(--ok);color:var(--surface)}.st.s3{background:var(--surface-2);color:var(--muted)}.st.s4{background:var(--bad-bg);color:var(--bad)}
+.kind{font-size:11px;font-weight:700;padding:1px 7px;border-radius:99px;border:1px solid currentColor}
+.kind.ev{color:var(--event)}.kind.tb{color:var(--table)}
+.empty{color:var(--muted);text-align:center;padding:20px;border:1px dashed var(--line);border-radius:12px}
+
+/* calendar */
+.calhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.calhead h2{min-width:140px;text-align:center}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.cal .dow{font-size:12px;color:var(--muted);text-align:center;font-weight:600;padding:2px 0}
+.day{min-height:92px;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:6px;display:flex;flex-direction:column;gap:3px;text-align:right;overflow:hidden;min-width:0}
+.day.out{opacity:.38}
+.day.today .dn{background:var(--pomodoro);color:var(--pomodoro-ink);border-radius:99px;padding:0 7px}
+.day[aria-pressed="true"]{border-color:var(--basil);box-shadow:inset 0 0 0 1.5px var(--basil)}
+.dn{font-weight:700;font-size:13px;align-self:flex-start;font-variant-numeric:tabular-nums}
+.day .g{font-size:12px;font-weight:600;font-variant-numeric:tabular-nums}
+.day .m{font-size:12px;color:var(--basil);font-weight:700;font-variant-numeric:tabular-nums}
+.day .ev{font-size:11px;padding:1px 5px;border-radius:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:var(--event);color:var(--surface)}
+.day .load{margin-top:auto;height:4px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+.day .load i{display:block;height:100%;background:var(--basil)}
+.day .load i.hi{background:var(--pomodoro)}
+.flag{width:7px;height:7px;border-radius:50%;background:var(--bad);display:inline-block;margin-inline-start:4px;vertical-align:middle}
+@media (max-width:640px){.day{min-height:66px;padding:4px}.day .ev,.day .m{display:none}.day .g{font-size:11px}}
+
+/* timeline */
+.tl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.tl{min-width:720px;display:grid;grid-template-columns:110px 1fr}
+.tl .lab{padding:8px 10px;border-bottom:1px solid var(--line);font-size:13px;font-weight:600;display:flex;flex-direction:column;justify-content:center;gap:2px;background:var(--surface-2)}
+.tl .lab small{font-weight:400;color:var(--muted)}
+.tl .labname{display:flex;align-items:center;gap:6px}
+.tl .labname svg{flex:none;opacity:.75}
+.tl .lane{position:relative;border-bottom:1px solid var(--line);min-height:52px;background-image:linear-gradient(to left,var(--line) 1px,transparent 1px);background-size:calc(100%/13) 100%}
+.tl .hours{position:relative;height:24px;border-bottom:1px solid var(--line)}
+.tl .hours span{position:absolute;top:4px;font-size:11px;color:var(--muted);transform:translateX(50%);font-variant-numeric:tabular-nums}
+.blk{position:absolute;top:6px;bottom:6px;border-radius:7px;padding:2px 6px;font-size:11px;line-height:1.3;color:var(--surface);background:var(--table);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;border:0;text-align:right}
+.blk.ev{background:var(--event)}
+.blk b{display:block;font-size:12px;overflow:hidden;text-overflow:ellipsis}
+.blk.stack1{top:28px}
+
+/* prep */
+.prep{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.prep ul{margin:0;padding:0;list-style:none;display:grid;gap:4px;font-size:14px}
+.prep li{display:flex;justify-content:space-between;gap:8px;border-bottom:1px dashed var(--line);padding-bottom:3px}
+.prep li b{font-variant-numeric:tabular-nums}
+
+/* modal / toast */
+.scrim{position:fixed;inset:0;z-index:60;background:rgba(10,14,9,.55);display:flex;align-items:flex-end;justify-content:center;padding:max(12px,env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) 0 max(12px,env(safe-area-inset-left,0px))}
+.sheet{background:var(--surface);width:100%;max-width:640px;max-height:92vh;overflow:auto;border-radius:18px 18px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom,0px));display:grid;gap:14px;box-shadow:var(--shadow)}
+@media (min-width:700px){.scrim{align-items:center}.sheet{border-radius:18px}}
+.x{margin-inline-start:auto;border:0;background:var(--surface-2);width:34px;height:34px;border-radius:99px;font-size:18px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px;margin:0}
+.kv dt{color:var(--muted)}.kv dd{margin:0;font-weight:500;min-width:0}
+.confirm{background:var(--surface-2);border-radius:10px;padding:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.toast{position:fixed;z-index:80;left:50%;transform:translateX(-50%);bottom:calc(150px + env(safe-area-inset-bottom,0px));background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-weight:600;box-shadow:var(--shadow);max-width:calc(100% - 32px)}
+.sync{font-size:12px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+.sync i{width:8px;height:8px;border-radius:50%;background:var(--warn)}
+.sync.on i{background:var(--ok)}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.filters button{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:5px 12px;font-size:13px}
+.filters button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.settings-row{display:grid;grid-template-columns:minmax(0,1.4fr) 90px auto;gap:8px;align-items:center}
+.gate{position:fixed;inset:0;z-index:100;background:var(--head);color:var(--head-ink);display:grid;place-items:center;padding:max(24px,env(safe-area-inset-top,0px)) 20px max(24px,env(safe-area-inset-bottom,0px));overflow:auto}
+.gate-card{width:min(380px,100%);display:grid;gap:14px}
+.gate-card img{height:84px;width:auto;justify-self:center;margin-bottom:6px}
+.gate-card h1{text-align:center;font-weight:500;font-size:24px;color:inherit}
+.gate-card .f{color:inherit;opacity:.92}
+.gate-card .inp{background:#FBF8F5;color:#2A2422;border-color:transparent;font-size:16px;padding:12px 13px}
+.gate-card .btn{justify-content:center;width:100%}
+.gate-err{color:#F6C2B4;min-height:1.3em;margin:0;font-size:14px;text-align:center}
+.gate-note{font-size:13px;opacity:.75;text-align:center;margin:0}
+.gate-msg{text-align:center;line-height:1.6;margin:0}
+@media (prefers-reduced-motion:no-preference){.sheet{animation:up .22s ease-out}@keyframes up{from{transform:translateY(24px);opacity:.6}}}
+</style>
+<script src="firebase-config.js"></script>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="logo">
+      <img src="data:image/png;base64,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" alt="MILA HOUSE" width="101" height="40">
+      <span class="sub">מערכת הזמנות לצוות</span>
+    </div>
+    <div class="spacer"></div>
+    <button class="helpbtn" data-act="help" aria-label="מדריך שימוש" title="מדריך שימוש">?</button>
+  </div>
+  <div class="tricolore"><i></i><i></i><i></i></div>
+</header>
+
+<div class="wrap">
+  <nav class="tabs" id="tabs" aria-label="ניווט">
+    <button data-tab="today"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>היום</button>
+    <button data-tab="new" class="cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>הזמנה חדשה</button>
+    <button data-tab="calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>יומן</button>
+    <button data-tab="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>חיפוש</button>
+    <button data-tab="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>הגדרות</button>
+  </nav>
+</div>
+
+<main class="wrap" id="app"></main>
+<div id="savebar" class="savebar" hidden></div>
+<div id="modal"></div>
+<div id="toast" class="toast" hidden></div>
+<div id="gate" class="gate" hidden>
+  <form class="gate-card" id="loginForm" autocomplete="on" novalidate>
+    <img id="gateLogo" alt="MILA HOUSE">
+    <h1>כניסה לצוות</h1>
+    <div id="gateFields" style="display:grid;gap:14px">
+      <label class="f">אימייל<input class="inp" id="lg-email" type="email" inputmode="email" autocomplete="username" autocapitalize="off" spellcheck="false"></label>
+      <label class="f">סיסמה<input class="inp" id="lg-pass" type="password" autocomplete="current-password"></label>
+    </div>
+    <p class="gate-err" id="lg-err" role="alert"></p>
+    <button class="btn red lg" type="submit" id="lg-btn">כניסה</button>
+    <p class="gate-note" id="gateNote">נכנסים עם האימייל והסיסמה של העסק.</p>
+  </form>
+</div>
+
+<script>
+/* ================= DEFAULT CONFIG (demo prices) ================= */
+const DEFAULT_CFG={
+  areas:[{id:"hall",name:"אולם ראשי",cap:60,exclusive:false},{id:"terrace",name:"מרפסת",cap:30,exclusive:false},{id:"private",name:"חדר פרטי",cap:40,exclusive:true},{id:"bar",name:"בר",cap:12,exclusive:false}],
+  dur:150, service:12, depositPct:30, estSpend:160, kidsPrice:69, eventFrom:12,
+  packages:[{id:"p1",name:"ערב פסטה",pp:149,desc:"אנטיפסטי לשולחן, 2 פסטות, קינוח"},{id:"p2",name:"טוסקנה קלאסי",pp:219,desc:"אנטיפסטי, פסטה/פיצה, עיקרית, קינוח, שתייה קלה"},{id:"p3",name:"גראן פסטה",pp:289,desc:"5 מנות, יין הבית, אספרסו ולימונצ'לו"}],
+  extras:[{id:"x1",name:"יין ופרוסקו חופשי",unit:"pp",price:65},{id:"x2",name:"עוגת אירוע",unit:"flat",price:350},{id:"x3",name:"סגירת חדר פרטי",unit:"flat",price:1200},{id:"x4",name:"עיצוב שולחנות ופרחים",unit:"flat",price:900},{id:"x5",name:"נגן אקורדיון / DJ",unit:"flat",price:1800},{id:"x6",name:"מלצר צמוד נוסף",unit:"flat",price:450},{id:"x7",name:"תפריט מודפס עם שם האירוע",unit:"flat",price:180},{id:"x8",name:"דמי חליצה (יין מבחוץ)",unit:"pp",price:25}]
+};
+const MENU=[
+ {id:"m1",cat:"אנטיפסטי",art:"bread",name:"פוקאצ'ה מהטאבון",price:29},{id:"m2",cat:"אנטיפסטי",art:"bruschetta",name:"ברוסקטה עגבניות",price:38},{id:"m3",cat:"אנטיפסטי",art:"burrata",name:"בורטה פוליה",price:64},{id:"m4",cat:"אנטיפסטי",art:"carpaccio",name:"קרפצ'ו בקר",price:58},{id:"m5",cat:"אנטיפסטי",art:"arancini",name:"ארנצ'יני",price:42},
+ {id:"m6",cat:"פסטה",art:"pasta",name:"ספגטי קרבונרה",price:72},{id:"m7",cat:"פסטה",art:"pastaRed",name:"פפרדלה ראגו",price:84},{id:"m8",cat:"פסטה",art:"gnocchi",name:"ניוקי פומודורו",price:76},{id:"m9",cat:"פסטה",art:"lasagna",name:"לזניה של נונה",price:79},{id:"m10",cat:"פסטה",art:"ravioli",name:"רביולי ריקוטה",price:74},{id:"m11",cat:"פסטה",art:"pastaSea",name:"לינגוויני פירות ים",price:96},
+ {id:"m12",cat:"פיצה",art:"pizza",name:"מרגריטה",price:62},{id:"m13",cat:"פיצה",art:"pizzaHot",name:"דיאבולה",price:74},{id:"m14",cat:"פיצה",art:"pizzaWhite",name:"ארבע גבינות",price:78},{id:"m15",cat:"פיצה",art:"pizzaMush",name:"פטריות וכמהין",price:86},
+ {id:"m16",cat:"עיקריות",art:"risotto",name:"ריזוטו פטריות",price:82},{id:"m17",cat:"עיקריות",art:"steak",name:"טליאטה",price:148},{id:"m18",cat:"עיקריות",art:"fish",name:"פילה לברק",price:118},{id:"m19",cat:"עיקריות",art:"osso",name:"אוסובוקו",price:138},
+ {id:"m20",cat:"קינוחים",art:"tiramisu",name:"טירמיסו",price:44},{id:"m21",cat:"קינוחים",art:"pannacotta",name:"פנה קוטה",price:38},{id:"m22",cat:"קינוחים",art:"cannoli",name:"קנולי",price:36},{id:"m23",cat:"קינוחים",art:"gelato",name:"ג'לטו",price:32},
+ {id:"m24",cat:"שתייה",art:"spritz",name:"אפרול שפריץ",price:46},{id:"m25",cat:"שתייה",art:"wine",name:"בקבוק קיאנטי",price:180},{id:"m26",cat:"שתייה",art:"prosecco",name:"בקבוק פרוסקו",price:160},{id:"m27",cat:"שתייה",art:"limoncello",name:"לימונצ'לו",price:24}];
+const MENU_BY_ID=Object.fromEntries(MENU.map(m=>[m.id,m]));
+const STATUSES=["ממתין לאישור","מאושר","מקדמה שולמה","הגיעו","בוטל"];
+const OCCASIONS=["","יום הולדת","יום נישואין","אירוע חברה","מסיבת רווקות","אירוסין","בר/בת מצווה","ארוחה עסקית","ברית/בריתה","אחר"];
+const ALLERGENS=["גלוטן","בוטנים","אגוזי עץ","שומשום / טחינה","חלב","ביצים","דגים","רכיכות / פירות ים","סויה","סלרי"];
+const SEATING_PRESETS=["ליד החלון","שולחן עגול","שולחן ארוך","פינה שקטה","רחוק מהמטבח","קרוב ליציאה","בחוץ (מרפסת)","בפנים"];
+const CAKE_OCCASIONS=new Set(["יום הולדת","בר/בת מצווה","אירוסין","יום נישואין"]);
+function areaIconPath(id){
+  return({hall:'<path d="M8 2v7a2 2 0 1 1-4 0V2M6 9v13M16 2c-2.5 0-4 2.5-4 6 0 2.5 1.5 4 4 4.5V22"/>',
+   terrace:'<circle cx="12" cy="13" r="4"/><path d="M12 3v2M4.5 7.5l1.4 1.4M19.5 7.5l-1.4 1.4M2 15h2M20 15h2M8 21h8"/>',
+   private:'<rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="15.5" cy="12" r="1.2" fill="currentColor"/>',
+   bar:'<path d="M4 4h16l-7 8.5V19h3M9 19h6M13 12.5 4 4"/>'}[id])||'<circle cx="12" cy="12" r="3.5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/>';
+}
+const areaIcon=id=>`<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${areaIconPath(id)}</svg>`;
+
+/* ================= HELPERS ================= */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const nis=n=>"₪"+Math.round(+n||0).toLocaleString("he-IL");
+const nisK=n=>n>=10000?"₪"+(n/1000).toFixed(n>=100000?0:1).replace(/\.0$/,"")+"K":nis(n);
+const pad=n=>String(n).padStart(2,"0");
+const iso=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+const today=()=>iso(new Date());
+const addDays=(s,n)=>{const d=new Date(s+"T12:00");d.setDate(d.getDate()+n);return iso(d)};
+const mins=t=>{const[h,m]=String(t||"0:0").split(":").map(Number);return h*60+(m||0)};
+const hhmm=m=>pad(Math.floor(m/60)%24)+":"+pad(m%60);
+const DAYS=["ראשון","שני","שלישי","רביעי","חמישי","שישי","שבת"];
+const MONTHS=["ינואר","פברואר","מרץ","אפריל","מאי","יוני","יולי","אוגוסט","ספטמבר","אוקטובר","נובמבר","דצמבר"];
+const dObj=s=>new Date(s+"T12:00");
+const fmtDate=s=>{const d=dObj(s);return "יום "+DAYS[d.getDay()]+", "+d.getDate()+" ב"+MONTHS[d.getMonth()]};
+const shortDate=s=>{const d=dObj(s);return d.getDate()+"/"+(d.getMonth()+1)};
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+function toast(msg){const t=$("#toast");t.textContent=msg;t.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(()=>t.hidden=true,2600)}
+function lsGet(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+const stClass=s=>"s"+Math.max(0,STATUSES.indexOf(s));
+const isCancel=b=>b.status==="בוטל";
+const clone=o=>JSON.parse(JSON.stringify(o));
+
+/* ================= FOOD ART (illustration, not photos) ================= */
+function art(kind,id){
+  const bg={bread:"#E9D8B4",bruschetta:"#F1D9C9",burrata:"#DCE7D2",carpaccio:"#F2D6D3",arancini:"#F2E2C0",pasta:"#F3E6C2",pastaRed:"#F1D3C8",gnocchi:"#EFDACD",lasagna:"#F2DCC6",ravioli:"#E6E9D3",pastaSea:"#D7E5E8",pizza:"#E7DDC9",pizzaHot:"#EDD5C9",pizzaWhite:"#ECE6D6",pizzaMush:"#E1DCCB",risotto:"#E8E1CE",steak:"#E6D3CB",fish:"#D6E3E6",osso:"#E8D9C9",tiramisu:"#E8D9C8",pannacotta:"#F1DDE1",cannoli:"#EFE3CB",gelato:"#E2EBD9",spritz:"#F6DCC8",wine:"#E9D3D9",prosecco:"#EEE9CF",limoncello:"#F1EEC4"}[kind]||"#EEE";
+  let n=id.length*97+id.charCodeAt(id.length-1)*13;const R=()=>{n=(n*9301+49297)%233280;return n/233280};
+  let s=`<svg viewBox="0 0 320 240" aria-hidden="true"><rect width="320" height="240" fill="${bg}"/><g opacity=".16">${[0,1,2,3,4,5,6,7].map(i=>`<rect x="${i*44}" width="18" height="240" fill="#C2352B"/>`).join("")}</g>`;
+  const plate=`<ellipse cx="160" cy="128" rx="112" ry="78" fill="#000" opacity=".08"/><ellipse cx="160" cy="120" rx="108" ry="74" fill="#FAFAF6"/><ellipse cx="160" cy="120" rx="86" ry="58" fill="#F0EFE8"/>`;
+  const leaf=(x,y,r)=>`<ellipse cx="${x}" cy="${y}" rx="11" ry="5.5" fill="#3E8A47" transform="rotate(${r} ${x} ${y})"/>`;
+  const pz=(sa,ch)=>`<ellipse cx="160" cy="120" rx="112" ry="76" fill="#C98A45"/><ellipse cx="160" cy="118" rx="96" ry="64" fill="${sa}"/>`+Array.from({length:9},()=>`<ellipse cx="${100+R()*120}" cy="${84+R()*66}" rx="${14+R()*8}" ry="${8+R()*4}" fill="${ch}"/>`).join("");
+  const nd=c=>{let o=plate;for(let i=0;i<16;i++)o+=`<path d="M${100+R()*40} ${96+R()*36} q ${34+R()*30} ${-30+R()*20} ${70+R()*30} ${R()*20}" stroke="${c}" stroke-width="6" fill="none" stroke-linecap="round"/>`;return o};
+  const glass=c=>`<path d="M124 40 h72 q0 70 -36 82 q-36 -12 -36 -82z" fill="#fff" opacity=".6"/><path d="M128 70 h64 q-4 40 -32 48 q-28 -8 -32 -48z" fill="${c}"/><rect x="156" y="120" width="8" height="70" fill="#fff" opacity=".85"/><ellipse cx="160" cy="194" rx="30" ry="7" fill="#fff" opacity=".9"/>`;
+  const S={
+   pizza:()=>pz("#C8372D","#F7F1DE")+leaf(140,100,20)+leaf(186,128,-30)+leaf(162,86,60),
+   pizzaHot:()=>pz("#C8372D","#F7F1DE")+Array.from({length:8},()=>`<circle cx="${105+R()*110}" cy="${86+R()*62}" r="10" fill="#8E2219"/>`).join(""),
+   pizzaWhite:()=>pz("#F2E4BE","#FFF8E2")+Array.from({length:6},()=>`<circle cx="${110+R()*100}" cy="${88+R()*56}" r="8" fill="#9DB2A3"/>`).join(""),
+   pizzaMush:()=>pz("#EFE0BB","#FFF8E2")+Array.from({length:7},()=>{const x=105+R()*110,y=88+R()*56;return`<path d="M${x-11} ${y} a11 8 0 0 1 22 0z" fill="#7A5A3C"/>`}).join(""),
+   pasta:()=>nd("#F2CF6B")+`<circle cx="160" cy="112" r="10" fill="#F2A900"/>`,
+   pastaRed:()=>nd("#EBC064")+`<ellipse cx="160" cy="114" rx="40" ry="22" fill="#9B3A24"/>`+leaf(172,104,10),
+   pastaSea:()=>nd("#F0CE70")+[0,1,2,3].map(i=>`<path d="M${118+i*26} ${110+(i%2)*16} a12 12 0 1 1 14 9" stroke="#F08A5D" stroke-width="8" fill="none" stroke-linecap="round"/>`).join(""),
+   gnocchi:()=>plate+`<ellipse cx="160" cy="120" rx="70" ry="42" fill="#C8372D"/>`+Array.from({length:12},()=>`<ellipse cx="${112+R()*96}" cy="${100+R()*42}" rx="12" ry="8" fill="#F2D9A0"/>`).join("")+`<circle cx="160" cy="116" r="18" fill="#FBF6EA"/>`,
+   lasagna:()=>plate+`<path d="M104 106 l104 -18 l20 34 l-104 20z" fill="#E7B04C"/><path d="M104 106 v20 l20 34 v-18z" fill="#C46A35"/><path d="M124 142 l104 -20 v20 l-104 20z" fill="#B5542E"/>`,
+   ravioli:()=>plate+Array.from({length:6},(v,i)=>{const x=116+(i%3)*44,y=102+Math.floor(i/3)*34;return`<rect x="${x-16}" y="${y-13}" width="32" height="26" rx="5" fill="#F1D48E" stroke="#D9B566" stroke-dasharray="3 2" stroke-width="2"/>`}).join(""),
+   risotto:()=>plate+`<ellipse cx="160" cy="118" rx="70" ry="42" fill="#E9D9A8"/>`+Array.from({length:40},()=>`<ellipse cx="${108+R()*104}" cy="${96+R()*46}" rx="3" ry="1.6" fill="#FFF6D6"/>`).join("")+Array.from({length:5},()=>{const x=120+R()*80,y=104+R()*30;return`<path d="M${x-9} ${y} a9 7 0 0 1 18 0z" fill="#6E4E34"/>`}).join(""),
+   steak:()=>plate+[0,1,2,3,4].map(i=>`<path d="M${104+i*24} 94 l18 0 l-7 56 l-18 0z" fill="#9B3B33"/><path d="M${108+i*24} 98 l10 0 l-5 44 l-10 0z" fill="#D46A6A"/>`).join(""),
+   fish:()=>plate+`<path d="M100 120 q60 -48 120 0 q-60 48 -120 0z" fill="#E8D7C0" stroke="#C9A97F" stroke-width="2"/><path d="M220 120 l26 -18 v36z" fill="#D9C2A0"/><circle cx="150" cy="150" r="10" fill="#F6D63A"/>`,
+   osso:()=>plate+`<ellipse cx="160" cy="122" rx="72" ry="38" fill="#F0C64A"/><ellipse cx="160" cy="114" rx="40" ry="28" fill="#7A3A22"/><circle cx="160" cy="112" r="12" fill="#F3E6C8" stroke="#C9A97F" stroke-width="3"/>`,
+   bread:()=>`<rect x="52" y="64" width="216" height="116" rx="30" fill="#D9A55A"/><rect x="60" y="68" width="200" height="104" rx="26" fill="#E8BC6E"/>`+Array.from({length:14},()=>`<circle cx="${78+R()*164}" cy="${84+R()*76}" r="6" fill="#C98A45"/>`).join(""),
+   bruschetta:()=>plate+[0,1,2].map(i=>`<rect x="${92+i*48}" y="${96+(i%2)*12}" width="44" height="40" rx="7" fill="#D9A55A"/>`+Array.from({length:5},()=>`<rect x="${96+i*48+R()*28}" y="${100+(i%2)*12+R()*24}" width="10" height="10" rx="2" fill="#D23A2E"/>`).join("")).join(""),
+   burrata:()=>plate+Array.from({length:7},(v,i)=>`<circle cx="${104+i*19}" cy="${146-(i%2)*7}" r="10" fill="#D23A2E"/>`).join("")+`<circle cx="160" cy="108" r="36" fill="#FCFBF4" stroke="#E8E3D2" stroke-width="2"/>`,
+   carpaccio:()=>plate+Array.from({length:8},(v,i)=>{const a=i/8*6.283;return`<ellipse cx="${160+Math.cos(a)*48}" cy="${120+Math.sin(a)*28}" rx="26" ry="15" fill="#C94A4A"/>`}).join("")+`<path d="M136 116 q24 -16 48 0" stroke="#4F9A4F" stroke-width="8" fill="none" stroke-linecap="round"/>`,
+   arancini:()=>plate+[[132,122],[188,122],[160,100]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="26" fill="#D7913E"/><circle cx="${x-7}" cy="${y-7}" r="7" fill="#EDB868"/>`).join(""),
+   tiramisu:()=>plate+`<path d="M104 104 h112 v44 h-112z" fill="#F3E5C8"/><rect x="104" y="118" width="112" height="9" fill="#7A4A2A"/><rect x="104" y="134" width="112" height="7" fill="#7A4A2A"/><path d="M104 104 h112 l-10 -12 h-92z" fill="#5A3420"/>`,
+   pannacotta:()=>plate+`<path d="M128 140 l8 -52 h48 l8 52z" fill="#FBF4E8"/><ellipse cx="160" cy="88" rx="24" ry="7" fill="#B3263A"/><path d="M122 140 q38 16 76 0" fill="#B3263A"/>`,
+   cannoli:()=>plate+[0,1].map(i=>`<g transform="rotate(${-14+i*20} 160 120)"><rect x="104" y="${102+i*26}" width="112" height="26" rx="13" fill="#C98A45"/><ellipse cx="104" cy="${115+i*26}" rx="11" ry="13" fill="#FBF4E8"/><ellipse cx="216" cy="${115+i*26}" rx="11" ry="13" fill="#FBF4E8"/></g>`).join(""),
+   gelato:()=>`<path d="M118 120 h84 l-12 80 h-60z" fill="#FAFAF6" stroke="#DDD"/>`+[["#9BC06A",138,110],["#6B3F2A",184,110],["#F3E27A",160,84]].map(([c,x,y])=>`<circle cx="${x}" cy="${y}" r="28" fill="${c}"/>`).join(""),
+   spritz:()=>glass("#F07A2A")+`<circle cx="178" cy="78" r="13" fill="#F6A04D" stroke="#fff" stroke-width="2"/>`,
+   wine:()=>`<rect x="140" y="80" width="40" height="120" rx="12" fill="#5A1726"/><rect x="150" y="34" width="20" height="52" rx="5" fill="#5A1726"/><rect x="140" y="120" width="40" height="38" fill="#F4F0E0"/>`,
+   prosecco:()=>`<rect x="140" y="80" width="40" height="120" rx="12" fill="#2F5A3A"/><rect x="150" y="34" width="20" height="52" rx="5" fill="#2F5A3A"/><rect x="148" y="30" width="24" height="22" rx="4" fill="#E7B43C"/><rect x="140" y="120" width="40" height="38" fill="#F4F0E0"/>`,
+   limoncello:()=>`<path d="M136 104 h48 l-7 92 h-34z" fill="#fff" opacity=".7"/><path d="M139 120 h42 l-6 74 h-30z" fill="#F2DE3A"/><circle cx="208" cy="160" r="22" fill="#F6D63A"/>`};
+  return s+(S[kind]?S[kind]():"")+"</svg>";
+}
+
+/* ================= STATE ================= */
+const state={tab:"today",bookings:[],cfg:clone(DEFAULT_CFG),cfgVersion:0,
+  calMonth:today().slice(0,7),calDay:today(),q:"",listFilter:"upcoming",
+  draft:lsGet("lucia.draft2",null)||null,names:{},meId:null};
+function blankDraft(){return{id:null,date:today(),time:"20:00",guests:2,kids:0,area:null,dur:state.cfg.dur,name:"",phone:"",occasion:"",pkg:"est",extras:[],dishes:{},discount:0,service:true,depositPaid:0,status:"מאושר",
+  req:{veg:0,vegan:0,gf:0,baby:0,allergyTags:[],allergies:"",cake:false,access:false,seatingTags:[],seating:"",notes:""}}}
+if(!state.draft)state.draft=blankDraft();
+const saveDraft=()=>lsSet("lucia.draft2",state.draft);
+const cfgArea=id=>state.cfg.areas.find(a=>a.id===id);
+
+/* ================= STORE ================= */
+let syncInfo={on:false,msg:"מתחבר…"};
+function setSync(on,msg){syncInfo={on,msg:msg||"מסונכרן עם הצוות"};document.querySelectorAll(".sync").forEach(el=>{el.className="sync"+(on?" on":"");el.lastChild.textContent=syncInfo.msg})}
+const syncBadge=()=>`<span class="sync${syncInfo.on?" on":""}"><i></i>${esc(syncInfo.msg)}</span>`;
+const DEMO=()=>{const t=today();const mk=(o)=>({dur:150,kids:0,occasion:"",pkg:"est",extras:[],dishes:{},discount:0,service:false,depositPaid:0,status:"מאושר",phone:"050-0000000",req:{veg:0,vegan:0,gf:0,baby:0,allergyTags:[],allergies:"",cake:false,access:false,seatingTags:[],seating:"",notes:""},...o});
+ return[mk({id:"l1",date:t,time:"19:30",guests:4,area:"terrace",name:"משפחת לוי (דוגמה)",req:{veg:0,vegan:0,gf:0,baby:1,allergyTags:[],allergies:"",cake:false,access:false,seatingTags:[],seating:"",notes:""}}),
+ mk({id:"l2",date:t,time:"20:00",guests:22,area:"private",name:"אירוע חברה – אלפא (דוגמה)",occasion:"אירוע חברה",pkg:"p2",extras:["x1"],service:true,depositPaid:2000,status:"מקדמה שולמה",req:{veg:3,vegan:1,gf:2,baby:0,allergyTags:["אגוזי עץ"],allergies:"ילד בן 6, רגישות קלה",cake:false,access:false,seatingTags:["שולחן ארוך"],seating:"",notes:"מקרן להצגה"}})]};
+/* ================= FIREBASE — keys live in firebase-config.js, so updating this file never touches them ================= */
+const FIREBASE_CONFIG=(window.MILA_FIREBASE_CONFIG&&typeof window.MILA_FIREBASE_CONFIG==="object")?window.MILA_FIREBASE_CONFIG:{};
+const FB_BASE="https://www.gstatic.com/firebasejs/10.12.2/";
+const FB_READY=!!(FIREBASE_CONFIG.apiKey&&FIREBASE_CONFIG.projectId);
+
+const AUTH_ERR={"auth/invalid-credential":"האימייל או הסיסמה לא נכונים","auth/wrong-password":"האימייל או הסיסמה לא נכונים","auth/user-not-found":"האימייל או הסיסמה לא נכונים","auth/invalid-email":"כתובת האימייל לא תקינה","auth/missing-password":"הקלידו סיסמה","auth/too-many-requests":"יותר מדי ניסיונות. חכו כמה דקות ונסו שוב","auth/network-request-failed":"אין חיבור לאינטרנט","auth/user-disabled":"המשתמש הזה הושבת"};
+function gate(mode,msg){const g=$("#gate");if(mode==="hide"){g.hidden=true;return}
+  if(!$("#gateLogo").src){const l=$(".logo img");if(l)$("#gateLogo").src=l.src}
+  g.hidden=false;const login=mode==="login";$("#gateFields").hidden=!login;$("#gateNote").hidden=!login;
+  $("#lg-btn").textContent=login?"כניסה":"נסו שוב";$("#lg-btn").dataset.mode=mode;$("#lg-btn").disabled=false;$("#lg-err").textContent=msg||"";
+  if(login)setTimeout(()=>{const e=$("#lg-email");if(e&&!e.value)e.focus()},50)}
+
+const store={db:null,fb:null,auth:null,user:null,unsub:[],
+  async init(){
+    if(!FB_READY){this.local("מצב הדגמה – עדיין לא חובר למאגר (ראו מדריך ההקמה)");return}
+    let A,U,F;
+    try{[A,U,F]=await Promise.all([import(FB_BASE+"firebase-app.js"),import(FB_BASE+"firebase-auth.js"),import(FB_BASE+"firebase-firestore.js")])}
+    catch(e){gate("retry","אין חיבור לאינטרנט, אז אי אפשר לטעון את המערכת. בדקו את ה-Wi-Fi ונסו שוב.");return}
+    this.fb={...U,...F};
+    const app=A.initializeApp(FIREBASE_CONFIG);this.auth=U.getAuth(app);
+    try{this.db=F.initializeFirestore(app,{localCache:F.persistentLocalCache({tabManager:F.persistentMultipleTabManager()})})}catch(e){this.db=F.getFirestore(app)}
+    U.onAuthStateChanged(this.auth,u=>{this.user=u||null;
+      if(u){gate("hide");this.listen();if(state.tab==="settings")render();if(!lsGet("lucia.guideSeen",false))setTimeout(openHelp,400)}
+      else{this.stop();state.bookings=[];state.cfg=clone(DEFAULT_CFG);onData();gate("login",this.deniedMsg||"");this.deniedMsg=null}});
+  },
+  async login(email,pass){const btn=$("#lg-btn");btn.disabled=true;$("#lg-err").textContent="";
+    try{await this.fb.signInWithEmailAndPassword(this.auth,email.trim(),pass)}catch(e){$("#lg-err").textContent=AUTH_ERR[e&&e.code]||"הכניסה נכשלה. נסו שוב";btn.disabled=false}},
+  async logout(){try{await this.fb.signOut(this.auth)}catch(e){toast("ההתנתקות נכשלה")}},
+  listen(){const F=this.fb;this.stop();setSync(false,"מתחבר…");
+    const timer=setTimeout(()=>setSync(false,"היומן לא נטען עדיין – בדקו חיבור"),10000);
+    const denied=e=>{if(!(e&&e.code==="permission-denied"))return false;if(this.deniedMsg||!this.user)return true;this.stop();
+      const em=this.user&&this.user.email;this.deniedMsg=`למשתמש ${em||""} אין הרשאה למערכת. בדקו שזה האימייל של העסק (שלב 5 במדריך).`;F.signOut(this.auth);return true};
+    this.unsub.push(F.onSnapshot(F.collection(this.db,"bookings"),{includeMetadataChanges:true},snap=>{clearTimeout(timer);
+      const off=snap.metadata.fromCache;setSync(!off,off?"אין אינטרנט – עובדים מהעותק במכשיר, יסונכרן כשיחזור":"מסונכרן עם הצוות");
+      state.bookings=snap.docs.map(d=>({id:d.id,...d.data()}));onData()},e=>{clearTimeout(timer);if(!denied(e))setSync(false,"שגיאה בטעינת היומן – רעננו את הדף")}));
+    this.unsub.push(F.onSnapshot(F.doc(this.db,"config","main"),s=>{state.cfg=s.exists()?{...clone(DEFAULT_CFG),...s.data()}:clone(DEFAULT_CFG);onData()},e=>{denied(e)}));
+  },
+  stop(){this.unsub.forEach(f=>{try{f()}catch(e){}});this.unsub=[]},
+  local(msg){this.db=null;state.bookings=lsGet("lucia.bookings",null)||DEMO();state.cfg={...clone(DEFAULT_CFG),...(lsGet("lucia.cfg",{})||{})};setSync(false,msg);onData()},
+  // Writes go to the device copy at once and sync in the background — the app never waits for the internet.
+  writeErr(e){toast(e&&e.code==="permission-denied"?"אין הרשאה לשמור – פנו למנהלת":"השמירה לשרת נכשלה – נסו שוב")},
+  async save(b){const id=b.id||uid();const body=clone(b);delete body.id;body.updatedAt=Date.now();if(!body.createdAt)body.createdAt=Date.now();
+    if(this.db){const F=this.fb;F.setDoc(F.doc(this.db,"bookings",id),body).catch(e=>this.writeErr(e));return id}
+    const i=state.bookings.findIndex(x=>x.id===id);const rec={id,...body};i>=0?state.bookings[i]=rec:state.bookings.push(rec);lsSet("lucia.bookings",state.bookings);onData();return id},
+  async remove(id){if(this.db){const F=this.fb;F.deleteDoc(F.doc(this.db,"bookings",id)).catch(e=>this.writeErr(e));return}
+    state.bookings=state.bookings.filter(x=>x.id!==id);lsSet("lucia.bookings",state.bookings);onData()},
+  async saveCfg(c){if(this.db){const F=this.fb;F.setDoc(F.doc(this.db,"config","main"),c).catch(e=>this.writeErr(e));state.cfg={...clone(DEFAULT_CFG),...c};return}
+    state.cfg={...clone(DEFAULT_CFG),...c};lsSet("lucia.cfg",c);onData()},
+  async importAll(list,cfg){
+    if(this.db){const F=this.fb;for(let i=0;i<list.length;i+=400){const bt=F.writeBatch(this.db);
+        list.slice(i,i+400).forEach(b=>{const body=clone(b);delete body.id;bt.set(F.doc(this.db,"bookings",b.id),body)});bt.commit().catch(e=>this.writeErr(e))}
+      if(cfg)F.setDoc(F.doc(this.db,"config","main"),cfg).catch(e=>this.writeErr(e));return}
+    const m=new Map(state.bookings.map(b=>[b.id,b]));list.forEach(b=>m.set(b.id,clone(b)));state.bookings=[...m.values()];lsSet("lucia.bookings",state.bookings);
+    if(cfg){state.cfg={...clone(DEFAULT_CFG),...cfg};lsSet("lucia.cfg",cfg)}onData()}
+};
+
+/* ================= CORE LOGIC ================= */
+// peak seated guests in an area during [start,end) — exclusive areas count any overlap as full
+function areaUse(date,time,dur,areaId,excludeId){
+  const a=cfgArea(areaId);if(!a)return{used:0,list:[]};const s=mins(time),e=s+(+dur||state.cfg.dur);
+  const list=state.bookings.filter(b=>b.date===date&&b.area===areaId&&b.id!==excludeId&&!isCancel(b)).filter(b=>{const bs=mins(b.time),be=bs+(+b.dur||state.cfg.dur);return bs<e&&be>s});
+  if(a.exclusive)return{used:list.length?a.cap:0,list};
+  const pts=[s,...list.map(b=>mins(b.time)).filter(p=>p>s&&p<e)];let peak=0;
+  for(const p of pts){const sum=list.filter(b=>{const bs=mins(b.time),be=bs+(+b.dur||state.cfg.dur);return bs<=p&&be>p}).reduce((t,b)=>t+(+b.guests||0),0);peak=Math.max(peak,sum)}
+  return{used:peak,list};
+}
+function availability(d){
+  return state.cfg.areas.map(a=>{const u=areaUse(d.date,d.time,d.dur,a.id,d.id);const free=Math.max(0,a.cap-u.used);const fits=(+d.guests||0)<=free&&(+d.guests||0)>0;
+    const after=u.used+(+d.guests||0);const level=!fits?"bad":after/a.cap>.85?"warn":"ok";return{...a,used:u.used,free,fits,level,list:u.list}});
+}
+function suggestTimes(d){
+  const base=mins(d.time),out=[];
+  for(const off of[30,-30,60,-60,90,-90,120,-120,150,-150]){const t=base+off;if(t<12*60||t>22*60+30)continue;const tt=hhmm(t);
+    const av=availability({...d,time:tt}).filter(a=>a.fits);if(av.length)out.push({time:tt,areas:av.map(a=>a.name)});if(out.length>=4)break}
+  return out.sort((a,b)=>mins(a.time)-mins(b.time));
+}
+function calc(b){
+  const c=state.cfg,g=Math.max(0,+b.guests||0),kids=Math.min(g,Math.max(0,+b.kids||0)),adults=g-kids,lines=[];
+  const pkg=c.packages.find(p=>p.id===b.pkg);
+  if(b.pkg==="est")lines.push({label:"הערכת הוצאה לסועד",sub:`${adults} × ${nis(c.estSpend)}`,amt:adults*c.estSpend});
+  else if(pkg)lines.push({label:`חבילת ${pkg.name}`,sub:`${adults} × ${nis(pkg.pp)}`,amt:adults*pkg.pp});
+  if(kids)lines.push({label:"תפריט ילדים",sub:`${kids} × ${nis(c.kidsPrice)}`,amt:kids*c.kidsPrice});
+  for(const id of b.extras||[]){const x=c.extras.find(e=>e.id===id);if(x)lines.push({label:x.name,sub:x.unit==="pp"?`${adults} × ${nis(x.price)}`:"",amt:x.unit==="pp"?x.price*adults:x.price})}
+  for(const[id,n]of Object.entries(b.dishes||{})){const m=MENU_BY_ID[id];if(m&&n>0)lines.push({label:m.name,sub:`${n} × ${nis(m.price)}`,amt:n*m.price})}
+  const sub=lines.reduce((a,l)=>a+l.amt,0),disc=Math.round(sub*Math.min(50,Math.max(0,+b.discount||0))/100);
+  const service=b.service?Math.round((sub-disc)*c.service/100):0,total=sub-disc+service;
+  const deposit=Math.round(total*c.depositPct/100),paid=+b.depositPaid||0;
+  return{lines,sub,disc,service,total,pp:g?total/g:0,deposit,paid,balance:total-paid};
+}
+const isEvent=b=>(+b.guests>=state.cfg.eventFrom)||(b.pkg&&b.pkg!=="est"&&b.pkg!=="alc");
+const allergyList=r=>[...((r&&r.allergyTags)||[]),...((r&&r.allergies&&r.allergies.trim())?[r.allergies.trim()]:[])];
+const seatingList=r=>[...((r&&r.seatingTags)||[]),...((r&&r.seating&&r.seating.trim())?[r.seating.trim()]:[])];
+function reqChips(b){const r=b.req||{},o=[];const al=allergyList(r);
+  if(al.length)o.push(`<span class="rq al">⚠ ${esc(al.join(", "))}</span>`);
+  if(+r.veg)o.push(`<span class="rq">${r.veg} צמחוני</span>`);if(+r.vegan)o.push(`<span class="rq">${r.vegan} טבעוני</span>`);if(+r.gf)o.push(`<span class="rq">${r.gf} ללא גלוטן</span>`);
+  if(+r.baby)o.push(`<span class="rq">${r.baby} כיסא תינוק</span>`);if(r.cake)o.push(`<span class="rq">עוגה</span>`);if(r.access)o.push(`<span class="rq">נגישות</span>`);
+  seatingList(r).forEach(s=>o.push(`<span class="rq">${esc(s)}</span>`));
+  return o.join("")}
+const hasReq=b=>{const r=b.req||{};return !!(allergyList(r).length||+r.veg||+r.vegan||+r.gf||+r.baby||r.cake||r.access||seatingList(r).length||r.notes)};
+function dayStats(date){const l=state.bookings.filter(b=>b.date===date&&!isCancel(b));
+  return{list:l,guests:l.reduce((a,b)=>a+(+b.guests||0),0),value:l.reduce((a,b)=>a+(+b.total||0),0),events:l.filter(isEvent),paid:l.reduce((a,b)=>a+(+b.depositPaid||0),0),req:l.filter(hasReq).length}}
+
+/* ================= VIEWS ================= */
+function bkRow(b,showDate=true){
+  const ar=cfgArea(b.area);return`<button class="bk${isCancel(b)?" cancel":""}" data-open="${esc(b.id)}"><div class="t">${esc(b.time)}${showDate?`<small>${shortDate(b.date)}</small>`:""}</div>
+   <div class="main"><b>${esc(b.name)}</b><span class="sub">${b.guests} איש · ${esc(ar?ar.name:"")}${b.occasion?" · "+esc(b.occasion):""}</span>${hasReq(b)?`<div class="reqchips">${reqChips(b)}</div>`:""}</div>
+   <div class="side"><span class="kind ${isEvent(b)?"ev":"tb"}">${isEvent(b)?"אירוע":"שולחן"}</span><span class="val">${nis(b.total)}</span><span class="st ${stClass(b.status)}">${esc(b.status)}</span></div></button>`}
+
+function viewToday(){
+  const t=today(),s=dayStats(t),w=[0,1,2,3,4,5,6].map(i=>dayStats(addDays(t,i)));
+  const weekVal=w.reduce((a,d)=>a+d.value,0),weekG=w.reduce((a,d)=>a+d.guests,0);
+  const pending=state.bookings.filter(b=>b.date>=t&&b.status==="ממתין לאישור");
+  const next=state.bookings.filter(b=>b.date>t&&b.date<=addDays(t,14)&&isEvent(b)&&!isCancel(b)).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)).slice(0,6);
+  return`<section class="view">
+   <div class="row"><div><span class="eyebrow">${fmtDate(t)}</span><h1>היום במסעדה</h1></div><span class="spacer"></span><button class="btn red lg" data-tab="new">+ הזמנה חדשה</button></div>
+   <div class="stats">
+    <div class="stat"><div class="k">סועדים היום</div><div class="v">${s.guests}</div><div class="s">${s.list.length} הזמנות · ${s.events.length} אירועים</div></div>
+    <div class="stat"><div class="k">שווי היום</div><div class="v">${nis(s.value)}</div><div class="s">מקדמות: ${nis(s.paid)}</div></div>
+    <div class="stat"><div class="k">7 הימים הקרובים</div><div class="v">${nisK(weekVal)}</div><div class="s">${weekG} סועדים</div></div>
+    <div class="stat"><div class="k">ממתינים לאישור</div><div class="v" style="color:${pending.length?"var(--warn)":"inherit"}">${pending.length}</div><div class="s">צריך לחזור ללקוח</div></div>
+   </div>
+   <div class="panel"><div class="row"><h2>תפוסה לפי שעה – היום</h2><span class="spacer"></span>${syncBadge()}</div>${timeline(t)}</div>
+   <div class="grid2">
+    <div class="panel"><h2>ההזמנות של היום</h2><div class="list">${s.list.length?s.list.sort((a,b)=>a.time.localeCompare(b.time)).map(b=>bkRow(b,false)).join(""):`<div class="empty">אין הזמנות להיום. לחצו "הזמנה חדשה" כשמישהו מתקשר.</div>`}</div></div>
+    <div class="panel"><div class="row"><h2>אירועים קרובים</h2><span class="spacer"></span><button class="btn sm ghost" data-tab="calendar">ליומן ←</button></div>
+     <div class="list">${next.length?next.map(b=>bkRow(b)).join(""):`<div class="empty">אין אירועים בשבועיים הקרובים.</div>`}</div>
+     ${pending.length?`<h3>ממתינים לאישור</h3><div class="list">${pending.map(b=>bkRow(b)).join("")}</div>`:""}</div>
+   </div>
+   ${s.list.length?`<div class="panel"><h2>דף מטבח והכנות – היום</h2>${prepSheet(s.list)}</div>`:""}
+  </section>`;
+}
+
+function timeline(date){
+  const START=11*60,SPAN=13*60;const l=state.bookings.filter(b=>b.date===date&&!isCancel(b));
+  const hours=Array.from({length:14},(v,i)=>`<span style="right:${(i/13*100).toFixed(2)}%">${pad(11+i>23?(11+i-24):11+i)}:00</span>`).join("");
+  const lanes=state.cfg.areas.map(a=>{const bl=l.filter(b=>b.area===a.id).sort((x,y)=>mins(x.time)-mins(y.time));const ends=[];
+    const blocks=bl.map(b=>{const s=mins(b.time),d=+b.dur||state.cfg.dur;let row=ends.findIndex(e=>e<=s);if(row<0){row=ends.length;ends.push(0)}ends[row]=s+d;
+      const r=Math.max(0,(s-START)/SPAN*100),w=Math.min(100-r,d/SPAN*100);
+      return`<button class="blk${isEvent(b)?" ev":""}${row%2?" stack1":""}" data-open="${esc(b.id)}" style="right:${r.toFixed(2)}%;width:${w.toFixed(2)}%;${ends.length>1?"bottom:auto;height:20px;"+(row%2?"":"top:5px;"):""}" title="${esc(b.name)}"><b>${b.guests} · ${esc(b.name)}</b>${ends.length>1?"":esc(b.time)}</button>`}).join("");
+    return`<div class="lab"><span class="labname">${areaIcon(a.id)}${esc(a.name)}</span><small>${a.cap} מקומות${a.exclusive?" · סגור":""}</small></div><div class="lane" style="${ends.length>1?"min-height:58px":""}">${blocks}</div>`}).join("");
+  return`<div class="tl-wrap"><div class="tl"><div class="lab" style="background:transparent"></div><div class="hours">${hours}</div>${lanes}</div></div>`;
+}
+function prepSheet(list){
+  const c=state.cfg,pk={},dishes={},diet={veg:0,vegan:0,gf:0,baby:0},al=[],cakes=[],notes=[];
+  for(const b of list){const p=c.packages.find(x=>x.id===b.pkg);if(p){pk[p.name]=(pk[p.name]||0)+(+b.guests-(+b.kids||0))}if(+b.kids)pk["תפריט ילדים"]=(pk["תפריט ילדים"]||0)+(+b.kids);
+    for(const[id,n]of Object.entries(b.dishes||{}))if(MENU_BY_ID[id])dishes[MENU_BY_ID[id].name]=(dishes[MENU_BY_ID[id].name]||0)+n;
+    const r=b.req||{};diet.veg+=+r.veg||0;diet.vegan+=+r.vegan||0;diet.gf+=+r.gf||0;diet.baby+=+r.baby||0;
+    const alg=allergyList(r);if(alg.length)al.push(`${esc(b.time)} ${esc(b.name)}: ${esc(alg.join(", "))}`);if(r.cake||(b.extras||[]).includes("x2"))cakes.push(`${esc(b.time)} ${esc(b.name)}`);if(r.notes)notes.push(`${esc(b.time)} ${esc(b.name)}: ${esc(r.notes)}`)}
+  const ul=(o)=>Object.keys(o).length?`<ul>${Object.entries(o).map(([k,v])=>`<li><span>${esc(k)}</span><b>${v}</b></li>`).join("")}</ul>`:`<p class="note">אין</p>`;
+  const ll=a=>a.length?`<ul>${a.map(x=>`<li><span>${x}</span></li>`).join("")}</ul>`:`<p class="note">אין</p>`;
+  return`<div class="prep"><div><h3>מנות לפי חבילות</h3>${ul(pk)}</div><div><h3>מנות שהוזמנו מראש</h3>${ul(dishes)}</div>
+   <div><h3>תזונה מיוחדת</h3><ul><li><span>צמחוני</span><b>${diet.veg}</b></li><li><span>טבעוני</span><b>${diet.vegan}</b></li><li><span>ללא גלוטן</span><b>${diet.gf}</b></li><li><span>כיסאות תינוק</span><b>${diet.baby}</b></li></ul></div>
+   <div><h3 style="color:var(--bad)">אלרגיות</h3>${ll(al)}</div><div><h3>עוגות / הפתעות</h3>${ll(cakes)}</div><div><h3>הערות לצוות</h3>${ll(notes)}</div></div>`;
+}
+
+/* ---------- NEW BOOKING (phone call flow) ---------- */
+function viewNew(){
+  const d=state.draft,t=today();
+  const dates=Array.from({length:10},(v,i)=>addDays(t,i));
+  const timesList=[];for(let m=12*60;m<=22*60+30;m+=30)timesList.push(hhmm(m));
+  return`<section class="view">
+   <div class="row"><div><span class="eyebrow">${d.id?"עריכת הזמנה":"שיחה נכנסת"}</span><h1>${d.id?"עריכת הזמנה":"הזמנה חדשה"}</h1><p class="lede">בודקים זמינות תוך כדי שיחה, סוגרים אזור, ומקבלים מיד כמה כל האירוע יעלה.</p></div><span class="spacer"></span>${d.id?`<button class="btn sm" data-act="new-blank">התחל הזמנה חדשה</button>`:`<button class="btn sm ghost" data-act="new-blank">נקה טופס</button>`}</div>
+   <nav class="stepnav" aria-label="קפיצה לשלב">
+    <a href="#step1"><i>1</i>מתי וכמה</a><a href="#step2"><i>2</i>פרטי מזמין</a><a href="#step3"><i>3</i>תפריט ומחיר</a><a href="#step4"><i>4</i>בקשות מיוחדות</a>
+   </nav>
+   <div class="grid2">
+    <div class="view" style="gap:16px;min-width:0">
+     <div class="panel" id="step1">
+      <div class="section-h"><span class="n">1</span><h2>מתי וכמה?</h2></div>
+      <div class="f">תאריך<div class="chips" role="group" aria-label="תאריך">${dates.map((x,i)=>`<button data-date="${x}" aria-pressed="${d.date===x}">${i===0?"היום":i===1?"מחר":DAYS[dObj(x).getDay()]}<small>${shortDate(x)}</small></button>`).join("")}</div></div>
+      <div class="fgrid three">
+       <label class="f">תאריך אחר<input class="inp" type="date" id="d-date" data-d="date" value="${d.date}"></label>
+       <label class="f">שעה<select class="inp" id="d-time" data-d="time">${(timesList.includes(d.time)?timesList:[d.time,...timesList]).map(x=>`<option${x===d.time?" selected":""}>${x}</option>`).join("")}</select></label>
+       <label class="f">משך ישיבה<select class="inp" id="d-dur" data-d="dur">${[90,120,150,180,210,240,300].map(m=>`<option value="${m}"${+d.dur===m?" selected":""}>${Math.floor(m/60)}:${pad(m%60)} שעות</option>`).join("")}</select></label>
+       <div class="f wide">מספר סועדים<div class="stepper"><button type="button" data-step="guests" data-d1="-1" aria-label="פחות">−</button><input id="d-guests" data-d="guests" type="number" inputmode="numeric" min="1" max="200" value="${d.guests}"><button type="button" data-step="guests" data-d1="1" aria-label="יותר">+</button></div></div>
+       <div class="f">מתוכם ילדים<div class="stepper"><button type="button" data-step="kids" data-d1="-1" aria-label="פחות">−</button><input id="d-kids" data-d="kids" type="number" min="0" value="${d.kids}"><button type="button" data-step="kids" data-d1="1" aria-label="יותר">+</button></div></div>
+      </div>
+      <div id="avail">${availHtml()}</div>
+     </div>
+     <div class="panel" id="step2">
+      <div class="section-h"><span class="n">2</span><h2>פרטי המזמין</h2></div>
+      <div class="fgrid">
+       <label class="f">שם<input class="inp" id="d-name" data-d="name" value="${esc(d.name)}" placeholder="שם המזמין / שם האירוע" autocomplete="off"></label>
+       <label class="f">טלפון<input class="inp" id="d-phone" data-d="phone" value="${esc(d.phone)}" inputmode="tel" placeholder="050-0000000"></label>
+       <label class="f">סוג האירוע<select class="inp" id="d-occ" data-d="occasion">${OCCASIONS.map(o=>`<option value="${o}"${o===d.occasion?" selected":""}>${o||"ארוחה רגילה"}</option>`).join("")}</select></label>
+       <label class="f">סטטוס<select class="inp" id="d-status" data-d="status">${STATUSES.map(s=>`<option${s===d.status?" selected":""}>${s}</option>`).join("")}</select></label>
+      </div>
+      <div id="repeat"></div>
+      ${CAKE_OCCASIONS.has(d.occasion)&&!d.req.cake?`<div class="suggest"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 21h16M5 21v-7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v7M9 12V7a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v5M12 2v2"/></svg>זה ${esc(d.occasion)} — לסמן שמביאים עוגה ולהוסיף אותה להצעת המחיר?<span class="spacer"></span><button type="button" class="btn sm primary" data-act="suggest-cake">כן, סמנו עוגה</button></div>`:""}
+     </div>
+     <div class="panel" id="step3">
+      <div class="section-h"><span class="n">3</span><h2>תפריט ומחיר</h2></div>
+      <div class="seg">
+       <button class="opt" data-pkg="est" aria-pressed="${d.pkg==="est"}"><b>שולחן רגיל</b><span>הערכת הוצאה ממוצעת</span><span class="p">~${nis(state.cfg.estSpend)} לסועד</span></button>
+       ${state.cfg.packages.map(p=>`<button class="opt" data-pkg="${p.id}" aria-pressed="${d.pkg===p.id}"><b>${esc(p.name)}</b><span>${esc(p.desc)}</span><span class="p">${nis(p.pp)} לסועד</span></button>`).join("")}
+       <button class="opt" data-pkg="alc" aria-pressed="${d.pkg==="alc"}"><b>א-לה-קארט מראש</b><span>בוחרים מנות מהתפריט</span><span class="p">לפי מנות</span></button>
+      </div>
+      <details class="fold"${(d.extras||[]).length?" open":""}><summary>תוספות לאירוע ${(d.extras||[]).length?`(${d.extras.length})`:""}</summary><div class="checks">${state.cfg.extras.map(x=>`<label class="check"><input type="checkbox" id="x-${x.id}" data-extra="${x.id}"${d.extras.includes(x.id)?" checked":""}><span class="grow">${esc(x.name)}</span><span class="p">${nis(x.price)}${x.unit==="pp"?" לסועד":""}</span></label>`).join("")}</div></details>
+      <details class="fold"${Object.keys(d.dishes).length||d.pkg==="alc"?" open":""}><summary>מנות מהתפריט ${Object.keys(d.dishes).length?`(${Object.values(d.dishes).reduce((a,b)=>a+b,0)})`:""}</summary><div><div class="dishes" id="dishes">${dishesHtml()}</div></div></details>
+      <div class="fgrid three">
+       <label class="f">הנחה %<input class="inp num" type="number" id="d-disc" data-d="discount" min="0" max="50" value="${d.discount}"></label>
+       <label class="f">מקדמה ששולמה ₪<input class="inp num" type="number" id="d-dep" data-d="depositPaid" min="0" value="${d.depositPaid}"></label>
+       <label class="check" style="align-self:end"><input type="checkbox" id="d-serv" data-d="service"${d.service?" checked":""}><span class="grow">שירות ${state.cfg.service}%</span></label>
+      </div>
+     </div>
+     <div class="panel" id="step4">
+      <div class="section-h"><span class="n">4</span><h2>בקשות מיוחדות</h2></div>
+      <div class="fgrid">
+       ${[["veg","צמחונים"],["vegan","טבעונים"],["gf","ללא גלוטן"],["baby","כיסאות תינוק"]].map(([k,l])=>`<div class="f">${l}<div class="stepper"><button type="button" data-rstep="${k}" data-d1="-1" aria-label="פחות">−</button><input id="r-${k}" data-r="${k}" type="number" min="0" value="${d.req[k]||0}"><button type="button" data-rstep="${k}" data-d1="1" aria-label="יותר">+</button></div></div>`).join("")}
+      </div>
+      <div class="f full">
+       אלרגיות ורגישויות <span class="note">— לחצו על מה שרלוונטי, ולכל השאר יש שדה פתוח למטה</span>
+       <div class="chipgrid" id="allergyChips">${ALLERGENS.map(a=>`<button type="button" data-allergy="${esc(a)}" aria-pressed="${(d.req.allergyTags||[]).includes(a)}">⚠ ${esc(a)}</button>`).join("")}</div>
+       <input class="inp" id="r-al" data-r="allergies" value="${esc(d.req.allergies)}" placeholder="אלרגיה אחרת / פרטים נוספים (לדוגמה: ילד בן 5, רגישות קשה)" style="margin-top:8px">
+      </div>
+      <div class="fgrid">
+       <label class="check"><input type="checkbox" id="r-cake" data-r="cake"${d.req.cake?" checked":""}><span class="grow">מביאים עוגה / הפתעה</span></label>
+       <label class="check"><input type="checkbox" id="r-acc" data-r="access"${d.req.access?" checked":""}><span class="grow">צריך נגישות לכיסא גלגלים</span></label>
+      </div>
+      <div class="f full">
+       בקשת הושבה <span class="note">— אפשר לבחור כמה</span>
+       <div class="chipgrid neutral" id="seatChips">${SEATING_PRESETS.map(s=>`<button type="button" data-seat="${esc(s)}" aria-pressed="${(d.req.seatingTags||[]).includes(s)}">${esc(s)}</button>`).join("")}</div>
+       <input class="inp" id="r-seat" data-r="seating" value="${esc(d.req.seating)}" placeholder="בקשת הושבה אחרת" style="margin-top:8px">
+      </div>
+      <label class="f full">הערות לצוות<textarea class="inp" id="r-notes" data-r="notes" placeholder="ברכה לחוגג, מקרן, שעת הגשת עוגה">${esc(d.req.notes)}</textarea></label>
+     </div>
+    </div>
+    <aside class="paper" id="paper">${paperHtml()}</aside>
+   </div></section>`;
+}
+function availHtml(){
+  const d=state.draft;if(!(+d.guests>0))return`<div class="verdict warn">הזינו מספר סועדים</div>`;
+  const av=availability(d),fit=av.filter(a=>a.fits);const sel=av.find(a=>a.id===d.area);
+  let v;
+  if(sel&&sel.fits)v=`<div class="verdict ok"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5 9-10"/></svg>פנוי! ${d.guests} איש ב${esc(sel.name)}, ${fmtDate(d.date)} ב-${d.time}</div>`;
+  else if(fit.length)v=`<div class="verdict ok"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5 9-10"/></svg>יש מקום ל-${d.guests} איש ב${fit.length} אזורים – בחרו אזור</div>`;
+  else{const sg=suggestTimes(d);v=`<div class="verdict bad"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 6l12 12M18 6L6 18"/></svg>אין מקום ל-${d.guests} איש ב-${d.time}</div>${sg.length?`<div class="f">שעות פנויות קרובות<div class="chips">${sg.map(s=>`<button data-settime="${s.time}">${s.time}<small>${esc(s.areas.join(", "))}</small></button>`).join("")}</div></div>`:`<p class="note">אין מקום ביום הזה לקבוצה בגודל הזה. נסו תאריך אחר.</p>`}`}
+  return`<div style="display:grid;gap:10px">${v}<div class="areas">${av.map(a=>{const pu=Math.min(100,a.used/a.cap*100),pn=Math.min(100-pu,(+d.guests||0)/a.cap*100);
+    return`<button class="area${a.fits?"":" full"}" data-area="${a.id}" aria-pressed="${d.area===a.id}"${a.fits?"":" aria-disabled=\"true\""}><div class="top"><b>${areaIcon(a.id)} ${esc(a.name)}</b><span class="badge ${a.level}">${a.fits?(a.level==="warn"?"כמעט מלא":"פנוי"):(a.exclusive&&a.used?"תפוס":"אין מקום")}</span></div>
+    <div class="bar"><i class="used" style="width:${pu}%"></i><i class="new" style="width:${pn}%"></i></div>
+    <div class="meta">${a.exclusive?(a.used?"סגור לאירוע אחר":"חדר סגור עד "+a.cap+" איש"):`${a.used} תפוסים · ${a.free} פנויים מתוך ${a.cap}`}</div></button>`}).join("")}</div></div>`;
+}
+function dishesHtml(){const d=state.draft;return MENU.map(m=>{const q=d.dishes[m.id]||0;return`<div class="dish"><div class="pic">${art(m.art,m.id)}</div><div><b>${esc(m.name)}</b><span>${esc(m.cat)} · ${nis(m.price)}</span></div>${q?`<span class="qty"><button data-dish="${m.id}" data-d1="1" aria-label="הוסף">+</button><span>${q}</span><button data-dish="${m.id}" data-d1="-1" aria-label="הסר">−</button></span>`:`<button class="addbtn" data-dish="${m.id}" data-d1="1" aria-label="הוסף ${esc(m.name)}">+</button>`}</div>`}).join("")}
+function canSave(){const d=state.draft;const a=availability(d).find(x=>x.id===d.area);
+  if(!(+d.guests>0))return"הזינו מספר סועדים";if(!d.area)return"בחרו אזור פנוי";if(!a||!a.fits)return"האזור שנבחר לא פנוי";if(!d.name.trim())return"הזינו שם מזמין";return""}
+function paperHtml(){
+  const d=state.draft,c=calc(d),ar=cfgArea(d.area),err=canSave();
+  return`<div class="ph"><div><small>סיכום והצעת מחיר</small><h3>${esc(d.name||"הזמנה חדשה")}</h3></div><small>${isEvent(d)?"אירוע":"שולחן"}</small></div>
+  <div class="pb"><div class="note">${fmtDate(d.date)} · ${esc(d.time)}–${hhmm(mins(d.time)+(+d.dur))} · ${d.guests} איש${+d.kids?` (${d.kids} ילדים)`:""} · ${ar?esc(ar.name):"אזור לא נבחר"}</div>
+   <table class="lines"><tbody>${c.lines.map(l=>`<tr><td>${esc(l.label)}${l.sub?`<small>${esc(l.sub)}</small>`:""}</td><td>${nis(l.amt)}</td></tr>`).join("")||`<tr><td colspan="2" class="note">בחרו חבילה או מנות</td></tr>`}
+   <tr class="sum"><td>סכום ביניים</td><td>${nis(c.sub)}</td></tr>${c.disc?`<tr class="sum"><td>הנחה ${d.discount}%</td><td>−${nis(c.disc)}</td></tr>`:""}${c.service?`<tr class="sum"><td>שירות ${state.cfg.service}%</td><td>${nis(c.service)}</td></tr>`:""}
+   <tr class="total"><td>סה"כ</td><td>${nis(c.total)}</td></tr></tbody></table>
+   <div class="pp"><span>לסועד</span><b>${nis(c.pp)}</b></div>
+   <div class="pp"><span>מקדמה נדרשת (${state.cfg.depositPct}%)</span><b>${nis(c.deposit)}</b></div>
+   <div class="pp"><span>שולם · יתרה לתשלום</span><b>${nis(c.paid)} · ${nis(c.balance)}</b></div>
+   ${hasReq(d)?`<div class="reqchips">${reqChips(d)}</div>`:""}
+   <button class="btn primary lg" data-act="save"${err?" disabled":""}>${d.id?"עדכן ביומן":"סגור הזמנה ושמור ביומן"}</button>
+   ${err?`<p class="note" style="color:var(--warn)">${err}</p>`:""}
+   <button class="btn sm ghost" data-act="copy-draft">העתק אישור ללקוח (וואטסאפ)</button>
+   <p class="note">המחירים כוללים מע"מ · מחירי דמו</p></div>`;
+}
+function refreshNew(){state.bookings.forEach(b=>{if(b.total==null)b.total=calc(b).total});const a=$("#avail");if(a)a.innerHTML=availHtml();const p=$("#paper");if(p)p.innerHTML=paperHtml();renderSavebar();renderRepeat()}
+function renderRepeat(){const el=$("#repeat");if(!el)return;const d=state.draft;const ph=(d.phone||"").replace(/\D/g,"");
+  if(ph.length<7){el.innerHTML="";return}const prev=state.bookings.filter(b=>b.id!==d.id&&(b.phone||"").replace(/\D/g,"")===ph);
+  el.innerHTML=prev.length?`<p class="note">לקוח חוזר: ${prev.length} הזמנות קודמות (אחרונה ${shortDate(prev.sort((a,b)=>b.date.localeCompare(a.date))[0].date)})</p>`:""}
+function renderSavebar(){const bar=$("#savebar");document.body.classList.toggle("has-save",state.tab==="new");if(state.tab!=="new"){bar.hidden=true;return}const c=calc(state.draft),err=canSave();bar.hidden=false;
+  bar.innerHTML=`<div class="in"><div><b>${nis(c.total)}</b><small>${state.draft.guests} איש · ${nis(c.pp)} לסועד</small></div><span class="spacer"></span><button class="btn primary" data-act="save"${err?" disabled":""}>${err||"סגור ושמור"}</button></div>`}
+
+/* ---------- CALENDAR ---------- */
+function viewCalendar(){
+  const[y,m]=state.calMonth.split("-").map(Number);const first=new Date(y,m-1,1);const start=new Date(first);start.setDate(1-first.getDay());
+  const t=today(),totalCap=state.cfg.areas.reduce((a,x)=>a+x.cap,0);
+  let monthVal=0,monthG=0,monthEv=0;let cells="";
+  for(let i=0;i<42;i++){const d=new Date(start);d.setDate(start.getDate()+i);if(i===35&&d.getMonth()!==m-1)break;const k=iso(d),s=dayStats(k);
+    if(d.getMonth()===m-1){monthVal+=s.value;monthG+=s.guests;monthEv+=s.events.length}
+    const ld=Math.min(100,s.guests/(totalCap*1.6)*100);
+    cells+=`<button class="day${d.getMonth()!==m-1?" out":""}${k===t?" today":""}" data-day="${k}" aria-pressed="${state.calDay===k}" aria-label="${fmtDate(k)}: ${s.list.length} הזמנות, ${s.guests} סועדים">
+     <span class="dn">${d.getDate()}${s.req?`<i class="flag" title="בקשות מיוחדות"></i>`:""}</span>
+     ${s.guests?`<span class="g">${s.guests} איש</span><span class="m">${nisK(s.value)}</span>`:""}
+     ${s.events.slice(0,2).map(e=>`<span class="ev">${esc(e.time)} ${esc(e.name)}</span>`).join("")}
+     ${s.guests?`<span class="load"><i class="${ld>70?"hi":""}" style="width:${ld}%"></i></span>`:""}</button>`}
+  const ds=dayStats(state.calDay);const all=state.bookings.filter(b=>b.date===state.calDay).sort((a,b)=>a.time.localeCompare(b.time));
+  return`<section class="view">
+   <div><span class="eyebrow">יומן הזמנות</span><h1>יומן</h1></div>
+   <div class="stats"><div class="stat"><div class="k">שווי ב${MONTHS[m-1]}</div><div class="v">${nisK(monthVal)}</div></div><div class="stat"><div class="k">סועדים בחודש</div><div class="v">${monthG}</div></div><div class="stat"><div class="k">אירועים בחודש</div><div class="v">${monthEv}</div></div><div class="stat"><div class="k">ממוצע לסועד</div><div class="v">${nis(monthG?monthVal/monthG:0)}</div></div></div>
+   <div class="panel">
+    <div class="calhead"><button class="btn sm" data-cal="-1" aria-label="חודש קודם">→</button><h2>${MONTHS[m-1]} ${y}</h2><button class="btn sm" data-cal="1" aria-label="חודש הבא">←</button><button class="btn sm ghost" data-cal="0">היום</button><span class="spacer"></span><span class="note"><i class="flag"></i> בקשות מיוחדות</span><button class="btn sm xl" data-act="export-month">${XL_ICON}ייצוא ${MONTHS[m-1]} לאקסל</button></div>
+    <div class="cal">${["א׳","ב׳","ג׳","ד׳","ה׳","ו׳","ש׳"].map(x=>`<div class="dow">${x}</div>`).join("")}${cells}</div>
+   </div>
+   <div class="panel">
+    <div class="row"><h2>${fmtDate(state.calDay)}</h2><span class="spacer"></span><button class="btn sm red" data-act="new-on-day">+ הזמנה ליום הזה</button></div>
+    <div class="stats"><div class="stat"><div class="k">סועדים</div><div class="v">${ds.guests}</div></div><div class="stat"><div class="k">שווי</div><div class="v">${nis(ds.value)}</div></div><div class="stat"><div class="k">אירועים</div><div class="v">${ds.events.length}</div></div><div class="stat"><div class="k">מקדמות</div><div class="v">${nis(ds.paid)}</div></div></div>
+    ${timeline(state.calDay)}
+    <div class="list">${all.length?all.map(b=>bkRow(b,false)).join(""):`<div class="empty">אין הזמנות ביום הזה.</div>`}</div>
+    ${ds.list.length?`<details class="fold"><summary>דף מטבח והכנות ליום הזה</summary><div>${prepSheet(ds.list)}</div></details>`:""}
+   </div></section>`;
+}
+
+/* ---------- LIST / SEARCH ---------- */
+function viewList(){
+  const t=today(),q=state.q.trim().toLowerCase().replace(/-/g,"");
+  let l=state.bookings.filter(b=>{if(state.listFilter==="upcoming"&&b.date<t)return false;if(state.listFilter==="past"&&b.date>=t)return false;if(state.listFilter==="pending"&&b.status!=="ממתין לאישור")return false;if(state.listFilter==="events"&&!isEvent(b))return false;
+    if(q&&!((b.name||"").toLowerCase().includes(q)||(b.phone||"").replace(/-/g,"").includes(q)))return false;return true});
+  l.sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));if(state.listFilter==="past")l.reverse();state.listRes=l;
+  const val=l.filter(b=>!isCancel(b)).reduce((a,b)=>a+(+b.total||0),0);
+  return`<section class="view"><div><span class="eyebrow">כל ההזמנות</span><h1>חיפוש הזמנה</h1><p class="lede">לקוח מתקשר לשנות? חפשו לפי שם או טלפון.</p></div>
+   <div class="panel"><input class="inp" id="q" placeholder="שם או מספר טלפון…" value="${esc(state.q)}" autocomplete="off">
+    <div class="filters">${[["upcoming","קרובות"],["events","אירועים"],["pending","ממתינות"],["past","עבר"],["all","הכול"]].map(([k,lab])=>`<button data-lf="${k}" aria-pressed="${state.listFilter===k}">${lab}</button>`).join("")}</div>
+    <div class="row"><p class="note" style="margin:0">${l.length} הזמנות · שווי ${nis(val)}</p><span class="spacer"></span><button class="btn sm xl" data-act="export-list"${l.length?"":" disabled"}>${XL_ICON}ייצוא לאקסל</button></div>
+    <div class="list" id="listRes">${l.length?l.map(b=>bkRow(b)).join(""):`<div class="empty">לא נמצאו הזמנות.</div>`}</div></div></section>`;
+}
+
+/* ---------- SETTINGS ---------- */
+function viewSettings(){const c=state.cfg;
+  return`<section class="view"><div><span class="eyebrow">הגדרות המסעדה</span><h1>הגדרות</h1><p class="lede">קיבולת האזורים, מחירי החבילות והתוספות. השינוי חל על כל הצוות.</p>${store.user?`<div class="row" style="margin-top:8px"><span class="note">מחובר כ-<b class="num">${esc(store.user.email||"")}</b></span><button class="btn sm" data-act="logout">התנתקות</button></div>`:""}</div>
+  <form class="grid2" id="cfgForm">
+   <div class="panel"><h2>אזורים וקיבולת</h2>
+    ${c.areas.map((a,i)=>`<div class="settings-row"><input class="inp" id="a-n-${i}" name="a-n-${i}" value="${esc(a.name)}" aria-label="שם אזור"><input class="inp num" id="a-c-${i}" name="a-c-${i}" type="number" min="1" value="${a.cap}" aria-label="קיבולת"><label class="check" style="padding:6px 8px"><input type="checkbox" id="a-x-${i}" name="a-x-${i}"${a.exclusive?" checked":""}><span class="grow" style="font-size:13px">נסגר לאירוע</span></label></div>`).join("")}
+    <p class="note">"נסגר לאירוע" = הזמנה אחת סוגרת את כל האזור (כמו חדר פרטי).</p>
+    <div class="fgrid">
+     <label class="f">משך ישיבה ברירת מחדל (דק')<input class="inp num" id="c-dur" name="dur" type="number" step="30" value="${c.dur}"></label>
+     <label class="f">הערכת הוצאה לסועד ₪<input class="inp num" id="c-est" name="estSpend" type="number" value="${c.estSpend}"></label>
+     <label class="f">תפריט ילדים ₪<input class="inp num" id="c-kids" name="kidsPrice" type="number" value="${c.kidsPrice}"></label>
+     <label class="f">דמי שירות %<input class="inp num" id="c-serv" name="service" type="number" value="${c.service}"></label>
+     <label class="f">מקדמה %<input class="inp num" id="c-dep" name="depositPct" type="number" value="${c.depositPct}"></label>
+     <label class="f">נחשב "אירוע" מ- (סועדים)<input class="inp num" id="c-evf" name="eventFrom" type="number" value="${c.eventFrom}"></label>
+    </div></div>
+   <div class="panel"><h2>חבילות ותוספות</h2>
+    ${c.packages.map((p,i)=>`<div class="settings-row" style="grid-template-columns:minmax(0,1fr) 100px"><input class="inp" id="p-n-${i}" name="p-n-${i}" value="${esc(p.name)}" aria-label="שם חבילה"><input class="inp num" id="p-p-${i}" name="p-p-${i}" type="number" value="${p.pp}" aria-label="מחיר לסועד"></div>`).join("")}
+    <h3>תוספות</h3>
+    ${c.extras.map((x,i)=>`<div class="settings-row" style="grid-template-columns:minmax(0,1fr) 100px"><input class="inp" id="e-n-${i}" name="e-n-${i}" value="${esc(x.name)}" aria-label="שם תוספת"><input class="inp num" id="e-p-${i}" name="e-p-${i}" type="number" value="${x.price}" aria-label="מחיר"></div>`).join("")}
+    <div class="row"><button class="btn primary" type="submit">שמור הגדרות</button><button class="btn ghost" type="button" data-act="cfg-reset">החזר לברירת מחדל</button></div>
+    <p class="note">${syncBadge()}</p></div>
+  </form>
+  <div class="panel"><div class="row"><div><h2>גיבוי וייצוא לאקסל</h2><p class="lede">קובץ אקסל עם כל ההזמנות (${state.bookings.length}) ולשונית סיכום לפי חודש. מומלץ לשמור עותק פעם בשבוע.</p></div><span class="spacer"></span><button class="btn xl" data-act="export-all"${state.bookings.length?"":" disabled"}>${XL_ICON}הורדת כל ההזמנות</button></div>
+   <div class="row" style="border-top:1px dashed var(--line);padding-top:12px"><div style="flex:1;min-width:220px"><h3>גיבוי מלא להעברה</h3><p class="lede" style="font-size:13px">קובץ ‎.json‎ שמכיל את כל ההזמנות וההגדרות בדיוק כמו שהן. משמש להעברת המערכת למקום אחר או לשחזור אחרי תקלה.</p></div>
+    <button class="btn" data-act="export-backup">הורדת גיבוי מלא</button><label class="btn" style="cursor:pointer">שחזור מגיבוי<input type="file" id="restoreFile" accept=".json,application/json" hidden></label></div></div>
+  </section>`;
+}
+
+/* ================= MODALS ================= */
+function closeModal(){$("#modal").innerHTML="";$("#modal").dataset.id=""}
+function openBooking(id){
+  const b=state.bookings.find(x=>x.id===id);if(!b){closeModal();return}const c=calc(b),ar=cfgArea(b.area),pkg=state.cfg.packages.find(p=>p.id===b.pkg);
+  const r=b.req||{};
+  $("#modal").dataset.id=id;
+  $("#modal").innerHTML=`<div class="scrim" data-act="close"><div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(b.name)}">
+   <div class="row"><span class="kind ${isEvent(b)?"ev":"tb"}">${isEvent(b)?"אירוע":"שולחן"}</span><span class="st ${stClass(b.status)}">${esc(b.status)}</span><button class="x" data-act="close" aria-label="סגור">×</button></div>
+   <h2>${esc(b.name)}</h2>
+   <dl class="kv"><dt>מתי</dt><dd>${fmtDate(b.date)} · ${esc(b.time)}–${hhmm(mins(b.time)+(+b.dur||150))}</dd><dt>סועדים</dt><dd>${b.guests}${+b.kids?` (${b.kids} ילדים)`:""}</dd><dt>אזור</dt><dd>${esc(ar?ar.name:"")}</dd>
+    <dt>טלפון</dt><dd class="num" style="user-select:all">${esc(b.phone||"—")}</dd>${b.occasion?`<dt>סוג</dt><dd>${esc(b.occasion)}</dd>`:""}
+    <dt>תפריט</dt><dd>${b.pkg==="est"?"שולחן רגיל (הערכה)":b.pkg==="alc"?"א-לה-קארט":esc(pkg?pkg.name:"")}${(b.extras||[]).length?" + "+b.extras.map(x=>esc(state.cfg.extras.find(e=>e.id===x)?.name||"")).join(", "):""}</dd>
+    ${Object.keys(b.dishes||{}).length?`<dt>מנות</dt><dd>${Object.entries(b.dishes).map(([k,n])=>`${n}× ${esc(MENU_BY_ID[k]?.name||k)}`).join(" · ")}</dd>`:""}
+    <dt>שווי</dt><dd class="num"><b>${nis(b.total)}</b> · ${nis(c.pp)} לסועד</dd><dt>מקדמה</dt><dd class="num">${nis(b.depositPaid)} שולם · יתרה ${nis((+b.total||0)-(+b.depositPaid||0))}</dd>
+    ${hasReq(b)?`<dt>בקשות</dt><dd><div class="reqchips">${reqChips(b)}</div>${r.notes?`<div style="margin-top:4px">${esc(r.notes)}</div>`:""}</dd>`:""}</dl>
+   <div class="f">עדכון סטטוס<div class="filters">${STATUSES.map(s=>`<button data-status="${esc(s)}" aria-pressed="${b.status===s}">${esc(s)}</button>`).join("")}</div></div>
+   <div class="row" id="delZone"><button class="btn primary" data-act="edit">ערוך הזמנה</button><button class="btn" data-act="copy-booking">העתק אישור ללקוח</button><span class="spacer"></span><button class="btn sm ghost" data-act="ask-del" style="color:var(--bad)">מחק</button></div>
+  </div></div>`;
+}
+function confirmText(b){const c=calc(b),ar=cfgArea(b.area);
+  let t=`MILA HOUSE – אישור הזמנה\n${b.name}\n${fmtDate(b.date)} בשעה ${b.time}\n${b.guests} סועדים · ${ar?ar.name:""}\n`;
+  if(b.pkg!=="est"){t+="\n";c.lines.forEach(l=>t+=`• ${l.label}${l.sub?" ("+l.sub+")":""}: ${nis(l.amt)}\n`);if(c.disc)t+=`הנחה: -${nis(c.disc)}\n`;if(c.service)t+=`שירות ${state.cfg.service}%: ${nis(c.service)}\n`;t+=`סה"כ: ${nis(c.total)} (כולל מע"מ)\nמקדמה: ${nis(c.deposit)}${c.paid?` · שולם ${nis(c.paid)}`:""}\n`}
+  const alg=allergyList(b.req);if(alg.length)t+=`\nרשמנו אצלנו: ${alg.join(", ")}\n`;return t+"\nמחכים לכם! לשינויים חייגו אלינו."}
+async function copyText(txt){try{await navigator.clipboard.writeText(txt);toast("הועתק – הדביקו בוואטסאפ")}catch(e){$("#modal").innerHTML=`<div class="scrim" data-act="close"><div class="sheet"><div class="row"><h2>העתיקו את הטקסט</h2><button class="x" data-act="close" aria-label="סגור">×</button></div><textarea class="inp" id="copyBox" style="min-height:240px">${esc(txt)}</textarea></div></div>`;$("#copyBox").select()}}
+
+const XL_ICON=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>`;
+/* ================= EXCEL EXPORT (self-contained .xlsx writer, no library) ================= */
+const XLSX_W={
+  crcT:null,
+  crc(b){if(!this.crcT){this.crcT=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;this.crcT[n]=c>>>0}}
+    let c=0xFFFFFFFF;for(let i=0;i<b.length;i++)c=this.crcT[(c^b[i])&255]^(c>>>8);return(c^0xFFFFFFFF)>>>0},
+  zip(files){const enc=new TextEncoder(),parts=[],cen=[];let off=0;
+    for(const[name,txt]of files){const nb=enc.encode(name),db=enc.encode(txt),crc=this.crc(db);
+      const lh=new DataView(new ArrayBuffer(30));lh.setUint32(0,0x04034b50,true);lh.setUint16(4,20,true);lh.setUint16(6,0x0800,true);lh.setUint16(8,0,true);lh.setUint32(14,crc,true);lh.setUint32(18,db.length,true);lh.setUint32(22,db.length,true);lh.setUint16(26,nb.length,true);
+      const ch=new DataView(new ArrayBuffer(46));ch.setUint32(0,0x02014b50,true);ch.setUint16(4,20,true);ch.setUint16(6,20,true);ch.setUint16(8,0x0800,true);ch.setUint32(16,crc,true);ch.setUint32(20,db.length,true);ch.setUint32(24,db.length,true);ch.setUint16(28,nb.length,true);ch.setUint32(42,off,true);
+      parts.push(new Uint8Array(lh.buffer),nb,db);cen.push(new Uint8Array(ch.buffer),nb);off+=30+nb.length+db.length}
+    const cs=cen.reduce((a,b)=>a+b.length,0),end=new DataView(new ArrayBuffer(22));end.setUint32(0,0x06054b50,true);end.setUint16(8,files.length,true);end.setUint16(10,files.length,true);end.setUint32(12,cs,true);end.setUint32(16,off,true);
+    return new Blob([...parts,...cen,new Uint8Array(end.buffer)],{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"})},
+  x:s=>String(s??"").replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])),
+  col(i){let s="";i++;while(i>0){const m=(i-1)%26;s=String.fromCharCode(65+m)+s;i=Math.floor((i-1)/26)}return s},
+  serial(isoDate){const[y,m,d]=String(isoDate).split("-").map(Number);if(!y||!m||!d)return null;return(Date.UTC(y,m-1,d)-Date.UTC(1899,11,30))/86400000},
+  /* sheet: {name, cols:[{h,w,t}], rows:[[...]] } t: "s" text | "n" number | "c" currency | "d" ISO date */
+  sheetXml(sh){const R=[];
+    R.push(`<row r="1">${sh.cols.map((c,i)=>`<c r="${this.col(i)}1" s="1" t="inlineStr"><is><t>${this.x(c.h)}</t></is></c>`).join("")}</row>`);
+    sh.rows.forEach((row,ri)=>{const r=ri+2;R.push(`<row r="${r}">${row.map((v,i)=>{const ref=this.col(i)+r,t=sh.cols[i].t;
+      if(v===""||v==null)return"";
+      if(t==="d"){const s=this.serial(v);return s==null?`<c r="${ref}" t="inlineStr"><is><t>${this.x(v)}</t></is></c>`:`<c r="${ref}" s="2"><v>${s}</v></c>`}
+      if((t==="n"||t==="c")&&isFinite(+v))return`<c r="${ref}"${t==="c"?' s="3"':""}><v>${+v}</v></c>`;
+      return`<c r="${ref}" s="4" t="inlineStr"><is><t xml:space="preserve">${this.x(v)}</t></is></c>`}).join("")}</row>`)});
+    if(sh.totals)R.push(`<row r="${sh.rows.length+2}">${sh.totals.map((v,i)=>{const ref=this.col(i)+(sh.rows.length+2);if(v===""||v==null)return"";
+      if(typeof v==="number")return`<c r="${ref}" s="${sh.cols[i].t==="c"?6:5}"><v>${v}</v></c>`;return`<c r="${ref}" s="5" t="inlineStr"><is><t>${this.x(v)}</t></is></c>`}).join("")}</row>`);
+    const last=this.col(sh.cols.length-1)+(sh.rows.length+1);
+    return`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheetViews><sheetView rightToLeft="1" workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews><sheetFormatPr defaultRowHeight="18"/><cols>${sh.cols.map((c,i)=>`<col min="${i+1}" max="${i+1}" width="${c.w||14}" customWidth="1"/>`).join("")}</cols><sheetData>${R.join("")}</sheetData>${sh.rows.length?`<autoFilter ref="A1:${last}"/>`:""}</worksheet>`},
+  build(sheets){
+    const ct=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>${sheets.map((s,i)=>`<Override PartName="/xl/worksheets/sheet${i+1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join("")}</Types>`;
+    const rels=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>`;
+    const dn=sheets.map((s,i)=>s.rows.length?`<definedName name="_xlnm._FilterDatabase" localSheetId="${i}" hidden="1">'${this.x(s.name)}'!$A$1:$${this.col(s.cols.length-1)}$${s.rows.length+1}</definedName>`:"").join("");
+    const wb=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><bookViews><workbookView/></bookViews><sheets>${sheets.map((s,i)=>`<sheet name="${this.x(s.name)}" sheetId="${i+1}" r:id="rId${i+1}"/>`).join("")}</sheets>${dn?`<definedNames>${dn}</definedNames>`:""}</workbook>`;
+    const wbr=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${sheets.map((s,i)=>`<Relationship Id="rId${i+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${i+1}.xml"/>`).join("")}<Relationship Id="rId${sheets.length+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`;
+    const st=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="2"><numFmt numFmtId="164" formatCode="dd/mm/yyyy"/><numFmt numFmtId="165" formatCode="#,##0 &quot;₪&quot;"/></numFmts><fonts count="3"><font><sz val="11"/><name val="Arial"/></font><font><b/><sz val="11"/><color rgb="FFFFFFFF"/><name val="Arial"/></font><font><b/><sz val="11"/><name val="Arial"/></font></fonts><fills count="4"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF5A4F4D"/><bgColor indexed="64"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFEFEAE4"/><bgColor indexed="64"/></patternFill></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="7"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0" applyFont="1" applyFill="1" applyAlignment="1"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/><xf numFmtId="165" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0" applyAlignment="1"><alignment vertical="top" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="3" borderId="0" xfId="0" applyFont="1" applyFill="1"/><xf numFmtId="165" fontId="2" fillId="3" borderId="0" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1"/></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>`;
+    return this.zip([["[Content_Types].xml",ct],["_rels/.rels",rels],["xl/workbook.xml",wb],["xl/_rels/workbook.xml.rels",wbr],["xl/styles.xml",st],...sheets.map((s,i)=>[`xl/worksheets/sheet${i+1}.xml`,this.sheetXml(s)])]);
+  }
+};
+function bookingSheets(list,title){
+  const c=state.cfg,rows=[...list].sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+  const pkgName=b=>b.pkg==="est"?"שולחן רגיל (הערכה)":b.pkg==="alc"?"א-לה-קארט":((c.packages.find(p=>p.id===b.pkg)||{}).name||"");
+  const cols=[{h:"תאריך",w:12,t:"d"},{h:"יום",w:8},{h:"שעה",w:7},{h:"משך (דק')",w:9,t:"n"},{h:"שם המזמין",w:26},{h:"טלפון",w:14},{h:"סוג האירוע",w:14},{h:"שולחן / אירוע",w:11},{h:"סועדים",w:8,t:"n"},{h:"מתוכם ילדים",w:9,t:"n"},{h:"אזור",w:12},{h:"תפריט / חבילה",w:18},{h:"תוספות",w:28},{h:"מנות שהוזמנו",w:28},{h:"הנחה %",w:8,t:"n"},{h:"שירות",w:7},{h:"סה\"כ",w:12,t:"c"},{h:"מקדמה ששולמה",w:13,t:"c"},{h:"יתרה לתשלום",w:13,t:"c"},{h:"סטטוס",w:13},{h:"אלרגיות",w:24},{h:"צמחונים",w:8,t:"n"},{h:"טבעונים",w:8,t:"n"},{h:"ללא גלוטן",w:9,t:"n"},{h:"כיסאות תינוק",w:9,t:"n"},{h:"עוגה",w:6},{h:"נגישות",w:7},{h:"הושבה",w:20},{h:"הערות לצוות",w:30},{h:"נוצר",w:12,t:"d"},{h:"עודכן",w:12,t:"d"}];
+  const isoOf=ms=>ms?iso(new Date(ms)):"";
+  const data=rows.map(b=>{const r=b.req||{},total=+b.total||calc(b).total,paid=+b.depositPaid||0,ar=cfgArea(b.area);
+    return[b.date,DAYS[dObj(b.date).getDay()],b.time,+b.dur||c.dur,b.name,b.phone,b.occasion||"ארוחה רגילה",isEvent(b)?"אירוע":"שולחן",+b.guests||0,+b.kids||0,ar?ar.name:"",pkgName(b),
+      (b.extras||[]).map(x=>(c.extras.find(e=>e.id===x)||{}).name).filter(Boolean).join(", "),
+      Object.entries(b.dishes||{}).filter(([,n])=>n>0).map(([k,n])=>`${n}× ${(MENU_BY_ID[k]||{}).name||k}`).join(", "),
+      +b.discount||0,b.service?"כן":"",total,paid,isCancel(b)?0:total-paid,b.status,allergyList(r).join(", "),+r.veg||0,+r.vegan||0,+r.gf||0,+r.baby||0,r.cake?"כן":"",r.access?"כן":"",seatingList(r).join(", "),r.notes||"",
+      isoOf(b.createdAt),isoOf(b.updatedAt)]});
+  const live=rows.filter(b=>!isCancel(b)),sum=f=>live.reduce((a,b)=>a+f(b),0);
+  const tTotal=sum(b=>+b.total||0),tPaid=sum(b=>+b.depositPaid||0);
+  const totals=cols.map((x,i)=>i===0?"סה\"כ (ללא מבוטלות)":i===8?sum(b=>+b.guests||0):i===16?tTotal:i===17?tPaid:i===18?tTotal-tPaid:"");
+  // monthly summary
+  const by={};for(const b of rows){const k=b.date.slice(0,7);(by[k]=by[k]||[]).push(b)}
+  const mrows=Object.keys(by).sort().map(k=>{const all=by[k],l=all.filter(b=>!isCancel(b)),v=l.reduce((a,b)=>a+(+b.total||0),0),g=l.reduce((a,b)=>a+(+b.guests||0),0),p=l.reduce((a,b)=>a+(+b.depositPaid||0),0);const[y,m]=k.split("-").map(Number);
+    return[`${MONTHS[m-1]} ${y}`,l.length,l.filter(isEvent).length,g,v,g?Math.round(v/g):0,p,v-p,all.length-l.length]});
+  const mcols=[{h:"חודש",w:16},{h:"הזמנות",w:9,t:"n"},{h:"אירועים",w:9,t:"n"},{h:"סועדים",w:9,t:"n"},{h:"שווי",w:13,t:"c"},{h:"ממוצע לסועד",w:12,t:"c"},{h:"מקדמות ששולמו",w:14,t:"c"},{h:"יתרה",w:13,t:"c"},{h:"בוטלו",w:8,t:"n"}];
+  return[{name:"הזמנות",cols,rows:data,totals:data.length?totals:null},{name:"סיכום חודשי",cols:mcols,rows:mrows}];
+}
+async function exportExcel(list,label){
+  if(!list.length){toast("אין הזמנות לייצוא");return}
+  let blob;try{blob=XLSX_W.build(bookingSheets(list,label))}catch(e){toast("יצירת הקובץ נכשלה");return}
+  await saveFile(`הזמנות MILA HOUSE – ${label}.xlsx`,blob);
+}
+/* ---------- file download (one place, so a hosting change only touches this) ---------- */
+function anchorDownload(filename,blob){try{const u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);toast("הקובץ ירד ✓")}catch(e){toast("ההורדה לא זמינה כאן")}}
+async function saveFile(filename,blob){anchorDownload(filename,blob)}
+/* ---------- full backup / restore (JSON) — moves all data between installations ---------- */
+const BACKUP_TAG="mila-house-bookings";
+async function exportBackup(){
+  const body={app:BACKUP_TAG,version:1,exportedAt:new Date().toISOString(),config:state.cfg,bookings:state.bookings.map(b=>clone(b))};
+  await saveFile(`גיבוי MILA HOUSE ${today()}.json`,new Blob([JSON.stringify(body,null,1)],{type:"application/json"}));
+}
+function parseBackup(text){
+  let j;try{j=JSON.parse(text)}catch(e){throw new Error("הקובץ לא קריא – בחרו קובץ גיבוי ‎.json‎")}
+  if(!j||j.app!==BACKUP_TAG||!Array.isArray(j.bookings))throw new Error("זה לא קובץ גיבוי של המערכת");
+  if(j.bookings.length>5000)throw new Error("הקובץ גדול מדי");
+  const list=[];for(const b of j.bookings){if(!b||typeof b!=="object")continue;const id=String(b.id||"").replace(/[^A-Za-z0-9_-]/g,"").slice(0,60);
+    if(!id||!/^\d{4}-\d{2}-\d{2}$/.test(String(b.date||"")))continue;const r=clone(b);r.id=id;list.push(r)}
+  const cfg=j.config&&typeof j.config==="object"&&Array.isArray(j.config.areas)?j.config:null;
+  return{list,cfg,exportedAt:j.exportedAt||""};
+}
+function askRestore(file){
+  const rd=new FileReader();rd.onload=()=>{let r;try{r=parseBackup(String(rd.result))}catch(e){toast(e.message);return}
+    if(!r.list.length&&!r.cfg){toast("אין בקובץ הזמנות לשחזור");return}
+    state.pendingRestore=r;const when=r.exportedAt?new Date(r.exportedAt).toLocaleString("he-IL",{dateStyle:"short",timeStyle:"short"}):"";
+    $("#modal").dataset.id="";
+    $("#modal").innerHTML=`<div class="scrim" data-act="close"><div class="sheet" role="dialog" aria-modal="true" aria-label="שחזור מגיבוי">
+     <div class="row"><h2>שחזור מגיבוי</h2><button class="x" data-act="close" aria-label="סגור">×</button></div>
+     <p style="margin:0">בקובץ ${r.list.length} הזמנות${r.cfg?" והגדרות מסעדה":""}${when?` (נשמר ב-${esc(when)})`:""}.</p>
+     <p class="note" style="margin:0">הזמנות שכבר קיימות עם אותו מזהה יוחלפו בגרסה שבקובץ. הזמנות אחרות שכבר במערכת יישארו כמו שהן.</p>
+     ${r.cfg?`<label class="check"><input type="checkbox" id="rs-cfg" checked><span class="grow">לשחזר גם את ההגדרות (אזורים, חבילות, מחירים)</span></label>`:""}
+     <div class="row"><button class="btn primary" data-act="do-restore">שחזר עכשיו</button><button class="btn" data-act="close">ביטול</button></div></div></div>`};
+  rd.onerror=()=>toast("לא ניתן לקרוא את הקובץ");rd.readAsText(file);
+}
+
+/* ================= RENDER ================= */
+const VIEWS={today:viewToday,new:viewNew,calendar:viewCalendar,list:viewList,settings:viewSettings};
+function render(){
+  const sy=window.scrollY,fid=document.activeElement&&document.activeElement.id;let sel=null;try{sel=fid&&[document.activeElement.selectionStart,document.activeElement.selectionEnd]}catch(e){}
+  $("#app").innerHTML=VIEWS[state.tab]();
+  document.querySelectorAll("#tabs button").forEach(b=>b.setAttribute("aria-current",b.dataset.tab===state.tab?"page":"false"));
+  renderSavebar();if(state.tab==="new")renderRepeat();
+  if(fid){const el=document.getElementById(fid);if(el){el.focus({preventScroll:true});try{if(sel&&sel[0]!=null)el.setSelectionRange(sel[0],sel[1])}catch(e){}}}
+  window.scrollTo(0,sy);
+  document.querySelectorAll(".tl-wrap").forEach(w=>{if(w.scrollWidth>w.clientWidth)w.scrollLeft=-(w.scrollWidth-w.clientWidth)*0.62});
+}
+function onData(){state.bookings.forEach(b=>{if(b.total==null)b.total=calc(b).total});
+  if(state.tab==="new")refreshNew();else if(state.tab==="settings"&&document.activeElement&&document.activeElement.closest&&document.activeElement.closest("#cfgForm")){}else render();
+  if($("#modal").dataset.id)openBooking($("#modal").dataset.id);
+}
+function go(tab){state.tab=tab;if(tab==="new"&&!state.draft.area)autoArea();try{history.replaceState(null,"","#"+tab)}catch(e){}closeModal();render();window.scrollTo(0,0)}
+
+/* ================= EVENTS ================= */
+document.addEventListener("click",async ev=>{
+  const t=ev.target.closest("button,[data-act]");if(!t)return;const d=state.draft;
+  if(t.dataset.tab){go(t.dataset.tab);return}
+  if(t.dataset.date){d.date=t.dataset.date;autoArea();saveDraft();render();return}
+  if(t.dataset.settime){d.time=t.dataset.settime;autoArea();saveDraft();render();return}
+  if(t.dataset.step){const k=t.dataset.step;d[k]=Math.max(k==="kids"?0:1,(+d[k]||0)+(+t.dataset.d1));if(k==="kids")d.kids=Math.min(d.kids,d.guests);$("#d-"+k).value=d[k];autoArea();saveDraft();refreshNew();return}
+  if(t.dataset.rstep){const k=t.dataset.rstep;d.req[k]=Math.max(0,(+d.req[k]||0)+(+t.dataset.d1));$("#r-"+k).value=d.req[k];saveDraft();refreshNew();return}
+  if(t.dataset.allergy){const s=new Set(d.req.allergyTags||[]);s.has(t.dataset.allergy)?s.delete(t.dataset.allergy):s.add(t.dataset.allergy);d.req.allergyTags=[...s];saveDraft();refreshNew();return}
+  if(t.dataset.seat){const s=new Set(d.req.seatingTags||[]);s.has(t.dataset.seat)?s.delete(t.dataset.seat):s.add(t.dataset.seat);d.req.seatingTags=[...s];saveDraft();refreshNew();return}
+  if(t.dataset.area){if(t.getAttribute("aria-disabled")==="true"){toast("האזור הזה לא פנוי בשעה שנבחרה");return}d.area=t.dataset.area;d.areaManual=true;saveDraft();refreshNew();return}
+  if(t.dataset.pkg){d.pkg=t.dataset.pkg;saveDraft();render();return}
+  if(t.dataset.dish){const id=t.dataset.dish;d.dishes[id]=Math.max(0,(d.dishes[id]||0)+(+t.dataset.d1));if(!d.dishes[id])delete d.dishes[id];saveDraft();$("#dishes").innerHTML=dishesHtml();refreshNew();return}
+  if(t.dataset.day){state.calDay=t.dataset.day;if(t.classList.contains("out"))state.calMonth=t.dataset.day.slice(0,7);render();return}
+  if(t.dataset.cal!==undefined){const k=+t.dataset.cal;if(!k){state.calMonth=today().slice(0,7);state.calDay=today()}else{const[y,m]=state.calMonth.split("-").map(Number);const x=new Date(y,m-1+k,1);state.calMonth=x.getFullYear()+"-"+pad(x.getMonth()+1)}render();return}
+  if(t.dataset.lf){state.listFilter=t.dataset.lf;render();return}
+  if(t.dataset.open){openBooking(t.dataset.open);return}
+  if(t.dataset.status){const id=$("#modal").dataset.id,b=state.bookings.find(x=>x.id===id);if(!b)return;try{await store.save({...b,status:t.dataset.status});toast("סטטוס: "+t.dataset.status)}catch(e){}return}
+  const act=t.dataset.act;if(!act)return;
+  if(act==="close"){if(ev.target===t||t.classList.contains("x"))closeModal();return}
+  if(act==="ask-del"){$("#delZone").innerHTML=`<div class="confirm"><span>למחוק את ההזמנה לצמיתות? (אפשר גם לסמן "בוטל")</span><button class="btn sm red" data-act="do-del">כן, מחק</button><button class="btn sm" data-act="cancel-del">חזור</button></div>`;return}
+  if(act==="cancel-del"){openBooking($("#modal").dataset.id);return}
+  if(act==="do-del"){const id=$("#modal").dataset.id;closeModal();try{await store.remove(id);toast("ההזמנה נמחקה")}catch(e){}return}
+  if(act==="edit"){const b=state.bookings.find(x=>x.id===$("#modal").dataset.id);if(!b)return;state.draft={...blankDraft(),...clone(b),req:{...blankDraft().req,...(b.req||{})},areaManual:true};saveDraft();go("new");return}
+  if(act==="copy-booking"){const b=state.bookings.find(x=>x.id===$("#modal").dataset.id);if(b)copyText(confirmText(b));return}
+  if(act==="copy-draft"){copyText(confirmText(state.draft));return}
+  if(act==="new-blank"){state.draft=blankDraft();saveDraft();render();return}
+  if(act==="new-on-day"){state.draft={...blankDraft(),date:state.calDay};autoArea();saveDraft();go("new");return}
+  if(act==="save"){const err=canSave();if(err){toast(err);return}const c=calc(d);const rec={...clone(d),total:c.total};delete rec.areaManual;delete rec.createdBy;if(!rec.id)delete rec.id;
+    const old=d.id&&state.bookings.find(b=>b.id===d.id);if(old){rec.createdAt=old.createdAt}
+    t.disabled=true;try{const id=await store.save(rec);toast(d.id?"ההזמנה עודכנה ביומן ✓":"ההזמנה נסגרה ונשמרה ביומן ✓");state.calDay=rec.date;state.calMonth=rec.date.slice(0,7);state.draft=blankDraft();saveDraft();go("calendar");setTimeout(()=>openBooking(id),50)}catch(e){t.disabled=false}return}
+  if(act==="cfg-reset"){try{await store.saveCfg(clone(DEFAULT_CFG));toast("ההגדרות הוחזרו")}catch(e){}render();return}
+  if(act==="suggest-cake"){d.req.cake=true;if(!d.extras.includes("x2"))d.extras=[...d.extras,"x2"];saveDraft();render();toast("סומן עוגה + נוספה לתוספות");return}
+  if(act==="help"){openHelp();return}
+  if(act==="export-list"){const lab={upcoming:"קרובות",events:"אירועים",pending:"ממתינות",past:"עבר",all:"הכול"}[state.listFilter]||"";
+    t.disabled=true;await exportExcel(state.listRes||[],lab+(state.q.trim()?` – ${state.q.trim()}`:"")+` ${shortDate(today()).replace("/","-")}`);t.disabled=false;return}
+  if(act==="export-month"){const[y,m]=state.calMonth.split("-").map(Number);t.disabled=true;await exportExcel(state.bookings.filter(b=>(b.date||"").startsWith(state.calMonth)),`${MONTHS[m-1]} ${y}`);t.disabled=false;return}
+  if(act==="logout"){store.logout();return}
+  if(act==="export-backup"){t.disabled=true;await exportBackup();t.disabled=false;return}
+  if(act==="do-restore"){const r=state.pendingRestore;if(!r)return;const withCfg=r.cfg&&$("#rs-cfg")&&$("#rs-cfg").checked;t.disabled=true;
+    try{await store.importAll(r.list,withCfg?r.cfg:null);state.pendingRestore=null;closeModal();toast(`שוחזרו ${r.list.length} הזמנות ✓`)}catch(e){t.disabled=false;toast("השחזור נכשל – נסו שוב")}return}
+  if(act==="export-all"){t.disabled=true;await exportExcel(state.bookings,`גיבוי מלא ${today()}`);t.disabled=false;return}
+});
+function openHelp(){lsSet("lucia.guideSeen",true);
+  $("#modal").dataset.id="";
+  $("#modal").innerHTML=`<div class="scrim" data-act="close"><div class="sheet" role="dialog" aria-modal="true" aria-label="מדריך שימוש">
+   <div class="row"><h2>איך עובדים עם האפליקציה</h2><button class="x" data-act="close" aria-label="סגור">×</button></div>
+   <div class="help-step"><i>1</i><div><b>לקוח מתקשר?</b><span>לוחצים "הזמנה חדשה" (הכפתור האדום), בוחרים תאריך, שעה ומספר סועדים. האפליקציה אומרת מיד אם יש מקום ובאיזה אזור.</span></div></div>
+   <div class="help-step"><i>2</i><div><b>בונים מחיר</b><span>בוחרים חבילה או "שולחן רגיל", מוסיפים תוספות או מנות — הסכום הסופי מתעדכן תמיד בצד (או למטה בטלפון).</span></div></div>
+   <div class="help-step"><i>3</i><div><b>בקשות מיוחדות</b><span>אלרגיות, צמחונים וסידורי ישיבה — לוחצים על הכפתורים המתאימים, לא צריך להקליד.</span></div></div>
+   <div class="help-step"><i>4</i><div><b>סוגרים</b><span>"סגור הזמנה ושמור ביומן" — זהו, זה נכנס ליומן המשותף וכל הצוות רואה את זה מיד.</span></div></div>
+   <div class="help-step"><i>5</i><div><b>יומן וחיפוש</b><span>בלשונית "יומן" רואים כל תאריך: כמה אנשים, כמה שווה, ומה המטבח צריך להכין. בלשונית "חיפוש" מוצאים הזמנה לפי שם או טלפון כשלקוח מתקשר לשנות.</span></div></div>
+   <div class="help-step"><i>6</i><div><b>ייצוא לאקסל</b><span>בחיפוש מורידים את הרשימה שמסוננת כרגע, ביומן את כל החודש, ובהגדרות גיבוי של כל ההזמנות. הקובץ כולל גם לשונית סיכום לפי חודש.</span></div></div>
+   <button class="btn primary lg" data-act="close">הבנתי, בואו נתחיל</button>
+  </div></div>`;
+}
+function autoArea(){const d=state.draft;const av=availability(d);const cur=av.find(a=>a.id===d.area);
+  if(cur&&cur.fits)return;if(d.areaManual&&cur&&cur.fits)return;
+  const fit=av.filter(a=>a.fits);if(!fit.length){if(!d.areaManual)d.area=null;return}
+  // prefer the smallest exclusive room for big groups, otherwise the area with most free seats
+  const big=+d.guests>=state.cfg.eventFrom&&fit.find(a=>a.exclusive);d.area=(big||fit.sort((a,b)=>b.free-a.free)[0]).id;d.areaManual=false}
+document.addEventListener("input",ev=>{
+  const el=ev.target,d=state.draft;
+  if(el.id==="q"){state.q=el.value;const pos=el.selectionStart;render();const q=$("#q");q.focus();q.setSelectionRange(pos,pos);return}
+  if(el.dataset.d){const k=el.dataset.d;let v=el.type==="checkbox"?el.checked:el.value;if(["guests","kids","dur","discount","depositPaid"].includes(k))v=+v||0;d[k]=v;
+    if(["date","time","dur","guests"].includes(k))autoArea();saveDraft();if(k==="date"||k==="occasion")render();else refreshNew();return}
+  if(el.dataset.r){const k=el.dataset.r;d.req[k]=el.type==="checkbox"?el.checked:(["veg","vegan","gf","baby"].includes(k)?+el.value||0:el.value);saveDraft();refreshNew();return}
+  if(el.dataset.extra){const s=new Set(d.extras);el.checked?s.add(el.dataset.extra):s.delete(el.dataset.extra);d.extras=[...s];saveDraft();refreshNew();return}
+});
+document.addEventListener("focusout",ev=>{
+  const el=ev.target,d=state.draft;if(!el.dataset||!el.dataset.d)return;const k=el.dataset.d;
+  const clamp={guests:[1,200],kids:[0,d.guests],discount:[0,50],depositPaid:[0,999999]}[k];if(!clamp)return;
+  const v=Math.max(clamp[0],Math.min(clamp[1],+el.value||clamp[0]));if(v!==d[k]||el.value===""){d[k]=v;saveDraft();refreshNew()}
+});
+document.addEventListener("submit",async ev=>{ev.preventDefault();const f=ev.target;if(f.id!=="cfgForm")return;const fd=new FormData(f),c=clone(state.cfg);
+  c.areas=c.areas.map((a,i)=>({...a,name:fd.get("a-n-"+i)||a.name,cap:Math.max(1,+fd.get("a-c-"+i)||a.cap),exclusive:fd.get("a-x-"+i)==="on"}));
+  c.packages=c.packages.map((p,i)=>({...p,name:fd.get("p-n-"+i)||p.name,pp:+fd.get("p-p-"+i)||0}));
+  c.extras=c.extras.map((x,i)=>({...x,name:fd.get("e-n-"+i)||x.name,price:+fd.get("e-p-"+i)||0}));
+  for(const k of["dur","estSpend","kidsPrice","service","depositPct","eventFrom"])c[k]=+fd.get(k)||0;
+  try{await store.saveCfg(c);state.cfg={...clone(DEFAULT_CFG),...c};toast("ההגדרות נשמרו לכל הצוות ✓");render()}catch(e){}});
+document.addEventListener("change",ev=>{if(ev.target.id==="restoreFile"){const f=ev.target.files&&ev.target.files[0];ev.target.value="";if(f)askRestore(f)}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("#modal").innerHTML)closeModal()});
+
+const h=(location.hash||"").slice(1);if(VIEWS[h])state.tab=h;
+document.getElementById("loginForm").addEventListener("submit",ev=>{ev.preventDefault();ev.stopPropagation();
+  if($("#lg-btn").dataset.mode==="retry"){location.reload();return}
+  const em=$("#lg-email").value,pw=$("#lg-pass").value;if(!em.trim()||!pw){$("#lg-err").textContent="הקלידו אימייל וסיסמה";return}store.login(em,pw)});
+render();store.init();
+if(!FB_READY&&!lsGet("lucia.guideSeen",false))setTimeout(openHelp,500);
+if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+</script>
+
+</body></html>
