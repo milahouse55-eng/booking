@@ -14,7 +14,7 @@
 <link rel="icon" type="image/png" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Heebo:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap">
 <style>html,body{margin:0;padding:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <style>
 /* Layout: staff console — sticky header, tab bar (bottom on phone / top on desktop); booking screen = form column + sticky price summary */
@@ -26,8 +26,8 @@
   --ok:#4E7558; --ok-bg:#E6EFE6; --warn:#9A6614; --warn-bg:#F7EBD6; --bad:#A8423A; --bad-bg:#F6E2DF;
   --event:#7B5468; --table:#5A4F4D;
   --shadow:0 10px 30px rgba(42,36,34,.13);
-  --display:"Frank Ruhl Libre","David Libre",Georgia,serif;
-  --body:"Heebo","Assistant",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  --display:"Rubik","Assistant",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  --body:"Rubik","Assistant",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
   --r:14px;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
@@ -81,9 +81,9 @@ nav.tabs button.cta{color:var(--pomodoro);font-weight:700}
 main{padding-block:16px 24px}
 .view{display:grid;gap:16px}
 h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.2}
-h1{font-size:clamp(24px,4vw,34px);font-weight:700;letter-spacing:.2px}
-h2{font-size:21px;font-weight:700}
-h3{font-size:17px;font-weight:700}
+h1{font-size:clamp(26px,4vw,36px);font-weight:600;letter-spacing:0}
+h2{font-size:20px;font-weight:600;letter-spacing:0}
+h3{font-size:16px;font-weight:600;font-family:var(--body)}
 .lede{color:var(--muted);margin:2px 0 0;max-width:66ch}
 .eyebrow{font-size:12px;letter-spacing:1.2px;color:var(--pomodoro);font-weight:600}
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:12px;align-content:start;min-width:0}
@@ -107,7 +107,7 @@ h3{font-size:17px;font-weight:700}
 @media (min-width:720px){.stats{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:11px 14px}
 .stat .k{font-size:12px;color:var(--muted)}
-.stat .v{font-family:var(--display);font-size:26px;font-weight:700;line-height:1.15;font-variant-numeric:tabular-nums}
+.stat .v{font-family:var(--display);font-size:28px;font-weight:600;line-height:1.15;font-variant-numeric:tabular-nums}
 .stat .s{font-size:12px;color:var(--muted)}
 
 /* forms */
@@ -182,7 +182,7 @@ textarea.inp{min-height:64px;resize:vertical}
 .verdict svg{flex:none}
 
 /* summary paper */
-.paper{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;align-self:start;position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px)}
+.paper{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;align-self:start;position:sticky;top:calc(env(safe-area-inset-top,0px) + 152px)}
 .paper .ph{background:var(--fg);color:var(--bg);padding:12px 16px;display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
 .paper .ph h3{color:inherit}
 .paper .ph small{opacity:.75}
@@ -299,10 +299,162 @@ details.fold>div{padding:0 12px 12px;display:grid;gap:10px}
 .filters button{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:5px 12px;font-size:13px}
 .filters button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 .settings-row{display:grid;grid-template-columns:minmax(0,1.4fr) 90px auto;gap:8px;align-items:center}
+/* ---- v8: phone-call booking, today dashboard, splash ---- */
+.hello{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap}
+.hello h1{font-size:clamp(30px,4.6vw,42px)}
+.cta-new{padding:14px 22px;font-size:17px;border-radius:14px;box-shadow:0 8px 22px color-mix(in srgb,var(--pomodoro) 28%,transparent)}
+.alerts{display:grid;gap:6px}
+.alert{display:flex;align-items:center;gap:12px;text-align:right;width:100%;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 12px}
+.alert .dot{width:10px;height:10px;border-radius:50%;flex:none;background:var(--warn)}
+.alert.bad{border-color:var(--bad);background:var(--bad-bg)}
+.alert.bad .dot{background:var(--bad)}
+.alert .grow{flex:1;min-width:0;display:grid}
+.alert small{color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+.alert .what{font-size:13px;font-weight:600;color:var(--warn);text-align:left}
+.alert.bad .what{color:var(--bad)}
+@media (max-width:560px){.alert{flex-wrap:wrap}.alert .what{width:100%;text-align:right;padding-inline-start:22px}}
+.panel-fold{background:var(--surface)}
+.modes{display:inline-flex;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface)}
+.modes button{border:0;background:transparent;padding:10px 16px;font-weight:600;font-size:15px;color:var(--muted)}
+.modes button[aria-pressed="true"]{background:var(--basil);color:var(--basil-ink)}
+.verdictbar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 66px);z-index:20;background:var(--bg);padding:6px 0;margin:-6px 0}
+.verdict.big{padding:12px 16px;border-radius:14px;flex-wrap:wrap;box-shadow:var(--shadow)}
+.verdict.big>div{display:grid;gap:1px}
+.verdict.big b{font-size:19px;font-family:var(--display);font-weight:600;line-height:1.2}
+.verdict.big span{font-size:14px;font-weight:500;opacity:.92}
+.verdict.big>.alts{display:flex;gap:6px;flex-wrap:wrap;width:100%}
+.verdict .alts button{border:1px solid currentColor;background:var(--surface);color:var(--fg);border-radius:10px;padding:6px 12px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.2}
+.verdict .alts small{display:block;font-weight:400;font-size:11px;color:var(--muted)}
+.callcard{gap:16px}
+.chip-date{flex:none;display:flex;align-items:center;border:1px dashed var(--line);border-radius:10px;padding:0 6px;background:var(--surface)}
+.chip-date input{border:0;background:transparent;font-size:13px;padding:6px 2px;color:var(--fg);width:132px}
+.guests{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.stepper.big{width:184px;flex:none}
+.stepper.big button{width:56px;height:52px;font-size:24px}
+.stepper.big input{font-size:24px}
+.qg{display:flex;gap:6px;flex-wrap:wrap}
+.qg button{min-width:44px;height:44px;border:1px solid var(--line);background:var(--surface);border-radius:10px;font-weight:700;font-variant-numeric:tabular-nums}
+.qg button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:6px}
+.slot{border:1.5px solid var(--line);background:var(--surface);border-radius:11px;padding:7px 4px;display:grid;line-height:1.2}
+.slot b{font-size:15.5px;font-variant-numeric:tabular-nums}
+.slot small{font-size:11px;color:var(--muted);min-height:13px}
+.slot.ok{border-color:color-mix(in srgb,var(--ok) 45%,var(--line));background:var(--ok-bg)}
+.slot.ok small{color:var(--ok)}
+.slot.tight{border-color:color-mix(in srgb,var(--warn) 45%,var(--line));background:var(--warn-bg)}
+.slot.tight small{color:var(--warn)}
+.slot.full{opacity:.5;background:var(--surface-2)}
+.slot.full b{text-decoration:line-through;text-decoration-thickness:1px}
+.slot[aria-pressed="true"]{background:var(--basil);border-color:var(--basil);color:var(--basil-ink);opacity:1}
+.slot[aria-pressed="true"] small{color:inherit;opacity:.85}
+.slot[aria-pressed="true"] b{text-decoration:none}
+.inp.big{font-size:18px;padding:12px 13px}
+.fgrid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:700px){.fgrid.four{grid-template-columns:1fr 1fr}}
+.cust{border:1px solid var(--basil);background:var(--surface-2);border-radius:12px;padding:10px 12px;display:grid;gap:8px;justify-items:start}
+.cust .ctop{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.sugg{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.sugg button{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:6px 11px;text-align:right;line-height:1.25}
+.sugg small{display:block;color:var(--muted);font-size:12px}
+.st-pick button[aria-pressed="true"]{background:var(--basil);border-color:var(--basil);color:var(--basil-ink)}
+details.fold-panel{padding:0;gap:0}
+details.fold-panel>summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+details.fold-panel>summary::-webkit-details-marker{display:none}
+details.fold-panel>summary::after{content:"＋";margin-inline-start:auto;color:var(--muted)}
+details.fold-panel[open]>summary::after{content:"－"}
+.fold-body{padding:0 16px 16px;display:grid;gap:12px}
+.say{background:var(--surface-2);border-inline-start:3px solid var(--parm);border-radius:8px;padding:9px 12px}
+.say small{font-size:11px;letter-spacing:.6px;color:var(--muted);font-weight:700}
+.say p{margin:2px 0 0;font-size:15px;line-height:1.55}
+.btn.wa{border-color:#1F8B4C;color:#1F8B4C;text-decoration:none}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.wa{border-color:#5FC88A;color:#5FC88A}}
+:root[data-theme="dark"] .btn.wa{border-color:#5FC88A;color:#5FC88A}
+.st.sh{background:color-mix(in srgb,var(--pomodoro) 16%,transparent);color:var(--pomodoro)}
+.settings-row.two{grid-template-columns:minmax(0,1fr) 150px}
+.cap{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);white-space:nowrap}
+.cap .inp{min-width:0}
+.pkg-row{display:grid;grid-template-columns:minmax(0,1fr) 150px 36px;gap:8px;align-items:center;padding-bottom:10px;border-bottom:1px dashed var(--line)}
+.pkg-row .desc{grid-column:1/-1;font-size:13px}
+.extra-row{display:grid;grid-template-columns:minmax(0,1fr) 90px 110px 36px;gap:8px;align-items:center}
+@media (max-width:560px){.extra-row{grid-template-columns:minmax(0,1fr) 80px 36px}.extra-row select{grid-column:1/3}.pkg-row{grid-template-columns:minmax(0,1fr) 120px 36px}}
+.icon-btn{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;color:var(--muted)}
+.icon-btn:hover{color:var(--bad);border-color:var(--bad)}
+.splash{position:fixed;inset:0;z-index:120;background:var(--head);display:grid;place-items:center;transition:opacity .6s ease,visibility .6s}
+.splash.out{opacity:0;visibility:hidden}
+.splash .in{display:grid;justify-items:center;gap:18px}
+.splash img{height:104px;width:auto;opacity:0;transform:translateY(6px) scale(.98)}
+.splash i{display:block;height:1px;width:0;background:var(--parm)}
+@media (prefers-reduced-motion:no-preference){.splash img{animation:spIn .9s cubic-bezier(.2,.7,.2,1) .1s forwards}.splash i{animation:spLine .9s ease-out .35s forwards}
+ @keyframes spIn{to{opacity:1;transform:none}}@keyframes spLine{to{width:150px}}}
+@media (prefers-reduced-motion:reduce){.splash img{opacity:1;transform:none}.splash i{width:150px}}
+/* ---- v9: allergies, reminders, hours ---- */
+.rq.al.lv-sens{background:#FBF3D0;color:#7A5B00}
+.rq.al.lv-allergy{background:var(--warn-bg);color:var(--warn)}
+.rq.al.lv-severe{background:var(--bad);color:#fff}
+.bk.severe{border-color:var(--bad);box-shadow:inset 3px 0 0 var(--bad)}
+.severe-banner{display:grid;gap:6px;background:var(--bad);color:#fff;border-radius:14px;padding:10px 14px}
+.severe-banner button{background:transparent;border:0;color:inherit;text-align:right;font-size:15px;padding:2px 0}
+.allergy-box{border-width:1.5px}
+.allergy-box.ask{border-color:var(--warn)}
+.allergy-box.has{border-color:var(--bad)}
+.allergy-box .chipgrid button{font-size:14px;padding:8px 14px}
+.allergy-box .none-btn{border-color:var(--ok);color:var(--ok)}
+.allergy-box .none-btn[aria-pressed="true"]{background:var(--ok);color:var(--surface);border-color:var(--ok)}
+.levels{display:flex;gap:6px;flex-wrap:wrap}
+.levels button{border:1.5px solid var(--line);background:var(--surface);border-radius:11px;padding:9px 14px;font-weight:600;font-size:14.5px}
+.levels button.lv-sens[aria-pressed="true"]{background:#FBF3D0;border-color:#C9A227;color:#7A5B00}
+.levels button.lv-allergy[aria-pressed="true"]{background:var(--warn-bg);border-color:var(--warn);color:var(--warn)}
+.levels button.lv-severe[aria-pressed="true"]{background:var(--bad);border-color:var(--bad);color:#fff}
+.cust-warn{background:var(--bad-bg);color:var(--bad);border-radius:8px;padding:6px 10px;font-size:13.5px;font-weight:600}
+.cust-al{display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-radius:10px;padding:8px 10px;background:var(--warn-bg);color:var(--warn);font-size:14px;width:100%}
+.cust-al.lv-severe{background:var(--bad);color:#fff}
+.cust-al.lv-severe .btn{background:#fff;color:var(--bad);border-color:#fff}
+.cust-al span{flex:1;min-width:200px}
+.brief-list{display:grid;gap:6px}
+.brief-row{display:grid;grid-template-columns:110px 56px minmax(0,1fr);gap:10px;align-items:center;text-align:right;border:1px solid var(--line);border-radius:12px;padding:9px 12px;background:var(--surface)}
+.brief-row .lvl{font-size:13px;font-weight:700}
+.brief-row .tm{font-weight:700;font-variant-numeric:tabular-nums}
+.brief-row .who{display:grid;min-width:0}
+.brief-row .who small{color:var(--muted);font-size:12.5px}
+.brief-row.lv-severe{border-color:var(--bad);background:var(--bad-bg)}
+.brief-row.lv-severe .lvl{color:var(--bad)}
+.brief-row.lv-allergy .lvl{color:var(--warn)}
+@media (max-width:560px){.brief-row{grid-template-columns:auto 1fr}.brief-row .who{grid-column:1/-1}}
+.remind{display:grid;gap:6px}
+.rm-row{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:8px 12px;background:var(--surface)}
+.rm-row .tm{font-weight:700;font-variant-numeric:tabular-nums;min-width:46px}
+.rm-row .grow{flex:1;min-width:0;display:grid}
+.rm-row small{color:var(--muted);font-size:12px}
+.rm-row.done{opacity:.7}
+.rm-row .sent{color:var(--ok);font-weight:700;font-size:13px}
+.chips button.closed{opacity:.55;border-style:dashed}
+.chips button.closed small{color:var(--bad)}
+.check.buyout{margin-top:8px}
+.hours-tbl{display:grid;gap:6px}
+.hours-row{display:grid;grid-template-columns:62px 80px minmax(0,1fr) auto minmax(0,1fr);gap:8px;align-items:center}
+.hours-row.off .inp{opacity:.4}
+.check.sm{padding:6px 8px;font-size:13px}
+.cd-list{display:grid;gap:4px}
+.cd-row{display:flex;align-items:center;gap:10px;border-bottom:1px dashed var(--line);padding:4px 0}
+.cd-add{display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:8px;align-items:center}
+@media (max-width:560px){.hours-row{grid-template-columns:52px 72px 1fr auto 1fr}.cd-add{grid-template-columns:1fr auto}.cd-add .inp:first-child{grid-column:1/-1}}
+.nudges{position:fixed;z-index:70;top:calc(env(safe-area-inset-top,0px) + 74px);left:max(12px,env(safe-area-inset-left,0px));width:min(380px,calc(100% - 24px));display:grid;gap:8px;pointer-events:none}
+.nudge{pointer-events:auto;display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-inline-start:4px solid var(--pomodoro);border-radius:12px;padding:10px 10px 10px 12px;box-shadow:var(--shadow);font-size:14px}
+.nudge.bad{border-inline-start-color:var(--bad)}.nudge.warn{border-inline-start-color:var(--warn)}
+.nudge .grow{flex:1;min-width:0}
+.nudge .x{width:30px;height:30px;font-size:16px;margin:0}
+@media (prefers-reduced-motion:no-preference){.nudge{animation:up .25s ease-out}}
+@media print{
+  header.top,nav.tabs,#savebar,#toast,#nudges,#splash,#modal,.noprint,#gate{display:none!important}
+  body{background:#fff;padding:0}
+  body.print-brief #app .view>*:not(.brief){display:none!important}
+  .brief{border:0}
+  .brief-row{break-inside:avoid}
+}
 .gate{position:fixed;inset:0;z-index:100;background:var(--head);color:var(--head-ink);display:grid;place-items:center;padding:max(24px,env(safe-area-inset-top,0px)) 20px max(24px,env(safe-area-inset-bottom,0px));overflow:auto}
 .gate-card{width:min(380px,100%);display:grid;gap:14px}
 .gate-card img{height:84px;width:auto;justify-self:center;margin-bottom:6px}
-.gate-card h1{text-align:center;font-weight:500;font-size:24px;color:inherit}
+.gate-card h1{text-align:center;font-weight:500;font-size:22px;color:inherit}
 .gate-card .f{color:inherit;opacity:.92}
 .gate-card .inp{background:#FBF8F5;color:#2A2422;border-color:transparent;font-size:16px;padding:12px 13px}
 .gate-card .btn{justify-content:center;width:100%}
@@ -340,6 +492,8 @@ details.fold>div{padding:0 12px 12px;display:grid;gap:10px}
 <main class="wrap" id="app"></main>
 <div id="savebar" class="savebar" hidden></div>
 <div id="modal"></div>
+<div id="splash" class="splash" aria-hidden="true"><div class="in"><img alt=""><i></i></div></div>
+<div id="nudges" class="nudges" aria-live="polite"></div>
 <div id="toast" class="toast" hidden></div>
 <div id="gate" class="gate" hidden>
   <form class="gate-card" id="loginForm" autocomplete="on" novalidate>
@@ -356,31 +510,34 @@ details.fold>div{padding:0 12px 12px;display:grid;gap:10px}
 </div>
 
 <script>
-/* ================= DEFAULT CONFIG (demo prices) ================= */
-const DEFAULT_CFG={
-  areas:[{id:"hall",name:"אולם ראשי",cap:60,exclusive:false},{id:"terrace",name:"מרפסת",cap:30,exclusive:false},{id:"private",name:"חדר פרטי",cap:40,exclusive:true},{id:"bar",name:"בר",cap:12,exclusive:false}],
-  dur:150, service:12, depositPct:30, estSpend:160, kidsPrice:69, eventFrom:12,
-  packages:[{id:"p1",name:"ערב פסטה",pp:149,desc:"אנטיפסטי לשולחן, 2 פסטות, קינוח"},{id:"p2",name:"טוסקנה קלאסי",pp:219,desc:"אנטיפסטי, פסטה/פיצה, עיקרית, קינוח, שתייה קלה"},{id:"p3",name:"גראן פסטה",pp:289,desc:"5 מנות, יין הבית, אספרסו ולימונצ'לו"}],
-  extras:[{id:"x1",name:"יין ופרוסקו חופשי",unit:"pp",price:65},{id:"x2",name:"עוגת אירוע",unit:"flat",price:350},{id:"x3",name:"סגירת חדר פרטי",unit:"flat",price:1200},{id:"x4",name:"עיצוב שולחנות ופרחים",unit:"flat",price:900},{id:"x5",name:"נגן אקורדיון / DJ",unit:"flat",price:1800},{id:"x6",name:"מלצר צמוד נוסף",unit:"flat",price:450},{id:"x7",name:"תפריט מודפס עם שם האירוע",unit:"flat",price:180},{id:"x8",name:"דמי חליצה (יין מבחוץ)",unit:"pp",price:25}]
+/* ================= DEFAULT CONFIG — every value here is editable in Settings ================= */
+const CFG_V=2;
+const DEFAULT_CFG={v:CFG_V,
+  areas:[{id:"inside",name:"במסעדה",cap:60,exclusive:false},{id:"outside",name:"בחוץ",cap:30,exclusive:false}],
+  dur:150, service:12, depositPct:30, estSpend:160, kidsPrice:69, eventFrom:12, holdHours:48, remindMins:60,
+  hours:[0,1,2,3,4,5,6].map(()=>({closed:false,open:"12:00",close:"23:00"})), closedDates:[],
+  packages:[{id:"p1",name:"חבילה בסיסית",pp:159,desc:""},{id:"p2",name:"חבילה מורחבת",pp:219,desc:""},{id:"p3",name:"חבילת פרימיום",pp:289,desc:""}],
+  extras:[{id:"x1",name:"שתייה חופשית",unit:"pp",price:65},{id:"x2",name:"עוגת אירוע",unit:"flat",price:350},{id:"x4",name:"עיצוב שולחנות ופרחים",unit:"flat",price:900},{id:"x5",name:"DJ / מוזיקה",unit:"flat",price:1800},{id:"x6",name:"מלצר צמוד",unit:"flat",price:450},{id:"x7",name:"תפריט מודפס עם שם האירוע",unit:"flat",price:180},{id:"x8",name:"דמי חליצה (יין מבחוץ)",unit:"pp",price:25}]
 };
-const MENU=[
- {id:"m1",cat:"אנטיפסטי",art:"bread",name:"פוקאצ'ה מהטאבון",price:29},{id:"m2",cat:"אנטיפסטי",art:"bruschetta",name:"ברוסקטה עגבניות",price:38},{id:"m3",cat:"אנטיפסטי",art:"burrata",name:"בורטה פוליה",price:64},{id:"m4",cat:"אנטיפסטי",art:"carpaccio",name:"קרפצ'ו בקר",price:58},{id:"m5",cat:"אנטיפסטי",art:"arancini",name:"ארנצ'יני",price:42},
- {id:"m6",cat:"פסטה",art:"pasta",name:"ספגטי קרבונרה",price:72},{id:"m7",cat:"פסטה",art:"pastaRed",name:"פפרדלה ראגו",price:84},{id:"m8",cat:"פסטה",art:"gnocchi",name:"ניוקי פומודורו",price:76},{id:"m9",cat:"פסטה",art:"lasagna",name:"לזניה של נונה",price:79},{id:"m10",cat:"פסטה",art:"ravioli",name:"רביולי ריקוטה",price:74},{id:"m11",cat:"פסטה",art:"pastaSea",name:"לינגוויני פירות ים",price:96},
- {id:"m12",cat:"פיצה",art:"pizza",name:"מרגריטה",price:62},{id:"m13",cat:"פיצה",art:"pizzaHot",name:"דיאבולה",price:74},{id:"m14",cat:"פיצה",art:"pizzaWhite",name:"ארבע גבינות",price:78},{id:"m15",cat:"פיצה",art:"pizzaMush",name:"פטריות וכמהין",price:86},
- {id:"m16",cat:"עיקריות",art:"risotto",name:"ריזוטו פטריות",price:82},{id:"m17",cat:"עיקריות",art:"steak",name:"טליאטה",price:148},{id:"m18",cat:"עיקריות",art:"fish",name:"פילה לברק",price:118},{id:"m19",cat:"עיקריות",art:"osso",name:"אוסובוקו",price:138},
- {id:"m20",cat:"קינוחים",art:"tiramisu",name:"טירמיסו",price:44},{id:"m21",cat:"קינוחים",art:"pannacotta",name:"פנה קוטה",price:38},{id:"m22",cat:"קינוחים",art:"cannoli",name:"קנולי",price:36},{id:"m23",cat:"קינוחים",art:"gelato",name:"ג'לטו",price:32},
- {id:"m24",cat:"שתייה",art:"spritz",name:"אפרול שפריץ",price:46},{id:"m25",cat:"שתייה",art:"wine",name:"בקבוק קיאנטי",price:180},{id:"m26",cat:"שתייה",art:"prosecco",name:"בקבוק פרוסקו",price:160},{id:"m27",cat:"שתייה",art:"limoncello",name:"לימונצ'לו",price:24}];
-const MENU_BY_ID=Object.fromEntries(MENU.map(m=>[m.id,m]));
-const STATUSES=["ממתין לאישור","מאושר","מקדמה שולמה","הגיעו","בוטל"];
+// Stored settings from an older version (demo areas/packages) are replaced by the current defaults.
+function mergeCfg(s){const d=clone(DEFAULT_CFG);if(!s||typeof s!=="object")return d;const o={...d,...s};
+  if(s.v!==CFG_V){o.areas=d.areas;o.packages=d.packages;o.extras=d.extras;o.v=CFG_V}
+  if(!Array.isArray(o.areas)||!o.areas.length)o.areas=d.areas;if(!Array.isArray(o.packages))o.packages=d.packages;if(!Array.isArray(o.extras))o.extras=d.extras;
+  if(!(+o.holdHours>0))o.holdHours=d.holdHours;
+  if(!Array.isArray(o.hours)||o.hours.length!==7)o.hours=d.hours;if(!Array.isArray(o.closedDates))o.closedDates=[];return o}
+const MENU=[];const MENU_BY_ID={};
+const STATUSES=["ממתין לאישור","שמור עד מקדמה","מאושר","מקדמה שולמה","הגיעו","לא הגיעו","בוטל"];
+const HOLD="שמור עד מקדמה",NOSHOW="לא הגיעו";
+const ST_CLASS={"ממתין לאישור":"s0","שמור עד מקדמה":"sh","מאושר":"s1","מקדמה שולמה":"s2","הגיעו":"s3","לא הגיעו":"s4","בוטל":"s4"};
+const LEVELS={sens:{l:"רגישות",i:"🟡"},allergy:{l:"אלרגיה",i:"🟠"},severe:{l:"מסכן חיים",i:"🔴"}};
+const LEVEL_RANK={sens:1,allergy:2,severe:3};
 const OCCASIONS=["","יום הולדת","יום נישואין","אירוע חברה","מסיבת רווקות","אירוסין","בר/בת מצווה","ארוחה עסקית","ברית/בריתה","אחר"];
 const ALLERGENS=["גלוטן","בוטנים","אגוזי עץ","שומשום / טחינה","חלב","ביצים","דגים","רכיכות / פירות ים","סויה","סלרי"];
-const SEATING_PRESETS=["ליד החלון","שולחן עגול","שולחן ארוך","פינה שקטה","רחוק מהמטבח","קרוב ליציאה","בחוץ (מרפסת)","בפנים"];
+const SEATING_PRESETS=["ליד החלון","שולחן עגול","שולחן ארוך","פינה שקטה","רחוק מהמטבח","קרוב ליציאה"];
 const CAKE_OCCASIONS=new Set(["יום הולדת","בר/בת מצווה","אירוסין","יום נישואין"]);
 function areaIconPath(id){
-  return({hall:'<path d="M8 2v7a2 2 0 1 1-4 0V2M6 9v13M16 2c-2.5 0-4 2.5-4 6 0 2.5 1.5 4 4 4.5V22"/>',
-   terrace:'<circle cx="12" cy="13" r="4"/><path d="M12 3v2M4.5 7.5l1.4 1.4M19.5 7.5l-1.4 1.4M2 15h2M20 15h2M8 21h8"/>',
-   private:'<rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="15.5" cy="12" r="1.2" fill="currentColor"/>',
-   bar:'<path d="M4 4h16l-7 8.5V19h3M9 19h6M13 12.5 4 4"/>'}[id])||'<circle cx="12" cy="12" r="3.5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/>';
+  return({inside:'<path d="M8 2v7a2 2 0 1 1-4 0V2M6 9v13M16 2c-2.5 0-4 2.5-4 6 0 2.5 1.5 4 4 4.5V22"/>',
+   outside:'<circle cx="12" cy="13" r="4"/><path d="M12 3v2M4.5 7.5l1.4 1.4M19.5 7.5l-1.4 1.4M2 15h2M20 15h2M8 21h8"/>'}[id])||'<circle cx="12" cy="12" r="3.5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/>';
 }
 const areaIcon=id=>`<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${areaIconPath(id)}</svg>`;
 
@@ -404,59 +561,18 @@ const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
 function toast(msg){const t=$("#toast");t.textContent=msg;t.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(()=>t.hidden=true,2600)}
 function lsGet(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
 function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
-const stClass=s=>"s"+Math.max(0,STATUSES.indexOf(s));
+const stClass=s=>ST_CLASS[s]||"s0";
 const isCancel=b=>b.status==="בוטל";
 const clone=o=>JSON.parse(JSON.stringify(o));
 
-/* ================= FOOD ART (illustration, not photos) ================= */
-function art(kind,id){
-  const bg={bread:"#E9D8B4",bruschetta:"#F1D9C9",burrata:"#DCE7D2",carpaccio:"#F2D6D3",arancini:"#F2E2C0",pasta:"#F3E6C2",pastaRed:"#F1D3C8",gnocchi:"#EFDACD",lasagna:"#F2DCC6",ravioli:"#E6E9D3",pastaSea:"#D7E5E8",pizza:"#E7DDC9",pizzaHot:"#EDD5C9",pizzaWhite:"#ECE6D6",pizzaMush:"#E1DCCB",risotto:"#E8E1CE",steak:"#E6D3CB",fish:"#D6E3E6",osso:"#E8D9C9",tiramisu:"#E8D9C8",pannacotta:"#F1DDE1",cannoli:"#EFE3CB",gelato:"#E2EBD9",spritz:"#F6DCC8",wine:"#E9D3D9",prosecco:"#EEE9CF",limoncello:"#F1EEC4"}[kind]||"#EEE";
-  let n=id.length*97+id.charCodeAt(id.length-1)*13;const R=()=>{n=(n*9301+49297)%233280;return n/233280};
-  let s=`<svg viewBox="0 0 320 240" aria-hidden="true"><rect width="320" height="240" fill="${bg}"/><g opacity=".16">${[0,1,2,3,4,5,6,7].map(i=>`<rect x="${i*44}" width="18" height="240" fill="#C2352B"/>`).join("")}</g>`;
-  const plate=`<ellipse cx="160" cy="128" rx="112" ry="78" fill="#000" opacity=".08"/><ellipse cx="160" cy="120" rx="108" ry="74" fill="#FAFAF6"/><ellipse cx="160" cy="120" rx="86" ry="58" fill="#F0EFE8"/>`;
-  const leaf=(x,y,r)=>`<ellipse cx="${x}" cy="${y}" rx="11" ry="5.5" fill="#3E8A47" transform="rotate(${r} ${x} ${y})"/>`;
-  const pz=(sa,ch)=>`<ellipse cx="160" cy="120" rx="112" ry="76" fill="#C98A45"/><ellipse cx="160" cy="118" rx="96" ry="64" fill="${sa}"/>`+Array.from({length:9},()=>`<ellipse cx="${100+R()*120}" cy="${84+R()*66}" rx="${14+R()*8}" ry="${8+R()*4}" fill="${ch}"/>`).join("");
-  const nd=c=>{let o=plate;for(let i=0;i<16;i++)o+=`<path d="M${100+R()*40} ${96+R()*36} q ${34+R()*30} ${-30+R()*20} ${70+R()*30} ${R()*20}" stroke="${c}" stroke-width="6" fill="none" stroke-linecap="round"/>`;return o};
-  const glass=c=>`<path d="M124 40 h72 q0 70 -36 82 q-36 -12 -36 -82z" fill="#fff" opacity=".6"/><path d="M128 70 h64 q-4 40 -32 48 q-28 -8 -32 -48z" fill="${c}"/><rect x="156" y="120" width="8" height="70" fill="#fff" opacity=".85"/><ellipse cx="160" cy="194" rx="30" ry="7" fill="#fff" opacity=".9"/>`;
-  const S={
-   pizza:()=>pz("#C8372D","#F7F1DE")+leaf(140,100,20)+leaf(186,128,-30)+leaf(162,86,60),
-   pizzaHot:()=>pz("#C8372D","#F7F1DE")+Array.from({length:8},()=>`<circle cx="${105+R()*110}" cy="${86+R()*62}" r="10" fill="#8E2219"/>`).join(""),
-   pizzaWhite:()=>pz("#F2E4BE","#FFF8E2")+Array.from({length:6},()=>`<circle cx="${110+R()*100}" cy="${88+R()*56}" r="8" fill="#9DB2A3"/>`).join(""),
-   pizzaMush:()=>pz("#EFE0BB","#FFF8E2")+Array.from({length:7},()=>{const x=105+R()*110,y=88+R()*56;return`<path d="M${x-11} ${y} a11 8 0 0 1 22 0z" fill="#7A5A3C"/>`}).join(""),
-   pasta:()=>nd("#F2CF6B")+`<circle cx="160" cy="112" r="10" fill="#F2A900"/>`,
-   pastaRed:()=>nd("#EBC064")+`<ellipse cx="160" cy="114" rx="40" ry="22" fill="#9B3A24"/>`+leaf(172,104,10),
-   pastaSea:()=>nd("#F0CE70")+[0,1,2,3].map(i=>`<path d="M${118+i*26} ${110+(i%2)*16} a12 12 0 1 1 14 9" stroke="#F08A5D" stroke-width="8" fill="none" stroke-linecap="round"/>`).join(""),
-   gnocchi:()=>plate+`<ellipse cx="160" cy="120" rx="70" ry="42" fill="#C8372D"/>`+Array.from({length:12},()=>`<ellipse cx="${112+R()*96}" cy="${100+R()*42}" rx="12" ry="8" fill="#F2D9A0"/>`).join("")+`<circle cx="160" cy="116" r="18" fill="#FBF6EA"/>`,
-   lasagna:()=>plate+`<path d="M104 106 l104 -18 l20 34 l-104 20z" fill="#E7B04C"/><path d="M104 106 v20 l20 34 v-18z" fill="#C46A35"/><path d="M124 142 l104 -20 v20 l-104 20z" fill="#B5542E"/>`,
-   ravioli:()=>plate+Array.from({length:6},(v,i)=>{const x=116+(i%3)*44,y=102+Math.floor(i/3)*34;return`<rect x="${x-16}" y="${y-13}" width="32" height="26" rx="5" fill="#F1D48E" stroke="#D9B566" stroke-dasharray="3 2" stroke-width="2"/>`}).join(""),
-   risotto:()=>plate+`<ellipse cx="160" cy="118" rx="70" ry="42" fill="#E9D9A8"/>`+Array.from({length:40},()=>`<ellipse cx="${108+R()*104}" cy="${96+R()*46}" rx="3" ry="1.6" fill="#FFF6D6"/>`).join("")+Array.from({length:5},()=>{const x=120+R()*80,y=104+R()*30;return`<path d="M${x-9} ${y} a9 7 0 0 1 18 0z" fill="#6E4E34"/>`}).join(""),
-   steak:()=>plate+[0,1,2,3,4].map(i=>`<path d="M${104+i*24} 94 l18 0 l-7 56 l-18 0z" fill="#9B3B33"/><path d="M${108+i*24} 98 l10 0 l-5 44 l-10 0z" fill="#D46A6A"/>`).join(""),
-   fish:()=>plate+`<path d="M100 120 q60 -48 120 0 q-60 48 -120 0z" fill="#E8D7C0" stroke="#C9A97F" stroke-width="2"/><path d="M220 120 l26 -18 v36z" fill="#D9C2A0"/><circle cx="150" cy="150" r="10" fill="#F6D63A"/>`,
-   osso:()=>plate+`<ellipse cx="160" cy="122" rx="72" ry="38" fill="#F0C64A"/><ellipse cx="160" cy="114" rx="40" ry="28" fill="#7A3A22"/><circle cx="160" cy="112" r="12" fill="#F3E6C8" stroke="#C9A97F" stroke-width="3"/>`,
-   bread:()=>`<rect x="52" y="64" width="216" height="116" rx="30" fill="#D9A55A"/><rect x="60" y="68" width="200" height="104" rx="26" fill="#E8BC6E"/>`+Array.from({length:14},()=>`<circle cx="${78+R()*164}" cy="${84+R()*76}" r="6" fill="#C98A45"/>`).join(""),
-   bruschetta:()=>plate+[0,1,2].map(i=>`<rect x="${92+i*48}" y="${96+(i%2)*12}" width="44" height="40" rx="7" fill="#D9A55A"/>`+Array.from({length:5},()=>`<rect x="${96+i*48+R()*28}" y="${100+(i%2)*12+R()*24}" width="10" height="10" rx="2" fill="#D23A2E"/>`).join("")).join(""),
-   burrata:()=>plate+Array.from({length:7},(v,i)=>`<circle cx="${104+i*19}" cy="${146-(i%2)*7}" r="10" fill="#D23A2E"/>`).join("")+`<circle cx="160" cy="108" r="36" fill="#FCFBF4" stroke="#E8E3D2" stroke-width="2"/>`,
-   carpaccio:()=>plate+Array.from({length:8},(v,i)=>{const a=i/8*6.283;return`<ellipse cx="${160+Math.cos(a)*48}" cy="${120+Math.sin(a)*28}" rx="26" ry="15" fill="#C94A4A"/>`}).join("")+`<path d="M136 116 q24 -16 48 0" stroke="#4F9A4F" stroke-width="8" fill="none" stroke-linecap="round"/>`,
-   arancini:()=>plate+[[132,122],[188,122],[160,100]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="26" fill="#D7913E"/><circle cx="${x-7}" cy="${y-7}" r="7" fill="#EDB868"/>`).join(""),
-   tiramisu:()=>plate+`<path d="M104 104 h112 v44 h-112z" fill="#F3E5C8"/><rect x="104" y="118" width="112" height="9" fill="#7A4A2A"/><rect x="104" y="134" width="112" height="7" fill="#7A4A2A"/><path d="M104 104 h112 l-10 -12 h-92z" fill="#5A3420"/>`,
-   pannacotta:()=>plate+`<path d="M128 140 l8 -52 h48 l8 52z" fill="#FBF4E8"/><ellipse cx="160" cy="88" rx="24" ry="7" fill="#B3263A"/><path d="M122 140 q38 16 76 0" fill="#B3263A"/>`,
-   cannoli:()=>plate+[0,1].map(i=>`<g transform="rotate(${-14+i*20} 160 120)"><rect x="104" y="${102+i*26}" width="112" height="26" rx="13" fill="#C98A45"/><ellipse cx="104" cy="${115+i*26}" rx="11" ry="13" fill="#FBF4E8"/><ellipse cx="216" cy="${115+i*26}" rx="11" ry="13" fill="#FBF4E8"/></g>`).join(""),
-   gelato:()=>`<path d="M118 120 h84 l-12 80 h-60z" fill="#FAFAF6" stroke="#DDD"/>`+[["#9BC06A",138,110],["#6B3F2A",184,110],["#F3E27A",160,84]].map(([c,x,y])=>`<circle cx="${x}" cy="${y}" r="28" fill="${c}"/>`).join(""),
-   spritz:()=>glass("#F07A2A")+`<circle cx="178" cy="78" r="13" fill="#F6A04D" stroke="#fff" stroke-width="2"/>`,
-   wine:()=>`<rect x="140" y="80" width="40" height="120" rx="12" fill="#5A1726"/><rect x="150" y="34" width="20" height="52" rx="5" fill="#5A1726"/><rect x="140" y="120" width="40" height="38" fill="#F4F0E0"/>`,
-   prosecco:()=>`<rect x="140" y="80" width="40" height="120" rx="12" fill="#2F5A3A"/><rect x="150" y="34" width="20" height="52" rx="5" fill="#2F5A3A"/><rect x="148" y="30" width="24" height="22" rx="4" fill="#E7B43C"/><rect x="140" y="120" width="40" height="38" fill="#F4F0E0"/>`,
-   limoncello:()=>`<path d="M136 104 h48 l-7 92 h-34z" fill="#fff" opacity=".7"/><path d="M139 120 h42 l-6 74 h-30z" fill="#F2DE3A"/><circle cx="208" cy="160" r="22" fill="#F6D63A"/>`};
-  return s+(S[kind]?S[kind]():"")+"</svg>";
-}
-
 /* ================= STATE ================= */
-const state={tab:"today",bookings:[],cfg:clone(DEFAULT_CFG),cfgVersion:0,
+const state={tab:"today",bookings:[],cfg:mergeCfg(null),cfgEdit:null,
   calMonth:today().slice(0,7),calDay:today(),q:"",listFilter:"upcoming",
-  draft:lsGet("lucia.draft2",null)||null,names:{},meId:null};
-function blankDraft(){return{id:null,date:today(),time:"20:00",guests:2,kids:0,area:null,dur:state.cfg.dur,name:"",phone:"",occasion:"",pkg:"est",extras:[],dishes:{},discount:0,service:true,depositPaid:0,status:"מאושר",
-  req:{veg:0,vegan:0,gf:0,baby:0,allergyTags:[],allergies:"",cake:false,access:false,seatingTags:[],seating:"",notes:""}}}
+  draft:lsGet("lucia.draft3",null)||null};
+function blankDraft(){return{id:null,mode:"table",date:today(),time:"20:00",guests:2,kids:0,area:null,dur:state.cfg.dur,name:"",phone:"",occasion:"",pkg:"est",extras:[],dishes:{},discount:0,service:true,depositPaid:0,status:"מאושר",buyout:false,
+  req:{veg:0,vegan:0,gf:0,baby:0,allergyTags:[],allergies:"",allergyLevel:"",allergyWho:"",allergyAsked:false,cake:false,access:false,seatingTags:[],seating:"",notes:""}}}
 if(!state.draft)state.draft=blankDraft();
-const saveDraft=()=>lsSet("lucia.draft2",state.draft);
+const saveDraft=()=>lsSet("lucia.draft3",state.draft);
 const cfgArea=id=>state.cfg.areas.find(a=>a.id===id);
 
 /* ================= STORE ================= */
@@ -464,8 +580,8 @@ let syncInfo={on:false,msg:"מתחבר…"};
 function setSync(on,msg){syncInfo={on,msg:msg||"מסונכרן עם הצוות"};document.querySelectorAll(".sync").forEach(el=>{el.className="sync"+(on?" on":"");el.lastChild.textContent=syncInfo.msg})}
 const syncBadge=()=>`<span class="sync${syncInfo.on?" on":""}"><i></i>${esc(syncInfo.msg)}</span>`;
 const DEMO=()=>{const t=today();const mk=(o)=>({dur:150,kids:0,occasion:"",pkg:"est",extras:[],dishes:{},discount:0,service:false,depositPaid:0,status:"מאושר",phone:"050-0000000",req:{veg:0,vegan:0,gf:0,baby:0,allergyTags:[],allergies:"",cake:false,access:false,seatingTags:[],seating:"",notes:""},...o});
- return[mk({id:"l1",date:t,time:"19:30",guests:4,area:"terrace",name:"משפחת לוי (דוגמה)",req:{veg:0,vegan:0,gf:0,baby:1,allergyTags:[],allergies:"",cake:false,access:false,seatingTags:[],seating:"",notes:""}}),
- mk({id:"l2",date:t,time:"20:00",guests:22,area:"private",name:"אירוע חברה – אלפא (דוגמה)",occasion:"אירוע חברה",pkg:"p2",extras:["x1"],service:true,depositPaid:2000,status:"מקדמה שולמה",req:{veg:3,vegan:1,gf:2,baby:0,allergyTags:["אגוזי עץ"],allergies:"ילד בן 6, רגישות קלה",cake:false,access:false,seatingTags:["שולחן ארוך"],seating:"",notes:"מקרן להצגה"}})]};
+ return[mk({id:"l1",date:t,time:"19:30",guests:4,area:"outside",name:"משפחת לוי (דוגמה)",req:{veg:0,vegan:0,gf:0,baby:1,allergyTags:[],allergies:"",cake:false,access:false,seatingTags:[],seating:"",notes:""}}),
+ mk({id:"l2",date:t,time:"20:00",guests:22,area:"inside",name:"אירוע חברה – אלפא (דוגמה)",mode:"event",occasion:"אירוע חברה",pkg:"p2",extras:["x1"],service:true,depositPaid:2000,status:"מקדמה שולמה",req:{veg:3,vegan:1,gf:2,baby:0,allergyTags:["אגוזי עץ"],allergies:"ילד בן 6, רגישות קלה",cake:false,access:false,seatingTags:["שולחן ארוך"],seating:"",notes:"מקרן להצגה"}})]};
 /* ================= FIREBASE — keys live in firebase-config.js, so updating this file never touches them ================= */
 const FIREBASE_CONFIG=(window.MILA_FIREBASE_CONFIG&&typeof window.MILA_FIREBASE_CONFIG==="object")?window.MILA_FIREBASE_CONFIG:{};
 const FB_BASE="https://www.gstatic.com/firebasejs/10.12.2/";
@@ -488,8 +604,8 @@ const store={db:null,fb:null,auth:null,user:null,unsub:[],
     const app=A.initializeApp(FIREBASE_CONFIG);this.auth=U.getAuth(app);
     try{this.db=F.initializeFirestore(app,{localCache:F.persistentLocalCache({tabManager:F.persistentMultipleTabManager()})})}catch(e){this.db=F.getFirestore(app)}
     U.onAuthStateChanged(this.auth,u=>{this.user=u||null;
-      if(u){gate("hide");this.listen();if(state.tab==="settings")render();if(!lsGet("lucia.guideSeen",false))setTimeout(openHelp,400)}
-      else{this.stop();state.bookings=[];state.cfg=clone(DEFAULT_CFG);onData();gate("login",this.deniedMsg||"");this.deniedMsg=null}});
+      if(u){gate("hide");this.listen();if(state.tab==="settings")render()}
+      else{this.stop();state.bookings=[];state.cfg=mergeCfg(null);onData();gate("login",this.deniedMsg||"");this.deniedMsg=null}});
   },
   async login(email,pass){const btn=$("#lg-btn");btn.disabled=true;$("#lg-err").textContent="";
     try{await this.fb.signInWithEmailAndPassword(this.auth,email.trim(),pass)}catch(e){$("#lg-err").textContent=AUTH_ERR[e&&e.code]||"הכניסה נכשלה. נסו שוב";btn.disabled=false}},
@@ -501,10 +617,10 @@ const store={db:null,fb:null,auth:null,user:null,unsub:[],
     this.unsub.push(F.onSnapshot(F.collection(this.db,"bookings"),{includeMetadataChanges:true},snap=>{clearTimeout(timer);
       const off=snap.metadata.fromCache;setSync(!off,off?"אין אינטרנט – עובדים מהעותק במכשיר, יסונכרן כשיחזור":"מסונכרן עם הצוות");
       state.bookings=snap.docs.map(d=>({id:d.id,...d.data()}));onData()},e=>{clearTimeout(timer);if(!denied(e))setSync(false,"שגיאה בטעינת היומן – רעננו את הדף")}));
-    this.unsub.push(F.onSnapshot(F.doc(this.db,"config","main"),s=>{state.cfg=s.exists()?{...clone(DEFAULT_CFG),...s.data()}:clone(DEFAULT_CFG);onData()},e=>{denied(e)}));
+    this.unsub.push(F.onSnapshot(F.doc(this.db,"config","main"),s=>{state.cfg=mergeCfg(s.exists()?s.data():null);onData()},e=>{denied(e)}));
   },
   stop(){this.unsub.forEach(f=>{try{f()}catch(e){}});this.unsub=[]},
-  local(msg){this.db=null;state.bookings=lsGet("lucia.bookings",null)||DEMO();state.cfg={...clone(DEFAULT_CFG),...(lsGet("lucia.cfg",{})||{})};setSync(false,msg);onData()},
+  local(msg){this.db=null;state.bookings=lsGet("lucia.bookings",null)||DEMO();state.cfg=mergeCfg(lsGet("lucia.cfg",null));setSync(false,msg);onData()},
   // Writes go to the device copy at once and sync in the background — the app never waits for the internet.
   writeErr(e){toast(e&&e.code==="permission-denied"?"אין הרשאה לשמור – פנו למנהלת":"השמירה לשרת נכשלה – נסו שוב")},
   async save(b){const id=b.id||uid();const body=clone(b);delete body.id;body.updatedAt=Date.now();if(!body.createdAt)body.createdAt=Date.now();
@@ -512,54 +628,63 @@ const store={db:null,fb:null,auth:null,user:null,unsub:[],
     const i=state.bookings.findIndex(x=>x.id===id);const rec={id,...body};i>=0?state.bookings[i]=rec:state.bookings.push(rec);lsSet("lucia.bookings",state.bookings);onData();return id},
   async remove(id){if(this.db){const F=this.fb;F.deleteDoc(F.doc(this.db,"bookings",id)).catch(e=>this.writeErr(e));return}
     state.bookings=state.bookings.filter(x=>x.id!==id);lsSet("lucia.bookings",state.bookings);onData()},
-  async saveCfg(c){if(this.db){const F=this.fb;F.setDoc(F.doc(this.db,"config","main"),c).catch(e=>this.writeErr(e));state.cfg={...clone(DEFAULT_CFG),...c};return}
-    state.cfg={...clone(DEFAULT_CFG),...c};lsSet("lucia.cfg",c);onData()},
+  async saveCfg(c){if(this.db){const F=this.fb;F.setDoc(F.doc(this.db,"config","main"),c).catch(e=>this.writeErr(e));state.cfg=mergeCfg(c);return}
+    state.cfg=mergeCfg(c);lsSet("lucia.cfg",c);onData()},
   async importAll(list,cfg){
     if(this.db){const F=this.fb;for(let i=0;i<list.length;i+=400){const bt=F.writeBatch(this.db);
         list.slice(i,i+400).forEach(b=>{const body=clone(b);delete body.id;bt.set(F.doc(this.db,"bookings",b.id),body)});bt.commit().catch(e=>this.writeErr(e))}
       if(cfg)F.setDoc(F.doc(this.db,"config","main"),cfg).catch(e=>this.writeErr(e));return}
     const m=new Map(state.bookings.map(b=>[b.id,b]));list.forEach(b=>m.set(b.id,clone(b)));state.bookings=[...m.values()];lsSet("lucia.bookings",state.bookings);
-    if(cfg){state.cfg={...clone(DEFAULT_CFG),...cfg};lsSet("lucia.cfg",cfg)}onData()}
+    if(cfg){state.cfg=mergeCfg(cfg);lsSet("lucia.cfg",cfg)}onData()}
 };
 
 /* ================= CORE LOGIC ================= */
-// peak seated guests in an area during [start,end) — exclusive areas count any overlap as full
+// peak seated guests in an area during [start,end); a "buyout" booking takes the whole area
 function areaUse(date,time,dur,areaId,excludeId){
-  const a=cfgArea(areaId);if(!a)return{used:0,list:[]};const s=mins(time),e=s+(+dur||state.cfg.dur);
+  const a=cfgArea(areaId);if(!a)return{used:0,list:[]};const s=mins(time),e=s+(+dur||state.cfg.dur);const g=b=>b.buyout?a.cap:(+b.guests||0);
   const list=state.bookings.filter(b=>b.date===date&&b.area===areaId&&b.id!==excludeId&&!isCancel(b)).filter(b=>{const bs=mins(b.time),be=bs+(+b.dur||state.cfg.dur);return bs<e&&be>s});
   if(a.exclusive)return{used:list.length?a.cap:0,list};
   const pts=[s,...list.map(b=>mins(b.time)).filter(p=>p>s&&p<e)];let peak=0;
-  for(const p of pts){const sum=list.filter(b=>{const bs=mins(b.time),be=bs+(+b.dur||state.cfg.dur);return bs<=p&&be>p}).reduce((t,b)=>t+(+b.guests||0),0);peak=Math.max(peak,sum)}
-  return{used:peak,list};
+  for(const p of pts){const sum=list.filter(b=>{const bs=mins(b.time),be=bs+(+b.dur||state.cfg.dur);return bs<=p&&be>p}).reduce((t,b)=>t+g(b),0);peak=Math.max(peak,sum)}
+  return{used:Math.min(peak,a.cap*2),list};
 }
 function availability(d){
-  return state.cfg.areas.map(a=>{const u=areaUse(d.date,d.time,d.dur,a.id,d.id);const free=Math.max(0,a.cap-u.used);const fits=(+d.guests||0)<=free&&(+d.guests||0)>0;
-    const after=u.used+(+d.guests||0);const level=!fits?"bad":after/a.cap>.85?"warn":"ok";return{...a,used:u.used,free,fits,level,list:u.list}});
+  return state.cfg.areas.map(a=>{const u=areaUse(d.date,d.time,d.dur,a.id,d.id);const free=Math.max(0,a.cap-u.used);const g=+d.guests||0;const need=d.buyout?a.cap:g;
+    const fits=g>0&&g<=a.cap&&need<=free;const after=u.used+need;const level=!fits?"bad":after/a.cap>.85?"warn":"ok";return{...a,used:u.used,free,fits,level,list:u.list}});
 }
+/* opening hours */
+function hoursFor(date){const cd=(state.cfg.closedDates||[]).find(x=>x.date===date);if(cd)return{closed:true,note:cd.note||"",special:true,open:"12:00",close:"23:00"};
+  const h=(state.cfg.hours||[])[dObj(date).getDay()]||{};return{closed:!!h.closed,open:h.open||"12:00",close:h.close||"23:00",note:""}}
+function slotList(date,override){const h=hoursFor(date||state.draft.date);if(h.closed&&!override)return[];const o=h.closed?{open:"12:00",close:"23:00"}:h;
+  let a=mins(o.open),e=mins(o.close)-60;if(mins(o.close)<=a)e=23*60+30;e=Math.min(e,23*60+30);a=Math.ceil(a/30)*30;const out=[];for(let m=a;m<=e;m+=30)out.push(hhmm(m));return out.length?out:[hhmm(a)]}
+const dayClosed=d=>hoursFor(d.date).closed&&!d.openOverride;
+const outOfHours=d=>!dayClosed(d)&&!slotList(d.date,d.openOverride).includes(d.time);
 function suggestTimes(d){
   const base=mins(d.time),out=[];
-  for(const off of[30,-30,60,-60,90,-90,120,-120,150,-150]){const t=base+off;if(t<12*60||t>22*60+30)continue;const tt=hhmm(t);
+  for(const tt of slotList(d.date,d.openOverride).filter(x=>x!==d.time).sort((a,b)=>Math.abs(mins(a)-base)-Math.abs(mins(b)-base))){
     const av=availability({...d,time:tt}).filter(a=>a.fits);if(av.length)out.push({time:tt,areas:av.map(a=>a.name)});if(out.length>=4)break}
   return out.sort((a,b)=>mins(a.time)-mins(b.time));
 }
 function calc(b){
   const c=state.cfg,g=Math.max(0,+b.guests||0),kids=Math.min(g,Math.max(0,+b.kids||0)),adults=g-kids,lines=[];
   const pkg=c.packages.find(p=>p.id===b.pkg);
-  if(b.pkg==="est")lines.push({label:"הערכת הוצאה לסועד",sub:`${adults} × ${nis(c.estSpend)}`,amt:adults*c.estSpend});
-  else if(pkg)lines.push({label:`חבילת ${pkg.name}`,sub:`${adults} × ${nis(pkg.pp)}`,amt:adults*pkg.pp});
+  if(pkg)lines.push({label:pkg.name,sub:`${adults} × ${nis(pkg.pp)}`,amt:adults*pkg.pp});
+  else lines.push({label:"הערכת הוצאה לסועד",sub:`${adults} × ${nis(c.estSpend)}`,amt:adults*c.estSpend});
   if(kids)lines.push({label:"תפריט ילדים",sub:`${kids} × ${nis(c.kidsPrice)}`,amt:kids*c.kidsPrice});
   for(const id of b.extras||[]){const x=c.extras.find(e=>e.id===id);if(x)lines.push({label:x.name,sub:x.unit==="pp"?`${adults} × ${nis(x.price)}`:"",amt:x.unit==="pp"?x.price*adults:x.price})}
-  for(const[id,n]of Object.entries(b.dishes||{})){const m=MENU_BY_ID[id];if(m&&n>0)lines.push({label:m.name,sub:`${n} × ${nis(m.price)}`,amt:n*m.price})}
   const sub=lines.reduce((a,l)=>a+l.amt,0),disc=Math.round(sub*Math.min(50,Math.max(0,+b.discount||0))/100);
   const service=b.service?Math.round((sub-disc)*c.service/100):0,total=sub-disc+service;
   const deposit=Math.round(total*c.depositPct/100),paid=+b.depositPaid||0;
-  return{lines,sub,disc,service,total,pp:g?total/g:0,deposit,paid,balance:total-paid};
+  return{lines,sub,disc,service,total,pp:g?total/g:0,deposit,paid,balance:total-paid,pkg};
 }
-const isEvent=b=>(+b.guests>=state.cfg.eventFrom)||(b.pkg&&b.pkg!=="est"&&b.pkg!=="alc");
+const isEvent=b=>b.mode==="event"||(+b.guests>=state.cfg.eventFrom)||(!!b.pkg&&b.pkg!=="est"&&b.pkg!=="alc");
 const allergyList=r=>[...((r&&r.allergyTags)||[]),...((r&&r.allergies&&r.allergies.trim())?[r.allergies.trim()]:[])];
 const seatingList=r=>[...((r&&r.seatingTags)||[]),...((r&&r.seating&&r.seating.trim())?[r.seating.trim()]:[])];
-function reqChips(b){const r=b.req||{},o=[];const al=allergyList(r);
-  if(al.length)o.push(`<span class="rq al">⚠ ${esc(al.join(", "))}</span>`);
+const alLevel=r=>(r&&LEVELS[r.allergyLevel])?r.allergyLevel:"allergy";
+const isSevere=b=>allergyList(b.req).length>0&&alLevel(b.req)==="severe";
+function allergyChip(r){const al=allergyList(r);if(!al.length)return"";const k=alLevel(r),lv=LEVELS[k];
+  return`<span class="rq al lv-${k}">${lv.i} ${esc(al.join(", "))} · ${lv.l}${r.allergyWho?" · "+esc(r.allergyWho):""}</span>`}
+function reqChips(b){const r=b.req||{},o=[];o.push(allergyChip(r));
   if(+r.veg)o.push(`<span class="rq">${r.veg} צמחוני</span>`);if(+r.vegan)o.push(`<span class="rq">${r.vegan} טבעוני</span>`);if(+r.gf)o.push(`<span class="rq">${r.gf} ללא גלוטן</span>`);
   if(+r.baby)o.push(`<span class="rq">${r.baby} כיסא תינוק</span>`);if(r.cake)o.push(`<span class="rq">עוגה</span>`);if(r.access)o.push(`<span class="rq">נגישות</span>`);
   seatingList(r).forEach(s=>o.push(`<span class="rq">${esc(s)}</span>`));
@@ -567,34 +692,77 @@ function reqChips(b){const r=b.req||{},o=[];const al=allergyList(r);
 const hasReq=b=>{const r=b.req||{};return !!(allergyList(r).length||+r.veg||+r.vegan||+r.gf||+r.baby||r.cake||r.access||seatingList(r).length||r.notes)};
 function dayStats(date){const l=state.bookings.filter(b=>b.date===date&&!isCancel(b));
   return{list:l,guests:l.reduce((a,b)=>a+(+b.guests||0),0),value:l.reduce((a,b)=>a+(+b.total||0),0),events:l.filter(isEvent),paid:l.reduce((a,b)=>a+(+b.depositPaid||0),0),req:l.filter(hasReq).length}}
+/* hold-until-deposit */
+const holdMs=()=>(+state.cfg.holdHours||48)*3600e3;
+function holdInfo(b){if(b.status!==HOLD||!b.holdUntil)return null;const left=b.holdUntil-Date.now();return{until:b.holdUntil,expired:left<=0,soon:left>0&&left<24*3600e3}}
+function fmtHold(ms){const d=new Date(ms);return "יום "+DAYS[d.getDay()]+" "+pad(d.getHours())+":"+pad(d.getMinutes())}
+function applyStatus(rec,status,prev){rec.status=status;if(status===HOLD){if(!rec.holdUntil||prev!==HOLD)rec.holdUntil=Date.now()+holdMs()}else delete rec.holdUntil;return rec}
+/* customers (built from past bookings) */
+const digits=s=>String(s||"").replace(/\D/g,"");
+function customerIndex(excludeId){const m=new Map();
+  for(const b of state.bookings){if(b.id===excludeId)continue;const k=digits(b.phone);if(k.length<7)continue;const c=m.get(k)||{phone:b.phone,name:b.name,visits:0,last:null,lastB:null,cancels:0,noShows:0,al:null};
+    if(isCancel(b))c.cancels++;else if(b.status===NOSHOW)c.noShows++;else c.visits++;
+    if(!c.last||b.date>c.last){c.last=b.date;c.lastB=b;c.name=b.name;c.phone=b.phone}
+    const r=b.req||{};if(allergyList(r).length){c.al=c.al||{tags:new Set(),text:"",level:"",who:""};(r.allergyTags||[]).forEach(t=>c.al.tags.add(t));if(r.allergies&&r.allergies.trim())c.al.text=r.allergies.trim();
+      const lv=alLevel(r);if((LEVEL_RANK[lv]||0)>(LEVEL_RANK[c.al.level]||0))c.al.level=lv;if(r.allergyWho)c.al.who=r.allergyWho}
+    m.set(k,c)}
+  return m}
+function waHref(phone,text){let n=digits(phone);if(n.startsWith("0"))n="972"+n.slice(1);if(n.length<11||n.length>13)return"";return"https://wa.me/"+n+"?text="+encodeURIComponent(text)}
+const WA_ICON=`<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.7-5A8.5 8.5 0 1 1 8 19.4z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8a4 4 0 0 1-1.8-1.8l.8-1-1-2z"/></svg>`;
+const CAL_ICON=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M12 14v4M10 16h4"/></svg>`;
+function remindText(b){return`שלום ${b.name}, תזכורת מ-MILA HOUSE: מחכים לכם מחר, ${fmtDate(b.date)} בשעה ${b.time}, ${b.guests} סועדים. נשמח לאישור הגעה 🙏`}
 
 /* ================= VIEWS ================= */
+function stBadge(b){const h=holdInfo(b);if(h&&h.expired)return`<span class="st s4">השמירה פגה</span>`;return`<span class="st ${stClass(b.status)}">${esc(b.status)}</span>`}
 function bkRow(b,showDate=true){
-  const ar=cfgArea(b.area);return`<button class="bk${isCancel(b)?" cancel":""}" data-open="${esc(b.id)}"><div class="t">${esc(b.time)}${showDate?`<small>${shortDate(b.date)}</small>`:""}</div>
-   <div class="main"><b>${esc(b.name)}</b><span class="sub">${b.guests} איש · ${esc(ar?ar.name:"")}${b.occasion?" · "+esc(b.occasion):""}</span>${hasReq(b)?`<div class="reqchips">${reqChips(b)}</div>`:""}</div>
-   <div class="side"><span class="kind ${isEvent(b)?"ev":"tb"}">${isEvent(b)?"אירוע":"שולחן"}</span><span class="val">${nis(b.total)}</span><span class="st ${stClass(b.status)}">${esc(b.status)}</span></div></button>`}
+  const ar=cfgArea(b.area),ev=isEvent(b);return`<button class="bk${isCancel(b)?" cancel":""}${isSevere(b)?" severe":""}" data-open="${esc(b.id)}"><div class="t">${esc(b.time)}${showDate?`<small>${shortDate(b.date)}</small>`:""}</div>
+   <div class="main"><b>${esc(b.name)}</b><span class="sub">${b.guests} איש · ${esc(ar?ar.name:"")}${b.buyout?" · סגירת מקום":""}${b.occasion?" · "+esc(b.occasion):""}</span>${hasReq(b)?`<div class="reqchips">${reqChips(b)}</div>`:""}</div>
+   <div class="side"><span class="kind ${ev?"ev":"tb"}">${ev?"אירוע":"שולחן"}</span>${ev?`<span class="val">${nis(b.total)}</span>`:""}${stBadge(b)}</div></button>`}
 
+function greeting(){const h=new Date().getHours();return h>=5&&h<12?"בוקר טוב":h>=12&&h<17?"צהריים טובים":h>=17&&h<22?"ערב טוב":"לילה טוב"}
+function alertsFor(t){const out=[];const up=state.bookings.filter(b=>b.date>=t&&!isCancel(b));
+  for(const b of up){const h=holdInfo(b);
+    if(h&&h.expired)out.push({lvl:"bad",b,txt:"השמירה פגה – לחזור ללקוח על המקדמה"});
+    else if(h&&h.soon)out.push({lvl:"warn",b,txt:"השמירה פגה "+fmtHold(h.until)});
+    else if(b.status==="ממתין לאישור")out.push({lvl:"warn",b,txt:"ממתין לאישור – לחזור ללקוח"});
+    else if(isEvent(b)&&b.date<=addDays(t,14)&&!(+b.depositPaid)&&!["מקדמה שולמה","הגיעו",HOLD].includes(b.status))out.push({lvl:"warn",b,txt:"אירוע קרוב בלי מקדמה"})}
+  const rank={bad:0,warn:1};return out.sort((a,b)=>rank[a.lvl]-rank[b.lvl]||(a.b.date+a.b.time).localeCompare(b.b.date+b.b.time)).slice(0,8)}
+function allergyBrief(list,title){
+  const al=list.filter(b=>allergyList(b.req).length).sort((a,b)=>(LEVEL_RANK[alLevel(b.req)]-LEVEL_RANK[alLevel(a.req)])||a.time.localeCompare(b.time));
+  const tot={};list.forEach(b=>{(b.req&&b.req.allergyTags||[]).forEach(t=>tot[t]=(tot[t]||0)+1)});
+  const diet=list.reduce((o,b)=>{const r=b.req||{};o.veg+=+r.veg||0;o.vegan+=+r.vegan||0;o.gf+=+r.gf||0;return o},{veg:0,vegan:0,gf:0});
+  return`<div class="panel brief"><div class="row"><h2>${title}</h2><span class="spacer"></span><button class="btn sm noprint" data-act="print-brief">הדפסה</button></div>
+   ${al.length?`<div class="brief-list">${al.map(b=>{const r=b.req,k=alLevel(r),ar=cfgArea(b.area);return`<button class="brief-row lv-${k}" data-open="${esc(b.id)}"><span class="lvl">${LEVELS[k].i} ${LEVELS[k].l}</span><span class="tm">${esc(b.time)}</span><span class="who"><b>${esc(allergyList(r).join(", "))}</b><small>${esc(b.name)} · ${b.guests} איש · ${esc(ar?ar.name:"")}${r.allergyWho?" · <b>"+esc(r.allergyWho)+"</b>":""}</small></span></button>`}).join("")}</div>`:`<p class="note">אין אלרגיות רשומות.</p>`}
+   <p class="note brief-tot">${Object.entries(tot).map(([k,v])=>`${esc(k)}: ${v}`).join(" · ")}${Object.keys(tot).length?" · ":""}צמחוני ${diet.veg} · טבעוני ${diet.vegan} · ללא גלוטן ${diet.gf}</p></div>`}
 function viewToday(){
-  const t=today(),s=dayStats(t),w=[0,1,2,3,4,5,6].map(i=>dayStats(addDays(t,i)));
-  const weekVal=w.reduce((a,d)=>a+d.value,0),weekG=w.reduce((a,d)=>a+d.guests,0);
-  const pending=state.bookings.filter(b=>b.date>=t&&b.status==="ממתין לאישור");
-  const next=state.bookings.filter(b=>b.date>t&&b.date<=addDays(t,14)&&isEvent(b)&&!isCancel(b)).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)).slice(0,6);
+  const t=today(),s=dayStats(t);const nowM=new Date().getHours()*60+new Date().getMinutes();
+  const list=s.list.slice().sort((a,b)=>a.time.localeCompare(b.time));const next=list.find(b=>mins(b.time)>=nowM-15);
+  const al=alertsFor(t);const allergic=list.filter(b=>allergyList(b.req).length);const severe=list.filter(isSevere);
+  const tom=addDays(t,1),tomList=state.bookings.filter(b=>b.date===tom&&!isCancel(b)).sort((a,b)=>a.time.localeCompare(b.time));const tomLeft=tomList.filter(b=>!b.remindedAt&&waHref(b.phone,"x")).length;
+  const upcoming=state.bookings.filter(b=>b.date>t&&b.date<=addDays(t,14)&&isEvent(b)&&!isCancel(b)).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)).slice(0,6);
+  const h=hoursFor(t);
   return`<section class="view">
-   <div class="row"><div><span class="eyebrow">${fmtDate(t)}</span><h1>היום במסעדה</h1></div><span class="spacer"></span><button class="btn red lg" data-tab="new">+ הזמנה חדשה</button></div>
+   <div class="hello"><div><span class="eyebrow">${fmtDate(t)}${h.closed?" · המסעדה סגורה היום":""}</span><h1>${greeting()}</h1><p class="lede">${s.list.length?`היום ${s.list.length} הזמנות ו-${s.guests} סועדים${s.events.length?`, מתוכם ${s.events.length} ${s.events.length===1?"אירוע":"אירועים"}`:""}.`:"עדיין אין הזמנות להיום."}</p></div>
+    <span class="spacer"></span><button class="btn red lg cta-new" data-tab="new"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>הזמנה חדשה</button></div>
+   ${severe.length?`<div class="severe-banner">${severe.map(b=>`<button data-open="${esc(b.id)}">🔴 <b>${esc(b.time)} · ${esc(b.name)}</b> · ${esc(allergyList(b.req).join(", "))} · מסכן חיים${b.req.allergyWho?" · "+esc(b.req.allergyWho):""}</button>`).join("")}</div>`:""}
    <div class="stats">
-    <div class="stat"><div class="k">סועדים היום</div><div class="v">${s.guests}</div><div class="s">${s.list.length} הזמנות · ${s.events.length} אירועים</div></div>
-    <div class="stat"><div class="k">שווי היום</div><div class="v">${nis(s.value)}</div><div class="s">מקדמות: ${nis(s.paid)}</div></div>
-    <div class="stat"><div class="k">7 הימים הקרובים</div><div class="v">${nisK(weekVal)}</div><div class="s">${weekG} סועדים</div></div>
-    <div class="stat"><div class="k">ממתינים לאישור</div><div class="v" style="color:${pending.length?"var(--warn)":"inherit"}">${pending.length}</div><div class="s">צריך לחזור ללקוח</div></div>
+    <div class="stat"><div class="k">סועדים היום</div><div class="v">${s.guests}</div><div class="s">${s.list.length} הזמנות</div></div>
+    <div class="stat"><div class="k">ההגעה הבאה</div><div class="v">${next?esc(next.time):"—"}</div><div class="s">${next?`${esc(next.name)} · ${next.guests} איש`:"אין הגעות נוספות היום"}</div></div>
+    <div class="stat"><div class="k">אלרגיות היום</div><div class="v" style="color:${allergic.length?"var(--bad)":"inherit"}">${allergic.length}</div><div class="s">${allergic.length?"בתדריך למטה":"אין"}</div></div>
+    <div class="stat"><div class="k">לטיפול</div><div class="v" style="color:${al.length?"var(--warn)":"inherit"}">${al.length}</div><div class="s">${al.length?"מקדמות ואישורים":"הכול מטופל"}</div></div>
    </div>
-   <div class="panel"><div class="row"><h2>תפוסה לפי שעה – היום</h2><span class="spacer"></span>${syncBadge()}</div>${timeline(t)}</div>
+   ${al.length?`<div class="panel"><h2>לטיפול</h2><div class="alerts">${al.map(a=>`<button class="alert ${a.lvl}" data-open="${esc(a.b.id)}"><span class="dot"></span><span class="grow"><b>${esc(a.b.name)}</b><small>${shortDate(a.b.date)} · ${esc(a.b.time)} · ${a.b.guests} איש</small></span><span class="what">${esc(a.txt)}</span></button>`).join("")}</div></div>`:""}
+   ${tomList.length?`<div class="panel"><div class="row"><h2>תזכורות למחר</h2><span class="spacer"></span><span class="note">${tomLeft?`נשארו ${tomLeft} לשליחה`:"כולם קיבלו תזכורת ✓"}</span></div>
+    <p class="note" style="margin:0">לחיצה פותחת וואטסאפ עם הודעה מוכנה ללקוח. אחרי השליחה זה מסומן כאן.</p>
+    <div class="remind">${tomList.map(b=>{const wa=waHref(b.phone,remindText(b));return`<div class="rm-row${b.remindedAt?" done":""}"><span class="tm">${esc(b.time)}</span><span class="grow"><b>${esc(b.name)}</b><small>${b.guests} איש${b.phone?" · "+esc(b.phone):""}</small></span>
+      ${b.remindedAt?`<span class="sent">נשלח ✓</span>`:""}${wa?`<a class="btn sm wa" href="${wa}" target="_blank" rel="noopener" data-remind="${esc(b.id)}">${WA_ICON}${b.remindedAt?"שוב":"שלח תזכורת"}</a>`:`<span class="note">אין טלפון תקין</span>`}</div>`}).join("")}</div></div>`:""}
    <div class="grid2">
-    <div class="panel"><h2>ההזמנות של היום</h2><div class="list">${s.list.length?s.list.sort((a,b)=>a.time.localeCompare(b.time)).map(b=>bkRow(b,false)).join(""):`<div class="empty">אין הזמנות להיום. לחצו "הזמנה חדשה" כשמישהו מתקשר.</div>`}</div></div>
-    <div class="panel"><div class="row"><h2>אירועים קרובים</h2><span class="spacer"></span><button class="btn sm ghost" data-tab="calendar">ליומן ←</button></div>
-     <div class="list">${next.length?next.map(b=>bkRow(b)).join(""):`<div class="empty">אין אירועים בשבועיים הקרובים.</div>`}</div>
-     ${pending.length?`<h3>ממתינים לאישור</h3><div class="list">${pending.map(b=>bkRow(b)).join("")}</div>`:""}</div>
+    <div class="panel"><div class="row"><h2>ההזמנות של היום</h2><span class="spacer"></span>${syncBadge()}</div><div class="list">${list.length?list.map(b=>bkRow(b,false)).join(""):`<div class="empty">אין הזמנות להיום. כשמישהו מתקשר, לוחצים "הזמנה חדשה".</div>`}</div></div>
+    <div class="panel"><div class="row"><h2>אירועים קרובים</h2><span class="spacer"></span>${upcoming.length?`<button class="btn sm" data-act="ics-upcoming">${CAL_ICON}ליומן האייפד</button>`:""}<button class="btn sm ghost" data-tab="calendar">ליומן ←</button></div>
+     <div class="list">${upcoming.length?upcoming.map(b=>bkRow(b)).join(""):`<div class="empty">אין אירועים בשבועיים הקרובים.</div>`}</div></div>
    </div>
-   ${s.list.length?`<div class="panel"><h2>דף מטבח והכנות – היום</h2>${prepSheet(s.list)}</div>`:""}
+   ${list.length?allergyBrief(list,"תדריך אלרגיות להיום"):""}
+   ${list.length?`<div class="panel"><h2>תפוסה לפי שעה</h2>${timeline(t)}</div><details class="fold panel-fold"><summary>דף מטבח והכנות להיום</summary><div>${prepSheet(list)}</div></details>`:""}
   </section>`;
 }
 
@@ -605,134 +773,168 @@ function timeline(date){
     const blocks=bl.map(b=>{const s=mins(b.time),d=+b.dur||state.cfg.dur;let row=ends.findIndex(e=>e<=s);if(row<0){row=ends.length;ends.push(0)}ends[row]=s+d;
       const r=Math.max(0,(s-START)/SPAN*100),w=Math.min(100-r,d/SPAN*100);
       return`<button class="blk${isEvent(b)?" ev":""}${row%2?" stack1":""}" data-open="${esc(b.id)}" style="right:${r.toFixed(2)}%;width:${w.toFixed(2)}%;${ends.length>1?"bottom:auto;height:20px;"+(row%2?"":"top:5px;"):""}" title="${esc(b.name)}"><b>${b.guests} · ${esc(b.name)}</b>${ends.length>1?"":esc(b.time)}</button>`}).join("");
-    return`<div class="lab"><span class="labname">${areaIcon(a.id)}${esc(a.name)}</span><small>${a.cap} מקומות${a.exclusive?" · סגור":""}</small></div><div class="lane" style="${ends.length>1?"min-height:58px":""}">${blocks}</div>`}).join("");
+    return`<div class="lab"><span class="labname">${areaIcon(a.id)}${esc(a.name)}</span><small>${a.cap} מקומות</small></div><div class="lane" style="${ends.length>1?"min-height:58px":""}">${blocks}</div>`}).join("");
   return`<div class="tl-wrap"><div class="tl"><div class="lab" style="background:transparent"></div><div class="hours">${hours}</div>${lanes}</div></div>`;
 }
 function prepSheet(list){
-  const c=state.cfg,pk={},dishes={},diet={veg:0,vegan:0,gf:0,baby:0},al=[],cakes=[],notes=[];
+  const c=state.cfg,pk={},diet={veg:0,vegan:0,gf:0,baby:0},al=[],cakes=[],notes=[];
   for(const b of list){const p=c.packages.find(x=>x.id===b.pkg);if(p){pk[p.name]=(pk[p.name]||0)+(+b.guests-(+b.kids||0))}if(+b.kids)pk["תפריט ילדים"]=(pk["תפריט ילדים"]||0)+(+b.kids);
-    for(const[id,n]of Object.entries(b.dishes||{}))if(MENU_BY_ID[id])dishes[MENU_BY_ID[id].name]=(dishes[MENU_BY_ID[id].name]||0)+n;
     const r=b.req||{};diet.veg+=+r.veg||0;diet.vegan+=+r.vegan||0;diet.gf+=+r.gf||0;diet.baby+=+r.baby||0;
-    const alg=allergyList(r);if(alg.length)al.push(`${esc(b.time)} ${esc(b.name)}: ${esc(alg.join(", "))}`);if(r.cake||(b.extras||[]).includes("x2"))cakes.push(`${esc(b.time)} ${esc(b.name)}`);if(r.notes)notes.push(`${esc(b.time)} ${esc(b.name)}: ${esc(r.notes)}`)}
+    const alg=allergyList(r);if(alg.length){const k=alLevel(r);al.push(`${LEVELS[k].i} ${esc(b.time)} ${esc(b.name)}: ${esc(alg.join(", "))} (${LEVELS[k].l}${r.allergyWho?", "+esc(r.allergyWho):""})`)}
+    if(r.cake||(b.extras||[]).includes("x2"))cakes.push(`${esc(b.time)} ${esc(b.name)}`);if(r.notes)notes.push(`${esc(b.time)} ${esc(b.name)}: ${esc(r.notes)}`)}
   const ul=(o)=>Object.keys(o).length?`<ul>${Object.entries(o).map(([k,v])=>`<li><span>${esc(k)}</span><b>${v}</b></li>`).join("")}</ul>`:`<p class="note">אין</p>`;
   const ll=a=>a.length?`<ul>${a.map(x=>`<li><span>${x}</span></li>`).join("")}</ul>`:`<p class="note">אין</p>`;
-  return`<div class="prep"><div><h3>מנות לפי חבילות</h3>${ul(pk)}</div><div><h3>מנות שהוזמנו מראש</h3>${ul(dishes)}</div>
+  return`<div class="prep"><div><h3>מנות לפי חבילות</h3>${ul(pk)}</div>
    <div><h3>תזונה מיוחדת</h3><ul><li><span>צמחוני</span><b>${diet.veg}</b></li><li><span>טבעוני</span><b>${diet.vegan}</b></li><li><span>ללא גלוטן</span><b>${diet.gf}</b></li><li><span>כיסאות תינוק</span><b>${diet.baby}</b></li></ul></div>
    <div><h3 style="color:var(--bad)">אלרגיות</h3>${ll(al)}</div><div><h3>עוגות / הפתעות</h3>${ll(cakes)}</div><div><h3>הערות לצוות</h3>${ll(notes)}</div></div>`;
 }
 
-/* ---------- NEW BOOKING (phone call flow) ---------- */
+/* ---------- NEW BOOKING (built for a phone call: date → guests → time → seat → name → allergies) ---------- */
+const evMode=d=>d.mode==="event";
 function viewNew(){
-  const d=state.draft,t=today();
-  const dates=Array.from({length:10},(v,i)=>addDays(t,i));
-  const timesList=[];for(let m=12*60;m<=22*60+30;m+=30)timesList.push(hhmm(m));
+  const d=state.draft,t=today(),ev=evMode(d);
+  const dates=Array.from({length:14},(v,i)=>addDays(t,i));
+  const statusOpts=ev?[HOLD,"מקדמה שולמה","מאושר","ממתין לאישור"]:["מאושר",HOLD];if(!statusOpts.includes(d.status))statusOpts.push(d.status);
+  const r=d.req,hasAl=allergyList(r).length>0,selArea=cfgArea(d.area);
   return`<section class="view">
-   <div class="row"><div><span class="eyebrow">${d.id?"עריכת הזמנה":"שיחה נכנסת"}</span><h1>${d.id?"עריכת הזמנה":"הזמנה חדשה"}</h1><p class="lede">בודקים זמינות תוך כדי שיחה, סוגרים אזור, ומקבלים מיד כמה כל האירוע יעלה.</p></div><span class="spacer"></span>${d.id?`<button class="btn sm" data-act="new-blank">התחל הזמנה חדשה</button>`:`<button class="btn sm ghost" data-act="new-blank">נקה טופס</button>`}</div>
-   <nav class="stepnav" aria-label="קפיצה לשלב">
-    <a href="#step1"><i>1</i>מתי וכמה</a><a href="#step2"><i>2</i>פרטי מזמין</a><a href="#step3"><i>3</i>תפריט ומחיר</a><a href="#step4"><i>4</i>בקשות מיוחדות</a>
-   </nav>
+   <div class="row"><div><span class="eyebrow">${d.id?"עריכת הזמנה":"שיחה נכנסת"}</span><h1>${d.id?"עריכת הזמנה":"הזמנה חדשה"}</h1></div><span class="spacer"></span>
+    <div class="modes" role="group" aria-label="סוג ההזמנה"><button data-mode="table" aria-pressed="${!ev}">שולחן</button><button data-mode="event" aria-pressed="${ev}">אירוע / קבוצה</button></div>
+    <button class="btn sm ghost" data-act="new-blank">${d.id?"הזמנה חדשה":"נקה"}</button></div>
+   <div id="verdict" class="verdictbar">${verdictHtml()}</div>
    <div class="grid2">
-    <div class="view" style="gap:16px;min-width:0">
-     <div class="panel" id="step1">
-      <div class="section-h"><span class="n">1</span><h2>מתי וכמה?</h2></div>
-      <div class="f">תאריך<div class="chips" role="group" aria-label="תאריך">${dates.map((x,i)=>`<button data-date="${x}" aria-pressed="${d.date===x}">${i===0?"היום":i===1?"מחר":DAYS[dObj(x).getDay()]}<small>${shortDate(x)}</small></button>`).join("")}</div></div>
-      <div class="fgrid three">
-       <label class="f">תאריך אחר<input class="inp" type="date" id="d-date" data-d="date" value="${d.date}"></label>
-       <label class="f">שעה<select class="inp" id="d-time" data-d="time">${(timesList.includes(d.time)?timesList:[d.time,...timesList]).map(x=>`<option${x===d.time?" selected":""}>${x}</option>`).join("")}</select></label>
-       <label class="f">משך ישיבה<select class="inp" id="d-dur" data-d="dur">${[90,120,150,180,210,240,300].map(m=>`<option value="${m}"${+d.dur===m?" selected":""}>${Math.floor(m/60)}:${pad(m%60)} שעות</option>`).join("")}</select></label>
-       <div class="f wide">מספר סועדים<div class="stepper"><button type="button" data-step="guests" data-d1="-1" aria-label="פחות">−</button><input id="d-guests" data-d="guests" type="number" inputmode="numeric" min="1" max="200" value="${d.guests}"><button type="button" data-step="guests" data-d1="1" aria-label="יותר">+</button></div></div>
-       <div class="f">מתוכם ילדים<div class="stepper"><button type="button" data-step="kids" data-d1="-1" aria-label="פחות">−</button><input id="d-kids" data-d="kids" type="number" min="0" value="${d.kids}"><button type="button" data-step="kids" data-d1="1" aria-label="יותר">+</button></div></div>
+    <div class="view" style="gap:14px;min-width:0">
+     <div class="panel callcard" id="step1">
+      <div class="f">תאריך<div class="chips" role="group" aria-label="תאריך">${dates.map((x,i)=>{const cl=hoursFor(x).closed;return`<button data-date="${x}" aria-pressed="${d.date===x}"${cl?' class="closed"':""}>${i===0?"היום":i===1?"מחר":DAYS[dObj(x).getDay()]}<small>${cl?"סגור":shortDate(x)}</small></button>`}).join("")}<label class="chip-date" title="תאריך אחר"><input type="date" id="d-date" data-d="date" value="${d.date}" aria-label="תאריך אחר"></label></div></div>
+      <div class="f">כמה סועדים?
+       <div class="guests"><div class="stepper big"><button type="button" data-step="guests" data-d1="-1" aria-label="פחות">−</button><input id="d-guests" data-d="guests" type="number" inputmode="numeric" min="1" max="300" value="${d.guests}"><button type="button" data-step="guests" data-d1="1" aria-label="יותר">+</button></div>
+       <div class="qg">${[2,3,4,5,6,8,10,15,20].map(n=>`<button type="button" data-g="${n}" aria-pressed="${+d.guests===n}">${n}</button>`).join("")}</div></div></div>
+      <div class="f">שעה <span class="note" id="hoursNote">${hoursNoteHtml()}</span><div class="slots" id="slots">${slotsHtml()}</div></div>
+      <div class="f">איפה יושבים?<div class="areas" id="areas">${areasHtml()}</div>
+       ${ev?`<label class="check buyout"><input type="checkbox" id="d-buyout" data-d="buyout"${d.buyout?" checked":""}><span class="grow">סגירת מקום: האירוע סוגר את כל ה${esc(selArea?selArea.name.replace(/^ב/,""):"אזור")}</span></label>`:""}</div>
+      <div class="fgrid${ev?" three":""}">
+       ${ev?`<label class="f">משך ישיבה<select class="inp" id="d-dur" data-d="dur">${[90,120,150,180,210,240,300].map(m=>`<option value="${m}"${+d.dur===m?" selected":""}>${Math.floor(m/60)}:${pad(m%60)} שעות</option>`).join("")}</select></label>
+       <div class="f">מתוכם ילדים<div class="stepper"><button type="button" data-step="kids" data-d1="-1" aria-label="פחות">−</button><input id="d-kids" data-d="kids" type="number" min="0" value="${d.kids}"><button type="button" data-step="kids" data-d1="1" aria-label="יותר">+</button></div></div>`:""}
+       <label class="f">סוג האירוע<select class="inp" id="d-occ" data-d="occasion">${OCCASIONS.map(o=>`<option value="${o}"${o===d.occasion?" selected":""}>${o||"ארוחה רגילה"}</option>`).join("")}</select></label>
       </div>
-      <div id="avail">${availHtml()}</div>
      </div>
      <div class="panel" id="step2">
-      <div class="section-h"><span class="n">2</span><h2>פרטי המזמין</h2></div>
+      <h2>מי מזמין?</h2>
       <div class="fgrid">
-       <label class="f">שם<input class="inp" id="d-name" data-d="name" value="${esc(d.name)}" placeholder="שם המזמין / שם האירוע" autocomplete="off"></label>
-       <label class="f">טלפון<input class="inp" id="d-phone" data-d="phone" value="${esc(d.phone)}" inputmode="tel" placeholder="050-0000000"></label>
-       <label class="f">סוג האירוע<select class="inp" id="d-occ" data-d="occasion">${OCCASIONS.map(o=>`<option value="${o}"${o===d.occasion?" selected":""}>${o||"ארוחה רגילה"}</option>`).join("")}</select></label>
-       <label class="f">סטטוס<select class="inp" id="d-status" data-d="status">${STATUSES.map(s=>`<option${s===d.status?" selected":""}>${s}</option>`).join("")}</select></label>
+       <label class="f">טלפון<input class="inp big" id="d-phone" data-d="phone" value="${esc(d.phone)}" inputmode="tel" placeholder="050-0000000" autocomplete="off"></label>
+       <label class="f">שם<input class="inp big" id="d-name" data-d="name" value="${esc(d.name)}" placeholder="${ev?"שם המזמין / שם האירוע":"שם המזמין"}" autocomplete="off"></label>
       </div>
-      <div id="repeat"></div>
-      ${CAKE_OCCASIONS.has(d.occasion)&&!d.req.cake?`<div class="suggest"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 21h16M5 21v-7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v7M9 12V7a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v5M12 2v2"/></svg>זה ${esc(d.occasion)} — לסמן שמביאים עוגה ולהוסיף אותה להצעת המחיר?<span class="spacer"></span><button type="button" class="btn sm primary" data-act="suggest-cake">כן, סמנו עוגה</button></div>`:""}
+      <div id="cust"></div>
+      <div class="f">סטטוס<div class="filters st-pick">${statusOpts.map(s=>`<button type="button" data-dstatus="${esc(s)}" aria-pressed="${d.status===s}">${esc(s)}</button>`).join("")}</div>
+       ${d.status===HOLD?`<p class="note" style="margin:0">ההזמנה תישמר ${state.cfg.holdHours} שעות. אם לא תשולם מקדמה עד אז, היא תופיע ב"לטיפול".</p>`:""}</div>
+      ${CAKE_OCCASIONS.has(d.occasion)&&!d.req.cake?`<div class="suggest"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 21h16M5 21v-7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v7M9 12V7a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v5M12 2v2"/></svg>זה ${esc(d.occasion)}. מביאים עוגה?<span class="spacer"></span><button type="button" class="btn sm primary" data-act="suggest-cake">כן, לסמן</button></div>`:""}
      </div>
-     <div class="panel" id="step3">
-      <div class="section-h"><span class="n">3</span><h2>תפריט ומחיר</h2></div>
+     <div class="panel allergy-box${hasAl?" has":""}${ev&&!hasAl&&!r.allergyAsked?" ask":""}" id="stepAl">
+      <div class="row"><h2>אלרגיות</h2><span class="note">${ev?"חובה לשאול באירוע":"לשאול את הלקוח"}</span></div>
+      <div class="chipgrid" id="allergyChips"><button type="button" class="none-btn" data-act="no-allergy" aria-pressed="${!!(r.allergyAsked&&!hasAl)}">✓ אין אלרגיות</button>${ALLERGENS.map(a=>`<button type="button" data-allergy="${esc(a)}" aria-pressed="${(r.allergyTags||[]).includes(a)}">${esc(a)}</button>`).join("")}</div>
+      <input class="inp" id="r-al" data-r="allergies" value="${esc(r.allergies)}" placeholder="אלרגיה אחרת או פרטים (לדוגמה: קשיו בלבד)">
+      ${hasAl?`<div class="f">כמה חמור?<div class="levels">${Object.entries(LEVELS).map(([k,v])=>`<button type="button" data-alevel="${k}" class="lv-${k}" aria-pressed="${alLevel(r)===k}">${v.i} ${v.l}</button>`).join("")}</div></div>
+      <label class="f">למי? <input class="inp" id="r-who" data-r="allergyWho" value="${esc(r.allergyWho)}" placeholder="לדוגמה: הילד בן 6, הכלה, 2 סועדים"></label>`:""}
+     </div>
+     ${ev?`<div class="panel" id="step3">
+      <h2>חבילה ומחיר</h2>
       <div class="seg">
-       <button class="opt" data-pkg="est" aria-pressed="${d.pkg==="est"}"><b>שולחן רגיל</b><span>הערכת הוצאה ממוצעת</span><span class="p">~${nis(state.cfg.estSpend)} לסועד</span></button>
-       ${state.cfg.packages.map(p=>`<button class="opt" data-pkg="${p.id}" aria-pressed="${d.pkg===p.id}"><b>${esc(p.name)}</b><span>${esc(p.desc)}</span><span class="p">${nis(p.pp)} לסועד</span></button>`).join("")}
-       <button class="opt" data-pkg="alc" aria-pressed="${d.pkg==="alc"}"><b>א-לה-קארט מראש</b><span>בוחרים מנות מהתפריט</span><span class="p">לפי מנות</span></button>
+       <button class="opt" data-pkg="est" aria-pressed="${d.pkg==="est"}"><b>בלי חבילה</b><span>הערכה לפי הוצאה ממוצעת</span><span class="p">~${nis(state.cfg.estSpend)} לסועד</span></button>
+       ${state.cfg.packages.map(p=>`<button class="opt" data-pkg="${p.id}" aria-pressed="${d.pkg===p.id}"><b>${esc(p.name)}</b>${p.desc?`<span>${esc(p.desc)}</span>`:""}<span class="p">${nis(p.pp)} לסועד</span></button>`).join("")}
       </div>
-      <details class="fold"${(d.extras||[]).length?" open":""}><summary>תוספות לאירוע ${(d.extras||[]).length?`(${d.extras.length})`:""}</summary><div class="checks">${state.cfg.extras.map(x=>`<label class="check"><input type="checkbox" id="x-${x.id}" data-extra="${x.id}"${d.extras.includes(x.id)?" checked":""}><span class="grow">${esc(x.name)}</span><span class="p">${nis(x.price)}${x.unit==="pp"?" לסועד":""}</span></label>`).join("")}</div></details>
-      <details class="fold"${Object.keys(d.dishes).length||d.pkg==="alc"?" open":""}><summary>מנות מהתפריט ${Object.keys(d.dishes).length?`(${Object.values(d.dishes).reduce((a,b)=>a+b,0)})`:""}</summary><div><div class="dishes" id="dishes">${dishesHtml()}</div></div></details>
+      <details class="fold"${(d.extras||[]).length?" open":""}><summary>תוספות ${(d.extras||[]).length?`(${d.extras.length})`:""}</summary><div class="checks">${state.cfg.extras.map(x=>`<label class="check"><input type="checkbox" id="x-${x.id}" data-extra="${x.id}"${d.extras.includes(x.id)?" checked":""}><span class="grow">${esc(x.name)}</span><span class="p">${nis(x.price)}${x.unit==="pp"?" לסועד":""}</span></label>`).join("")}</div></details>
       <div class="fgrid three">
        <label class="f">הנחה %<input class="inp num" type="number" id="d-disc" data-d="discount" min="0" max="50" value="${d.discount}"></label>
        <label class="f">מקדמה ששולמה ₪<input class="inp num" type="number" id="d-dep" data-d="depositPaid" min="0" value="${d.depositPaid}"></label>
        <label class="check" style="align-self:end"><input type="checkbox" id="d-serv" data-d="service"${d.service?" checked":""}><span class="grow">שירות ${state.cfg.service}%</span></label>
       </div>
-     </div>
-     <div class="panel" id="step4">
-      <div class="section-h"><span class="n">4</span><h2>בקשות מיוחדות</h2></div>
-      <div class="fgrid">
-       ${[["veg","צמחונים"],["vegan","טבעונים"],["gf","ללא גלוטן"],["baby","כיסאות תינוק"]].map(([k,l])=>`<div class="f">${l}<div class="stepper"><button type="button" data-rstep="${k}" data-d1="-1" aria-label="פחות">−</button><input id="r-${k}" data-r="${k}" type="number" min="0" value="${d.req[k]||0}"><button type="button" data-rstep="${k}" data-d1="1" aria-label="יותר">+</button></div></div>`).join("")}
-      </div>
-      <div class="f full">
-       אלרגיות ורגישויות <span class="note">— לחצו על מה שרלוונטי, ולכל השאר יש שדה פתוח למטה</span>
-       <div class="chipgrid" id="allergyChips">${ALLERGENS.map(a=>`<button type="button" data-allergy="${esc(a)}" aria-pressed="${(d.req.allergyTags||[]).includes(a)}">⚠ ${esc(a)}</button>`).join("")}</div>
-       <input class="inp" id="r-al" data-r="allergies" value="${esc(d.req.allergies)}" placeholder="אלרגיה אחרת / פרטים נוספים (לדוגמה: ילד בן 5, רגישות קשה)" style="margin-top:8px">
+     </div>`:""}
+     <details class="panel fold-panel" id="step4"${ev||(+r.veg||+r.vegan||+r.gf||+r.baby||r.cake||r.access||seatingList(r).length||r.notes)?" open":""}>
+      <summary><h2>בקשות נוספות</h2><span class="note">תזונה, הושבה, עוגה, הערות</span></summary>
+      <div class="fold-body">
+      <div class="fgrid four">
+       ${[["veg","צמחונים"],["vegan","טבעונים"],["gf","ללא גלוטן"],["baby","כיסאות תינוק"]].map(([k,l])=>`<div class="f">${l}<div class="stepper"><button type="button" data-rstep="${k}" data-d1="-1" aria-label="פחות">−</button><input id="r-${k}" data-r="${k}" type="number" min="0" value="${r[k]||0}"><button type="button" data-rstep="${k}" data-d1="1" aria-label="יותר">+</button></div></div>`).join("")}
       </div>
       <div class="fgrid">
-       <label class="check"><input type="checkbox" id="r-cake" data-r="cake"${d.req.cake?" checked":""}><span class="grow">מביאים עוגה / הפתעה</span></label>
-       <label class="check"><input type="checkbox" id="r-acc" data-r="access"${d.req.access?" checked":""}><span class="grow">צריך נגישות לכיסא גלגלים</span></label>
+       <label class="check"><input type="checkbox" id="r-cake" data-r="cake"${r.cake?" checked":""}><span class="grow">מביאים עוגה / הפתעה</span></label>
+       <label class="check"><input type="checkbox" id="r-acc" data-r="access"${r.access?" checked":""}><span class="grow">נגישות לכיסא גלגלים</span></label>
       </div>
-      <div class="f full">
-       בקשת הושבה <span class="note">— אפשר לבחור כמה</span>
-       <div class="chipgrid neutral" id="seatChips">${SEATING_PRESETS.map(s=>`<button type="button" data-seat="${esc(s)}" aria-pressed="${(d.req.seatingTags||[]).includes(s)}">${esc(s)}</button>`).join("")}</div>
-       <input class="inp" id="r-seat" data-r="seating" value="${esc(d.req.seating)}" placeholder="בקשת הושבה אחרת" style="margin-top:8px">
+      <div class="f full">הושבה
+       <div class="chipgrid neutral" id="seatChips">${SEATING_PRESETS.map(s=>`<button type="button" data-seat="${esc(s)}" aria-pressed="${(r.seatingTags||[]).includes(s)}">${esc(s)}</button>`).join("")}</div>
+       <input class="inp" id="r-seat" data-r="seating" value="${esc(r.seating)}" placeholder="בקשה אחרת" style="margin-top:8px">
       </div>
-      <label class="f full">הערות לצוות<textarea class="inp" id="r-notes" data-r="notes" placeholder="ברכה לחוגג, מקרן, שעת הגשת עוגה">${esc(d.req.notes)}</textarea></label>
-     </div>
+      <label class="f full">הערות לצוות<textarea class="inp" id="r-notes" data-r="notes" placeholder="ברכה לחוגג, מקרן, שעת הגשת עוגה">${esc(r.notes)}</textarea></label>
+      </div>
+     </details>
     </div>
     <aside class="paper" id="paper">${paperHtml()}</aside>
    </div></section>`;
 }
-function availHtml(){
-  const d=state.draft;if(!(+d.guests>0))return`<div class="verdict warn">הזינו מספר סועדים</div>`;
-  const av=availability(d),fit=av.filter(a=>a.fits);const sel=av.find(a=>a.id===d.area);
-  let v;
-  if(sel&&sel.fits)v=`<div class="verdict ok"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5 9-10"/></svg>פנוי! ${d.guests} איש ב${esc(sel.name)}, ${fmtDate(d.date)} ב-${d.time}</div>`;
-  else if(fit.length)v=`<div class="verdict ok"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5 9-10"/></svg>יש מקום ל-${d.guests} איש ב${fit.length} אזורים – בחרו אזור</div>`;
-  else{const sg=suggestTimes(d);v=`<div class="verdict bad"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 6l12 12M18 6L6 18"/></svg>אין מקום ל-${d.guests} איש ב-${d.time}</div>${sg.length?`<div class="f">שעות פנויות קרובות<div class="chips">${sg.map(s=>`<button data-settime="${s.time}">${s.time}<small>${esc(s.areas.join(", "))}</small></button>`).join("")}</div></div>`:`<p class="note">אין מקום ביום הזה לקבוצה בגודל הזה. נסו תאריך אחר.</p>`}`}
-  return`<div style="display:grid;gap:10px">${v}<div class="areas">${av.map(a=>{const pu=Math.min(100,a.used/a.cap*100),pn=Math.min(100-pu,(+d.guests||0)/a.cap*100);
-    return`<button class="area${a.fits?"":" full"}" data-area="${a.id}" aria-pressed="${d.area===a.id}"${a.fits?"":" aria-disabled=\"true\""}><div class="top"><b>${areaIcon(a.id)} ${esc(a.name)}</b><span class="badge ${a.level}">${a.fits?(a.level==="warn"?"כמעט מלא":"פנוי"):(a.exclusive&&a.used?"תפוס":"אין מקום")}</span></div>
+function hoursNoteHtml(){const d=state.draft,h=hoursFor(d.date);if(h.closed&&!d.openOverride)return"";return`— פתוח ${h.closed?"(נפתח במיוחד)":h.open+"–"+h.close} · ירוק = יש מקום, כתום = כמעט מלא`}
+function slotsHtml(){const d=state.draft;const g=+d.guests||0;const sl=slotList(d.date,d.openOverride);
+  if(!sl.length)return`<p class="note" style="grid-column:1/-1">אין שעות ביום הזה.</p>`;
+  return sl.map(tm=>{const av=availability({...d,time:tm});const best=Math.max(0,...av.map(a=>a.free));const ok=av.some(a=>a.fits);const tight=ok&&!av.some(a=>a.fits&&a.level==="ok");
+    return`<button type="button" class="slot ${ok?(tight?"tight":"ok"):"full"}" data-settime="${tm}" aria-pressed="${d.time===tm}"><b>${tm}</b><small>${ok?(g?`${best} פנוי`:""):"מלא"}</small></button>`}).join("")}
+function areasHtml(){const d=state.draft;const av=availability(d);
+  return av.map(a=>{const pu=Math.min(100,a.used/a.cap*100),pn=Math.min(100-pu,(d.buyout?a.cap:(+d.guests||0))/a.cap*100);
+    return`<button class="area${a.fits?"":" full"}" data-area="${a.id}" aria-pressed="${d.area===a.id}"${a.fits?"":" aria-disabled=\"true\""}><div class="top"><b>${areaIcon(a.id)} ${esc(a.name)}</b><span class="badge ${a.level}">${a.fits?(a.level==="warn"?"כמעט מלא":"פנוי"):"אין מקום"}</span></div>
     <div class="bar"><i class="used" style="width:${pu}%"></i><i class="new" style="width:${pn}%"></i></div>
-    <div class="meta">${a.exclusive?(a.used?"סגור לאירוע אחר":"חדר סגור עד "+a.cap+" איש"):`${a.used} תפוסים · ${a.free} פנויים מתוך ${a.cap}`}</div></button>`}).join("")}</div></div>`;
+    <div class="meta">${a.free} פנויים מתוך ${a.cap} בשעה ${esc(d.time)}</div></button>`}).join("")}
+function verdictHtml(){
+  const d=state.draft;const x=`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>`;
+  if(dayClosed(d)){const h=hoursFor(d.date);return`<div class="verdict bad big">${x}<div><b>המסעדה סגורה ב${fmtDate(d.date).replace("יום ","יום ")}</b><span>${h.note?esc(h.note)+" · ":""}אפשר לבחור תאריך אחר, או לפתוח את היום במיוחד לאירוע.</span></div><div class="alts"><button data-act="open-day">פתיחה במיוחד ליום הזה</button></div></div>`}
+  if(!(+d.guests>0))return`<div class="verdict warn">כמה סועדים?</div>`;
+  const av=availability(d),fit=av.filter(a=>a.fits),sel=av.find(a=>a.id===d.area);
+  const ok=`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M5 12l5 5 9-10"/></svg>`;
+  if(outOfHours(d)){const h=hoursFor(d.date);return`<div class="verdict warn big">${x}<div><b>${esc(d.time)} מחוץ לשעות הפתיחה</b><span>ביום הזה פתוח ${h.closed?"12:00–23:00":h.open+"–"+h.close}. בחרו שעה מהרשימה.</span></div></div>`}
+  if(sel&&sel.fits)return`<div class="verdict ok big">${ok}<div><b>יש מקום</b><span>${d.guests} איש · ${fmtDate(d.date)} · ${esc(d.time)} · ${esc(sel.name)}${d.buyout?" · סגירת מקום":""}</span></div></div>`;
+  if(fit.length)return`<div class="verdict ok big">${ok}<div><b>יש מקום</b><span>${d.guests} איש ב-${esc(d.time)} · בחרו איפה יושבים</span></div></div>`;
+  const sg=suggestTimes(d);
+  return`<div class="verdict bad big">${x}<div><b>אין מקום ב-${esc(d.time)}${d.buyout?" לסגירת מקום":""}</b><span>${sg.length?"אפשר להציע ללקוח:":"אין מקום ביום הזה לקבוצה בגודל הזה. נסו תאריך אחר."}</span></div>
+   ${sg.length?`<div class="alts">${sg.map(s=>`<button data-settime="${s.time}">${s.time}<small>${esc(s.areas.join(" / "))}</small></button>`).join("")}</div>`:""}</div>`;
 }
-function dishesHtml(){const d=state.draft;return MENU.map(m=>{const q=d.dishes[m.id]||0;return`<div class="dish"><div class="pic">${art(m.art,m.id)}</div><div><b>${esc(m.name)}</b><span>${esc(m.cat)} · ${nis(m.price)}</span></div>${q?`<span class="qty"><button data-dish="${m.id}" data-d1="1" aria-label="הוסף">+</button><span>${q}</span><button data-dish="${m.id}" data-d1="-1" aria-label="הסר">−</button></span>`:`<button class="addbtn" data-dish="${m.id}" data-d1="1" aria-label="הוסף ${esc(m.name)}">+</button>`}</div>`}).join("")}
 function canSave(){const d=state.draft;const a=availability(d).find(x=>x.id===d.area);
-  if(!(+d.guests>0))return"הזינו מספר סועדים";if(!d.area)return"בחרו אזור פנוי";if(!a||!a.fits)return"האזור שנבחר לא פנוי";if(!d.name.trim())return"הזינו שם מזמין";return""}
+  if(dayClosed(d))return"המסעדה סגורה ביום הזה";if(outOfHours(d))return"מחוץ לשעות הפתיחה";
+  if(!(+d.guests>0))return"חסר מספר סועדים";if(!d.area)return"בחרו איפה יושבים";if(!a||!a.fits)return"אין מקום בשעה הזו";if(!d.name.trim())return"חסר שם";
+  if(evMode(d)&&!d.req.allergyAsked&&!allergyList(d.req).length)return"שאלו על אלרגיות";return""}
+function sayText(d){const c=calc(d),ar=cfgArea(d.area),when=`${fmtDate(d.date)} בשעה ${d.time}`;
+  const hold=d.status===HOLD?` השמירה בתוקף ${state.cfg.holdHours} שעות, ואחרי המקדמה זה סגור.`:"";
+  if(!evMode(d))return`שמרתי לכם שולחן ל-${d.guests} ב${when}${ar?", "+ar.name:""}.${hold} מחכים לכם!`;
+  const head=c.pkg?`${c.pkg.name} יוצאת ${nis(c.pkg.pp)} לאדם`:`זה יוצא בערך ${nis(Math.round(c.pp))} לאדם`;
+  return`${head}. ל-${d.guests} איש, ${when}, זה ${c.pkg?"":"בערך "}${nis(c.total)} סך הכול${c.service?" כולל שירות":""}. כדי לשריין את התאריך צריך מקדמה של ${nis(c.deposit)}.${hold}`}
 function paperHtml(){
-  const d=state.draft,c=calc(d),ar=cfgArea(d.area),err=canSave();
-  return`<div class="ph"><div><small>סיכום והצעת מחיר</small><h3>${esc(d.name||"הזמנה חדשה")}</h3></div><small>${isEvent(d)?"אירוע":"שולחן"}</small></div>
-  <div class="pb"><div class="note">${fmtDate(d.date)} · ${esc(d.time)}–${hhmm(mins(d.time)+(+d.dur))} · ${d.guests} איש${+d.kids?` (${d.kids} ילדים)`:""} · ${ar?esc(ar.name):"אזור לא נבחר"}</div>
-   <table class="lines"><tbody>${c.lines.map(l=>`<tr><td>${esc(l.label)}${l.sub?`<small>${esc(l.sub)}</small>`:""}</td><td>${nis(l.amt)}</td></tr>`).join("")||`<tr><td colspan="2" class="note">בחרו חבילה או מנות</td></tr>`}
-   <tr class="sum"><td>סכום ביניים</td><td>${nis(c.sub)}</td></tr>${c.disc?`<tr class="sum"><td>הנחה ${d.discount}%</td><td>−${nis(c.disc)}</td></tr>`:""}${c.service?`<tr class="sum"><td>שירות ${state.cfg.service}%</td><td>${nis(c.service)}</td></tr>`:""}
+  const d=state.draft,c=calc(d),ar=cfgArea(d.area),err=canSave(),ev=evMode(d);const wa=waHref(d.phone,confirmText(d));
+  return`<div class="ph"><div><small>${ev?"סיכום והצעת מחיר":"סיכום ההזמנה"}</small><h3>${esc(d.name||"הזמנה חדשה")}</h3></div><small>${ev?"אירוע":"שולחן"}</small></div>
+  <div class="pb"><div class="note">${fmtDate(d.date)} · ${esc(d.time)}–${hhmm(mins(d.time)+(+d.dur))} · ${d.guests} איש${+d.kids?` (${d.kids} ילדים)`:""} · ${ar?esc(ar.name):"עוד לא נבחר מקום"}${d.buyout?" · סגירת מקום":""}</div>
+   <div class="say"><small>מה להגיד ללקוח</small><p>"${esc(sayText(d))}"</p></div>
+   ${ev?`<table class="lines"><tbody>${c.lines.map(l=>`<tr><td>${esc(l.label)}${l.sub?`<small>${esc(l.sub)}</small>`:""}</td><td>${nis(l.amt)}</td></tr>`).join("")}
+   ${c.disc?`<tr class="sum"><td>הנחה ${d.discount}%</td><td>−${nis(c.disc)}</td></tr>`:""}${c.service?`<tr class="sum"><td>שירות ${state.cfg.service}%</td><td>${nis(c.service)}</td></tr>`:""}
    <tr class="total"><td>סה"כ</td><td>${nis(c.total)}</td></tr></tbody></table>
    <div class="pp"><span>לסועד</span><b>${nis(c.pp)}</b></div>
-   <div class="pp"><span>מקדמה נדרשת (${state.cfg.depositPct}%)</span><b>${nis(c.deposit)}</b></div>
-   <div class="pp"><span>שולם · יתרה לתשלום</span><b>${nis(c.paid)} · ${nis(c.balance)}</b></div>
+   <div class="pp"><span>מקדמה (${state.cfg.depositPct}%)</span><b>${nis(c.deposit)}</b></div>
+   ${c.paid?`<div class="pp"><span>שולם · יתרה</span><b>${nis(c.paid)} · ${nis(c.balance)}</b></div>`:""}`:""}
    ${hasReq(d)?`<div class="reqchips">${reqChips(d)}</div>`:""}
-   <button class="btn primary lg" data-act="save"${err?" disabled":""}>${d.id?"עדכן ביומן":"סגור הזמנה ושמור ביומן"}</button>
-   ${err?`<p class="note" style="color:var(--warn)">${err}</p>`:""}
-   <button class="btn sm ghost" data-act="copy-draft">העתק אישור ללקוח (וואטסאפ)</button>
-   <p class="note">המחירים כוללים מע"מ · מחירי דמו</p></div>`;
+   <button class="btn primary lg" data-act="save"${err?" disabled":""}>${err||(d.id?"עדכן ביומן":"שמור ביומן")}</button>
+   <div class="row" style="gap:6px">${wa?`<a class="btn sm wa" href="${wa}" target="_blank" rel="noopener">${WA_ICON}אישור בוואטסאפ</a>`:""}<button class="btn sm ghost" data-act="copy-draft">העתק אישור</button></div>
+  </div>`;
 }
-function refreshNew(){state.bookings.forEach(b=>{if(b.total==null)b.total=calc(b).total});const a=$("#avail");if(a)a.innerHTML=availHtml();const p=$("#paper");if(p)p.innerHTML=paperHtml();renderSavebar();renderRepeat()}
-function renderRepeat(){const el=$("#repeat");if(!el)return;const d=state.draft;const ph=(d.phone||"").replace(/\D/g,"");
-  if(ph.length<7){el.innerHTML="";return}const prev=state.bookings.filter(b=>b.id!==d.id&&(b.phone||"").replace(/\D/g,"")===ph);
-  el.innerHTML=prev.length?`<p class="note">לקוח חוזר: ${prev.length} הזמנות קודמות (אחרונה ${shortDate(prev.sort((a,b)=>b.date.localeCompare(a.date))[0].date)})</p>`:""}
+function renderCust(){const el=$("#cust");if(!el)return;const d=state.draft;const ph=digits(d.phone),nm=(d.name||"").trim();const idx=customerIndex(d.id);
+  const exact=ph.length>=9?idx.get(ph):null;
+  if(exact){const lb=exact.lastB||{},st=seatingList(lb.req),a=exact.al;
+    const alTxt=a?[...a.tags,...(a.text?[a.text]:[])].join(", "):"";const have=allergyList(d.req).length>0;
+    el.innerHTML=`<div class="cust"><div class="ctop"><b>לקוח חוזר${exact.name?": "+esc(exact.name):""}</b><span class="note">${exact.visits} ${exact.visits===1?"ביקור":"ביקורים"}${exact.last?` · אחרון ${shortDate(exact.last)}`:""}${exact.cancels?` · ${exact.cancels} ביטולים`:""}</span></div>
+     ${exact.noShows?`<div class="cust-warn">⚠ לא הגיעו ${exact.noShows===1?"פעם אחת":exact.noShows+" פעמים"} בעבר. כדאי לבקש מקדמה או אישור הגעה.</div>`:""}
+     ${a&&!have?`<div class="cust-al lv-${a.level||"allergy"}"><span>${LEVELS[a.level||"allergy"].i} בביקורים קודמים: <b>${esc(alTxt)}</b> · ${LEVELS[a.level||"allergy"].l}${a.who?" · "+esc(a.who):""}. עדיין רלוונטי?</span><button type="button" class="btn sm" data-act="copy-allergy">כן, להוסיף</button></div>`:""}
+     ${st.length||(lb.req&&lb.req.notes)?`<button type="button" class="btn sm ghost" data-act="copy-req">העתק הושבה והערות מהביקור הקודם</button>`:""}</div>`;
+    if(!nm&&exact.name){d.name=exact.name;const n=$("#d-name");if(n)n.value=d.name;saveDraft();const p=$("#paper");if(p)p.innerHTML=paperHtml();renderSavebar()}return}
+  let hits=[];if(ph.length>=3)hits=[...idx.entries()].filter(([k])=>k.includes(ph));else if(nm.length>=2&&!ph)hits=[...idx.entries()].filter(([,c])=>(c.name||"").includes(nm));
+  hits=hits.sort((a,b)=>(b[1].last||"").localeCompare(a[1].last||"")).slice(0,4);
+  el.innerHTML=hits.length?`<div class="sugg"><span class="note">לקוחות קודמים:</span>${hits.map(([k,c])=>`<button type="button" data-cust="${k}"><b>${esc(c.name||"")}${c.al?" ⚠":""}</b><small class="num">${esc(c.phone||"")}</small></button>`).join("")}</div>`:""}
+function refreshNew(){state.bookings.forEach(b=>{if(b.total==null)b.total=calc(b).total});
+  const set=(id,h)=>{const e=$(id);if(e)e.innerHTML=h};set("#verdict",verdictHtml());set("#slots",slotsHtml());set("#areas",areasHtml());set("#paper",paperHtml());set("#hoursNote",hoursNoteHtml());
+  document.querySelectorAll("[data-g]").forEach(b=>b.setAttribute("aria-pressed",String(+state.draft.guests===+b.dataset.g)));
+  renderSavebar();renderCust()}
 function renderSavebar(){const bar=$("#savebar");document.body.classList.toggle("has-save",state.tab==="new");if(state.tab!=="new"){bar.hidden=true;return}const c=calc(state.draft),err=canSave();bar.hidden=false;
-  bar.innerHTML=`<div class="in"><div><b>${nis(c.total)}</b><small>${state.draft.guests} איש · ${nis(c.pp)} לסועד</small></div><span class="spacer"></span><button class="btn primary" data-act="save"${err?" disabled":""}>${err||"סגור ושמור"}</button></div>`}
+  bar.innerHTML=`<div class="in"><div><b>${evMode(state.draft)?nis(c.total):state.draft.guests+" איש · "+esc(state.draft.time)}</b><small>${evMode(state.draft)?`${state.draft.guests} איש · ${nis(c.pp)} לסועד`:fmtDate(state.draft.date)}</small></div><span class="spacer"></span><button class="btn primary" data-act="save"${err?" disabled":""}>${err||"שמור ביומן"}</button></div>`}
 
 /* ---------- CALENDAR ---------- */
 function viewCalendar(){
@@ -779,57 +981,80 @@ function viewList(){
 }
 
 /* ---------- SETTINGS ---------- */
-function viewSettings(){const c=state.cfg;
-  return`<section class="view"><div><span class="eyebrow">הגדרות המסעדה</span><h1>הגדרות</h1><p class="lede">קיבולת האזורים, מחירי החבילות והתוספות. השינוי חל על כל הצוות.</p>${store.user?`<div class="row" style="margin-top:8px"><span class="note">מחובר כ-<b class="num">${esc(store.user.email||"")}</b></span><button class="btn sm" data-act="logout">התנתקות</button></div>`:""}</div>
+const XBTN=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>`;
+function viewSettings(){const c=state.cfgEdit||state.cfg;
+  return`<section class="view"><div><span class="eyebrow">הגדרות המסעדה</span><h1>הגדרות</h1><p class="lede">מקומות ישיבה, חבילות, תוספות ומחירים. השינוי חל על כל הצוות.</p>${store.user?`<div class="row" style="margin-top:8px"><span class="note">מחובר כ-<b class="num">${esc(store.user.email||"")}</b></span><button class="btn sm" data-act="logout">התנתקות</button></div>`:""}</div>
   <form class="grid2" id="cfgForm">
-   <div class="panel"><h2>אזורים וקיבולת</h2>
-    ${c.areas.map((a,i)=>`<div class="settings-row"><input class="inp" id="a-n-${i}" name="a-n-${i}" value="${esc(a.name)}" aria-label="שם אזור"><input class="inp num" id="a-c-${i}" name="a-c-${i}" type="number" min="1" value="${a.cap}" aria-label="קיבולת"><label class="check" style="padding:6px 8px"><input type="checkbox" id="a-x-${i}" name="a-x-${i}"${a.exclusive?" checked":""}><span class="grow" style="font-size:13px">נסגר לאירוע</span></label></div>`).join("")}
-    <p class="note">"נסגר לאירוע" = הזמנה אחת סוגרת את כל האזור (כמו חדר פרטי).</p>
+   <div class="panel"><h2>מקומות ישיבה</h2>
+    ${c.areas.map((a,i)=>`<div class="settings-row two"><input class="inp" id="a-n-${i}" name="a-n-${i}" value="${esc(a.name)}" aria-label="שם האזור"><label class="cap"><input class="inp num" id="a-c-${i}" name="a-c-${i}" type="number" min="1" value="${a.cap}" aria-label="כמה מקומות"><span>מקומות</span></label></div>`).join("")}
+    <h3>כללי</h3>
     <div class="fgrid">
-     <label class="f">משך ישיבה ברירת מחדל (דק')<input class="inp num" id="c-dur" name="dur" type="number" step="30" value="${c.dur}"></label>
-     <label class="f">הערכת הוצאה לסועד ₪<input class="inp num" id="c-est" name="estSpend" type="number" value="${c.estSpend}"></label>
+     <label class="f">משך ישיבה רגיל (דקות)<input class="inp num" id="c-dur" name="dur" type="number" step="30" value="${c.dur}"></label>
+     <label class="f">הוצאה ממוצעת לסועד ₪<input class="inp num" id="c-est" name="estSpend" type="number" value="${c.estSpend}"></label>
      <label class="f">תפריט ילדים ₪<input class="inp num" id="c-kids" name="kidsPrice" type="number" value="${c.kidsPrice}"></label>
      <label class="f">דמי שירות %<input class="inp num" id="c-serv" name="service" type="number" value="${c.service}"></label>
      <label class="f">מקדמה %<input class="inp num" id="c-dep" name="depositPct" type="number" value="${c.depositPct}"></label>
-     <label class="f">נחשב "אירוע" מ- (סועדים)<input class="inp num" id="c-evf" name="eventFrom" type="number" value="${c.eventFrom}"></label>
-    </div></div>
-   <div class="panel"><h2>חבילות ותוספות</h2>
-    ${c.packages.map((p,i)=>`<div class="settings-row" style="grid-template-columns:minmax(0,1fr) 100px"><input class="inp" id="p-n-${i}" name="p-n-${i}" value="${esc(p.name)}" aria-label="שם חבילה"><input class="inp num" id="p-p-${i}" name="p-p-${i}" type="number" value="${p.pp}" aria-label="מחיר לסועד"></div>`).join("")}
+     <label class="f">"אירוע" מ- (סועדים)<input class="inp num" id="c-evf" name="eventFrom" type="number" value="${c.eventFrom}"></label>
+     <label class="f">שמירה עד מקדמה (שעות)<input class="inp num" id="c-hold" name="holdHours" type="number" min="1" value="${c.holdHours}"></label>
+     <label class="f">התראה לפני אירוע (דקות)<input class="inp num" id="c-rem" name="remindMins" type="number" min="5" step="5" value="${c.remindMins}"></label>
+    </div>
+    <h3>שעות פתיחה</h3>
+    <div class="hours-tbl">${c.hours.map((h,i)=>`<div class="hours-row${h.closed?" off":""}"><b>${DAYS[i]}</b><label class="check sm"><input type="checkbox" id="h-c-${i}" name="h-c-${i}"${h.closed?" checked":""}><span>סגור</span></label><input class="inp" type="time" id="h-o-${i}" name="h-o-${i}" value="${esc(h.open)}" aria-label="פתיחה ${DAYS[i]}"><span class="note">עד</span><input class="inp" type="time" id="h-e-${i}" name="h-e-${i}" value="${esc(h.close)}" aria-label="סגירה ${DAYS[i]}"></div>`).join("")}</div>
+    <p class="note">ההזמנה האחרונה תוצע שעה לפני הסגירה.</p>
+    <h3>ימים סגורים מיוחדים</h3>
+    ${(c.closedDates||[]).length?`<div class="cd-list">${c.closedDates.slice().sort((a,b)=>a.date.localeCompare(b.date)).map(x=>`<div class="cd-row"><b>${fmtDate(x.date)}</b><span class="note">${esc(x.note||"")}</span><span class="spacer"></span><button type="button" class="icon-btn" data-rmcd="${esc(x.date)}" aria-label="הסר">${XBTN}</button></div>`).join("")}</div>`:`<p class="note">אין. אפשר להוסיף חג, שיפוץ או אירוע סגור.</p>`}
+    <div class="cd-add"><input class="inp" type="date" id="cd-date" aria-label="תאריך"><input class="inp" id="cd-note" placeholder="סיבה (למשל: ערב חג)" aria-label="סיבה"><button type="button" class="btn sm" data-add="closed">+ הוסף</button></div>
+    </div>
+   <div class="panel"><h2>חבילות אירוע</h2>
+    ${c.packages.map((p,i)=>`<div class="pkg-row"><input class="inp" id="p-n-${i}" name="p-n-${i}" value="${esc(p.name)}" placeholder="שם החבילה" aria-label="שם החבילה"><label class="cap"><input class="inp num" id="p-p-${i}" name="p-p-${i}" type="number" value="${p.pp}" aria-label="מחיר לסועד"><span>₪ לסועד</span></label><button type="button" class="icon-btn" data-rm="p-${i}" aria-label="הסר חבילה">${XBTN}</button>
+      <input class="inp desc" id="p-d-${i}" name="p-d-${i}" value="${esc(p.desc||"")}" placeholder="מה כולל (למשל: מנה ראשונה, עיקרית, קינוח, שתייה)" aria-label="מה החבילה כוללת"></div>`).join("")}
+    <button type="button" class="btn sm" data-add="pkg">+ הוסף חבילה</button>
     <h3>תוספות</h3>
-    ${c.extras.map((x,i)=>`<div class="settings-row" style="grid-template-columns:minmax(0,1fr) 100px"><input class="inp" id="e-n-${i}" name="e-n-${i}" value="${esc(x.name)}" aria-label="שם תוספת"><input class="inp num" id="e-p-${i}" name="e-p-${i}" type="number" value="${x.price}" aria-label="מחיר"></div>`).join("")}
-    <div class="row"><button class="btn primary" type="submit">שמור הגדרות</button><button class="btn ghost" type="button" data-act="cfg-reset">החזר לברירת מחדל</button></div>
+    ${c.extras.map((x,i)=>`<div class="extra-row"><input class="inp" id="e-n-${i}" name="e-n-${i}" value="${esc(x.name)}" placeholder="שם התוספת" aria-label="שם התוספת"><input class="inp num" id="e-p-${i}" name="e-p-${i}" type="number" value="${x.price}" aria-label="מחיר"><select class="inp" id="e-u-${i}" name="e-u-${i}" aria-label="סוג מחיר"><option value="flat"${x.unit!=="pp"?" selected":""}>סכום קבוע</option><option value="pp"${x.unit==="pp"?" selected":""}>לסועד</option></select><button type="button" class="icon-btn" data-rm="e-${i}" aria-label="הסר תוספת">${XBTN}</button></div>`).join("")}
+    <button type="button" class="btn sm" data-add="extra">+ הוסף תוספת</button>
+    <div class="row" style="margin-top:6px"><button class="btn primary" type="submit">שמור הגדרות</button>${state.cfgEdit?`<button class="btn ghost" type="button" data-act="cfg-discard">בטל שינויים</button>`:""}</div>
     <p class="note">${syncBadge()}</p></div>
   </form>
+  <div class="panel"><div class="row"><div><h2>התראות במכשיר הזה</h2><p class="lede">כשהמערכת פתוחה, היא מתריעה ${state.cfg.remindMins} דקות לפני כל אירוע ולפני הגעה של סועד עם אלרגיה מסכנת חיים, וגם כשפגה שמירה עד מקדמה. כדי לקבל תזכורת גם כשהאייפד סגור, מוסיפים אירועים ליומן של האייפד (כפתור "ליומן האייפד").</p></div><span class="spacer"></span><button class="btn" data-act="notif-enable">${notifState()}</button></div></div>
   <div class="panel"><div class="row"><div><h2>גיבוי וייצוא לאקסל</h2><p class="lede">קובץ אקסל עם כל ההזמנות (${state.bookings.length}) ולשונית סיכום לפי חודש. מומלץ לשמור עותק פעם בשבוע.</p></div><span class="spacer"></span><button class="btn xl" data-act="export-all"${state.bookings.length?"":" disabled"}>${XL_ICON}הורדת כל ההזמנות</button></div>
    <div class="row" style="border-top:1px dashed var(--line);padding-top:12px"><div style="flex:1;min-width:220px"><h3>גיבוי מלא להעברה</h3><p class="lede" style="font-size:13px">קובץ ‎.json‎ שמכיל את כל ההזמנות וההגדרות בדיוק כמו שהן. משמש להעברת המערכת למקום אחר או לשחזור אחרי תקלה.</p></div>
     <button class="btn" data-act="export-backup">הורדת גיבוי מלא</button><label class="btn" style="cursor:pointer">שחזור מגיבוי<input type="file" id="restoreFile" accept=".json,application/json" hidden></label></div></div>
   </section>`;
 }
+function readCfgForm(){const f=$("#cfgForm"),base=clone(state.cfgEdit||state.cfg);if(!f)return base;const fd=new FormData(f);
+  base.areas=base.areas.map((a,i)=>({...a,name:(fd.get("a-n-"+i)||"").trim()||a.name,cap:Math.max(1,+fd.get("a-c-"+i)||a.cap),exclusive:false}));
+  base.packages=base.packages.map((p,i)=>({...p,name:(fd.get("p-n-"+i)||"").trim(),pp:+fd.get("p-p-"+i)||0,desc:(fd.get("p-d-"+i)||"").trim()}));
+  base.extras=base.extras.map((x,i)=>({...x,name:(fd.get("e-n-"+i)||"").trim(),price:+fd.get("e-p-"+i)||0,unit:fd.get("e-u-"+i)==="pp"?"pp":"flat"}));
+  for(const k of["dur","estSpend","kidsPrice","service","depositPct","eventFrom","holdHours","remindMins"]){const v=fd.get(k);if(v!==null)base[k]=+v||0}
+  base.hours=base.hours.map((h,i)=>fd.get("h-o-"+i)===null?h:{closed:fd.get("h-c-"+i)==="on",open:fd.get("h-o-"+i)||h.open,close:fd.get("h-e-"+i)||h.close});
+  base.v=CFG_V;return base}
 
 /* ================= MODALS ================= */
 function closeModal(){$("#modal").innerHTML="";$("#modal").dataset.id=""}
 function openBooking(id){
   const b=state.bookings.find(x=>x.id===id);if(!b){closeModal();return}const c=calc(b),ar=cfgArea(b.area),pkg=state.cfg.packages.find(p=>p.id===b.pkg);
-  const r=b.req||{};
+  const r=b.req||{},h=holdInfo(b),wa=waHref(b.phone,confirmText(b));
   $("#modal").dataset.id=id;
   $("#modal").innerHTML=`<div class="scrim" data-act="close"><div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(b.name)}">
-   <div class="row"><span class="kind ${isEvent(b)?"ev":"tb"}">${isEvent(b)?"אירוע":"שולחן"}</span><span class="st ${stClass(b.status)}">${esc(b.status)}</span><button class="x" data-act="close" aria-label="סגור">×</button></div>
+   <div class="row"><span class="kind ${isEvent(b)?"ev":"tb"}">${isEvent(b)?"אירוע":"שולחן"}</span>${stBadge(b)}<button class="x" data-act="close" aria-label="סגור">×</button></div>
    <h2>${esc(b.name)}</h2>
-   <dl class="kv"><dt>מתי</dt><dd>${fmtDate(b.date)} · ${esc(b.time)}–${hhmm(mins(b.time)+(+b.dur||150))}</dd><dt>סועדים</dt><dd>${b.guests}${+b.kids?` (${b.kids} ילדים)`:""}</dd><dt>אזור</dt><dd>${esc(ar?ar.name:"")}</dd>
-    <dt>טלפון</dt><dd class="num" style="user-select:all">${esc(b.phone||"—")}</dd>${b.occasion?`<dt>סוג</dt><dd>${esc(b.occasion)}</dd>`:""}
-    <dt>תפריט</dt><dd>${b.pkg==="est"?"שולחן רגיל (הערכה)":b.pkg==="alc"?"א-לה-קארט":esc(pkg?pkg.name:"")}${(b.extras||[]).length?" + "+b.extras.map(x=>esc(state.cfg.extras.find(e=>e.id===x)?.name||"")).join(", "):""}</dd>
-    ${Object.keys(b.dishes||{}).length?`<dt>מנות</dt><dd>${Object.entries(b.dishes).map(([k,n])=>`${n}× ${esc(MENU_BY_ID[k]?.name||k)}`).join(" · ")}</dd>`:""}
-    <dt>שווי</dt><dd class="num"><b>${nis(b.total)}</b> · ${nis(c.pp)} לסועד</dd><dt>מקדמה</dt><dd class="num">${nis(b.depositPaid)} שולם · יתרה ${nis((+b.total||0)-(+b.depositPaid||0))}</dd>
+   ${isSevere(b)?`<div class="severe-banner"><span>🔴 <b>אלרגיה מסכנת חיים:</b> ${esc(allergyList(r).join(", "))}${r.allergyWho?" · "+esc(r.allergyWho):""}</span></div>`:""}
+   ${h?`<div class="verdict ${h.expired?"bad":h.soon?"warn":"ok"}" style="font-size:14px">${h.expired?"השמירה פגה ב":"שמור עד "}${fmtHold(h.until)}${h.expired?". לחזור ללקוח על המקדמה":""}<span class="spacer"></span><button class="btn sm" data-act="extend-hold">+24 שעות</button></div>`:""}
+   <dl class="kv"><dt>מתי</dt><dd>${fmtDate(b.date)} · ${esc(b.time)}–${hhmm(mins(b.time)+(+b.dur||150))}</dd><dt>סועדים</dt><dd>${b.guests}${+b.kids?` (${b.kids} ילדים)`:""}</dd><dt>איפה</dt><dd>${esc(ar?ar.name:"")}${b.buyout?" · סגירת מקום":""}</dd>
+    <dt>טלפון</dt><dd class="num">${b.phone?`<a href="tel:${esc(digits(b.phone))}">${esc(b.phone)}</a>`:"—"}</dd>${b.occasion?`<dt>סוג</dt><dd>${esc(b.occasion)}</dd>`:""}
+    ${isEvent(b)?`<dt>חבילה</dt><dd>${pkg?esc(pkg.name):"בלי חבילה"}${(b.extras||[]).length?" + "+b.extras.map(x=>esc(state.cfg.extras.find(e=>e.id===x)?.name||"")).filter(Boolean).join(", "):""}</dd>
+    <dt>שווי</dt><dd class="num"><b>${nis(b.total)}</b> · ${nis(c.pp)} לסועד</dd><dt>מקדמה</dt><dd class="num">${nis(b.depositPaid)} שולם · יתרה ${nis((+b.total||0)-(+b.depositPaid||0))}</dd>`:""}
     ${hasReq(b)?`<dt>בקשות</dt><dd><div class="reqchips">${reqChips(b)}</div>${r.notes?`<div style="margin-top:4px">${esc(r.notes)}</div>`:""}</dd>`:""}</dl>
-   <div class="f">עדכון סטטוס<div class="filters">${STATUSES.map(s=>`<button data-status="${esc(s)}" aria-pressed="${b.status===s}">${esc(s)}</button>`).join("")}</div></div>
-   <div class="row" id="delZone"><button class="btn primary" data-act="edit">ערוך הזמנה</button><button class="btn" data-act="copy-booking">העתק אישור ללקוח</button><span class="spacer"></span><button class="btn sm ghost" data-act="ask-del" style="color:var(--bad)">מחק</button></div>
+   <div class="f">סטטוס<div class="filters">${STATUSES.map(s=>`<button data-status="${esc(s)}" aria-pressed="${b.status===s}">${esc(s)}</button>`).join("")}</div></div>
+   <div class="row" id="delZone"><button class="btn primary" data-act="edit">ערוך</button>${wa?`<a class="btn wa" href="${wa}" target="_blank" rel="noopener">${WA_ICON}וואטסאפ ללקוח</a>`:""}<button class="btn" data-act="copy-booking">העתק אישור</button><button class="btn" data-act="ics-one">${CAL_ICON}ליומן האייפד</button><span class="spacer"></span><button class="btn sm ghost" data-act="ask-del" style="color:var(--bad)">מחק</button></div>
   </div></div>`;
 }
 function confirmText(b){const c=calc(b),ar=cfgArea(b.area);
-  let t=`MILA HOUSE – אישור הזמנה\n${b.name}\n${fmtDate(b.date)} בשעה ${b.time}\n${b.guests} סועדים · ${ar?ar.name:""}\n`;
-  if(b.pkg!=="est"){t+="\n";c.lines.forEach(l=>t+=`• ${l.label}${l.sub?" ("+l.sub+")":""}: ${nis(l.amt)}\n`);if(c.disc)t+=`הנחה: -${nis(c.disc)}\n`;if(c.service)t+=`שירות ${state.cfg.service}%: ${nis(c.service)}\n`;t+=`סה"כ: ${nis(c.total)} (כולל מע"מ)\nמקדמה: ${nis(c.deposit)}${c.paid?` · שולם ${nis(c.paid)}`:""}\n`}
+  let t=`MILA HOUSE – אישור הזמנה\n${b.name}\n${fmtDate(b.date)} בשעה ${b.time}\n${b.guests} סועדים${ar?" · "+ar.name:""}\n`;
+  if(isEvent(b)&&b.pkg!=="est"){t+="\n";c.lines.forEach(l=>t+=`• ${l.label}${l.sub?" ("+l.sub+")":""}: ${nis(l.amt)}\n`);if(c.disc)t+=`הנחה: -${nis(c.disc)}\n`;if(c.service)t+=`שירות ${state.cfg.service}%: ${nis(c.service)}\n`;t+=`סה"כ: ${nis(c.total)} (כולל מע"מ)\nמקדמה: ${nis(c.deposit)}${c.paid?` · שולם ${nis(c.paid)}`:""}\n`}
+  if(b.status===HOLD)t+=`\nההזמנה שמורה עד ${fmtHold(b.holdUntil||Date.now()+holdMs())}, ותיסגר סופית עם תשלום המקדמה.\n`;
   const alg=allergyList(b.req);if(alg.length)t+=`\nרשמנו אצלנו: ${alg.join(", ")}\n`;return t+"\nמחכים לכם! לשינויים חייגו אלינו."}
-async function copyText(txt){try{await navigator.clipboard.writeText(txt);toast("הועתק – הדביקו בוואטסאפ")}catch(e){$("#modal").innerHTML=`<div class="scrim" data-act="close"><div class="sheet"><div class="row"><h2>העתיקו את הטקסט</h2><button class="x" data-act="close" aria-label="סגור">×</button></div><textarea class="inp" id="copyBox" style="min-height:240px">${esc(txt)}</textarea></div></div>`;$("#copyBox").select()}}
+async function copyText(txt){try{await navigator.clipboard.writeText(txt);toast("הועתק – אפשר להדביק בוואטסאפ")}catch(e){$("#modal").innerHTML=`<div class="scrim" data-act="close"><div class="sheet"><div class="row"><h2>העתיקו את הטקסט</h2><button class="x" data-act="close" aria-label="סגור">×</button></div><textarea class="inp" id="copyBox" style="min-height:240px">${esc(txt)}</textarea></div></div>`;$("#copyBox").select()}}
 
 const XL_ICON=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>`;
 /* ================= EXCEL EXPORT (self-contained .xlsx writer, no library) ================= */
@@ -872,13 +1097,13 @@ const XLSX_W={
 function bookingSheets(list,title){
   const c=state.cfg,rows=[...list].sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
   const pkgName=b=>b.pkg==="est"?"שולחן רגיל (הערכה)":b.pkg==="alc"?"א-לה-קארט":((c.packages.find(p=>p.id===b.pkg)||{}).name||"");
-  const cols=[{h:"תאריך",w:12,t:"d"},{h:"יום",w:8},{h:"שעה",w:7},{h:"משך (דק')",w:9,t:"n"},{h:"שם המזמין",w:26},{h:"טלפון",w:14},{h:"סוג האירוע",w:14},{h:"שולחן / אירוע",w:11},{h:"סועדים",w:8,t:"n"},{h:"מתוכם ילדים",w:9,t:"n"},{h:"אזור",w:12},{h:"תפריט / חבילה",w:18},{h:"תוספות",w:28},{h:"מנות שהוזמנו",w:28},{h:"הנחה %",w:8,t:"n"},{h:"שירות",w:7},{h:"סה\"כ",w:12,t:"c"},{h:"מקדמה ששולמה",w:13,t:"c"},{h:"יתרה לתשלום",w:13,t:"c"},{h:"סטטוס",w:13},{h:"אלרגיות",w:24},{h:"צמחונים",w:8,t:"n"},{h:"טבעונים",w:8,t:"n"},{h:"ללא גלוטן",w:9,t:"n"},{h:"כיסאות תינוק",w:9,t:"n"},{h:"עוגה",w:6},{h:"נגישות",w:7},{h:"הושבה",w:20},{h:"הערות לצוות",w:30},{h:"נוצר",w:12,t:"d"},{h:"עודכן",w:12,t:"d"}];
+  const cols=[{h:"תאריך",w:12,t:"d"},{h:"יום",w:8},{h:"שעה",w:7},{h:"משך (דק')",w:9,t:"n"},{h:"שם המזמין",w:26},{h:"טלפון",w:14},{h:"סוג האירוע",w:14},{h:"שולחן / אירוע",w:11},{h:"סועדים",w:8,t:"n"},{h:"מתוכם ילדים",w:9,t:"n"},{h:"אזור",w:12},{h:"תפריט / חבילה",w:18},{h:"תוספות",w:28},{h:"מנות שהוזמנו",w:28},{h:"הנחה %",w:8,t:"n"},{h:"שירות",w:7},{h:"סה\"כ",w:12,t:"c"},{h:"מקדמה ששולמה",w:13,t:"c"},{h:"יתרה לתשלום",w:13,t:"c"},{h:"סטטוס",w:13},{h:"אלרגיות",w:24},{h:"חומרה",w:11},{h:"למי",w:16},{h:"צמחונים",w:8,t:"n"},{h:"טבעונים",w:8,t:"n"},{h:"ללא גלוטן",w:9,t:"n"},{h:"כיסאות תינוק",w:9,t:"n"},{h:"עוגה",w:6},{h:"נגישות",w:7},{h:"הושבה",w:20},{h:"הערות לצוות",w:30},{h:"נוצר",w:12,t:"d"},{h:"עודכן",w:12,t:"d"}];
   const isoOf=ms=>ms?iso(new Date(ms)):"";
   const data=rows.map(b=>{const r=b.req||{},total=+b.total||calc(b).total,paid=+b.depositPaid||0,ar=cfgArea(b.area);
     return[b.date,DAYS[dObj(b.date).getDay()],b.time,+b.dur||c.dur,b.name,b.phone,b.occasion||"ארוחה רגילה",isEvent(b)?"אירוע":"שולחן",+b.guests||0,+b.kids||0,ar?ar.name:"",pkgName(b),
       (b.extras||[]).map(x=>(c.extras.find(e=>e.id===x)||{}).name).filter(Boolean).join(", "),
       Object.entries(b.dishes||{}).filter(([,n])=>n>0).map(([k,n])=>`${n}× ${(MENU_BY_ID[k]||{}).name||k}`).join(", "),
-      +b.discount||0,b.service?"כן":"",total,paid,isCancel(b)?0:total-paid,b.status,allergyList(r).join(", "),+r.veg||0,+r.vegan||0,+r.gf||0,+r.baby||0,r.cake?"כן":"",r.access?"כן":"",seatingList(r).join(", "),r.notes||"",
+      +b.discount||0,b.service?"כן":"",total,paid,isCancel(b)?0:total-paid,b.status,allergyList(r).join(", "),allergyList(r).length?LEVELS[alLevel(r)].l:"",r.allergyWho||"",+r.veg||0,+r.vegan||0,+r.gf||0,+r.baby||0,r.cake?"כן":"",r.access?"כן":"",seatingList(r).join(", "),r.notes||"",
       isoOf(b.createdAt),isoOf(b.updatedAt)]});
   const live=rows.filter(b=>!isCancel(b)),sum=f=>live.reduce((a,b)=>a+f(b),0);
   const tTotal=sum(b=>+b.total||0),tPaid=sum(b=>+b.depositPaid||0);
@@ -929,54 +1154,115 @@ function askRestore(file){
 
 /* ================= RENDER ================= */
 const VIEWS={today:viewToday,new:viewNew,calendar:viewCalendar,list:viewList,settings:viewSettings};
+const REDUCED=(()=>{try{return matchMedia("(prefers-reduced-motion: reduce)").matches}catch(e){return false}})();
 function render(){
   const sy=window.scrollY,fid=document.activeElement&&document.activeElement.id;let sel=null;try{sel=fid&&[document.activeElement.selectionStart,document.activeElement.selectionEnd]}catch(e){}
+  const openDetails=[...document.querySelectorAll("#app details[id]")].map(x=>[x.id,x.open]);
   $("#app").innerHTML=VIEWS[state.tab]();
+  openDetails.forEach(([id,o])=>{const x=document.getElementById(id);if(x)x.open=o});
   document.querySelectorAll("#tabs button").forEach(b=>b.setAttribute("aria-current",b.dataset.tab===state.tab?"page":"false"));
-  renderSavebar();if(state.tab==="new")renderRepeat();
+  renderSavebar();if(state.tab==="new")renderCust();
   if(fid){const el=document.getElementById(fid);if(el){el.focus({preventScroll:true});try{if(sel&&sel[0]!=null)el.setSelectionRange(sel[0],sel[1])}catch(e){}}}
   window.scrollTo(0,sy);
   document.querySelectorAll(".tl-wrap").forEach(w=>{if(w.scrollWidth>w.clientWidth)w.scrollLeft=-(w.scrollWidth-w.clientWidth)*0.62});
 }
 function onData(){state.bookings.forEach(b=>{if(b.total==null)b.total=calc(b).total});
-  if(state.tab==="new")refreshNew();else if(state.tab==="settings"&&document.activeElement&&document.activeElement.closest&&document.activeElement.closest("#cfgForm")){}else render();
+  if(state.tab==="new")refreshNew();else if(state.tab==="settings"&&(state.cfgEdit||(document.activeElement&&document.activeElement.closest&&document.activeElement.closest("#cfgForm")))){}else render();
   if($("#modal").dataset.id)openBooking($("#modal").dataset.id);
 }
-function go(tab){state.tab=tab;if(tab==="new"&&!state.draft.area)autoArea();try{history.replaceState(null,"","#"+tab)}catch(e){}closeModal();render();window.scrollTo(0,0)}
+function go(tab){if(tab!=="settings")state.cfgEdit=null;state.tab=tab;if(tab==="new"&&!state.draft.area)autoArea();try{history.replaceState(null,"","#"+tab)}catch(e){}closeModal();render();window.scrollTo(0,0);
+  if(!REDUCED){try{$("#app").animate([{opacity:0,transform:"translateY(8px)"},{opacity:1,transform:"none"}],{duration:240,easing:"cubic-bezier(.2,.7,.2,1)"})}catch(e){}}}
+function setMode(m,manual){const d=state.draft;if(d.mode===m&&!manual)return;d.mode=m;if(manual)d.modeManual=true;
+  if(m==="table"){d.pkg="est";d.extras=[];d.discount=0;d.kids=0;if(!d.statusManual||d.status===HOLD||d.status==="מקדמה שולמה")d.status="מאושר"}
+  else{if(!d.statusManual)d.status=HOLD;if(+d.dur<state.cfg.dur+30)d.dur=Math.max(+d.dur,180)}}
+function setGuests(n){const d=state.draft;d.guests=Math.max(1,Math.min(300,n));d.kids=Math.min(d.kids,d.guests);
+  if(!d.modeManual){const want=d.guests>=state.cfg.eventFrom?"event":"table";if(want!==d.mode){setMode(want,false);autoArea();saveDraft();render();return true}}return false}
+
+function fixTime(){const d=state.draft;const sl=slotList(d.date,d.openOverride);if(sl.length&&!sl.includes(d.time)){const base=mins(d.time);d.time=sl.slice().sort((a,b)=>Math.abs(mins(a)-base)-Math.abs(mins(b)-base))[0]}}
+function setDate(v){const d=state.draft;d.date=v;d.openOverride=false;fixTime();autoArea();saveDraft()}
+/* iPad calendar (.ics) — native reminders even when the app is closed */
+const icsEsc=s=>String(s||"").replace(/\\/g,"\\\\").replace(/\n/g,"\\n").replace(/[,;]/g,m=>"\\"+m);
+function icsDT(date,m){return date.replace(/-/g,"")+"T"+pad(Math.floor(m/60))+pad(m%60)+"00"}
+function icsFor(list){const st=new Date().toISOString().replace(/[-:]/g,"").replace(/\.\d+Z$/,"Z");
+  const ev=list.map(b=>{const s=mins(b.time),e=s+(+b.dur||state.cfg.dur);const ed=e>=1440?addDays(b.date,1):b.date;const ar=cfgArea(b.area);const al=allergyList(b.req);
+    const desc=[`${b.guests} סועדים${ar?" · "+ar.name:""}${b.buyout?" · סגירת מקום":""}`,b.phone?`טלפון: ${b.phone}`:"",b.occasion||"",al.length?`אלרגיות: ${al.join(", ")} (${LEVELS[alLevel(b.req)].l}${b.req.allergyWho?", "+b.req.allergyWho:""})`:"",b.req&&b.req.notes?`הערות: ${b.req.notes}`:"",`סטטוס: ${b.status}`].filter(Boolean).join("\n");
+    return["BEGIN:VEVENT",`UID:${b.id}@milahouse`,`DTSTAMP:${st}`,`DTSTART:${icsDT(b.date,s)}`,`DTEND:${icsDT(ed,e%1440)}`,`SUMMARY:${icsEsc((isEvent(b)?"אירוע: ":"")+b.name+" · "+b.guests+" איש")}`,`LOCATION:${icsEsc("MILA HOUSE"+(ar?" · "+ar.name:""))}`,`DESCRIPTION:${icsEsc(desc)}`,
+      "BEGIN:VALARM","ACTION:DISPLAY",`DESCRIPTION:${icsEsc("מחר: "+b.name)}`,"TRIGGER:-P1D","END:VALARM","BEGIN:VALARM","ACTION:DISPLAY",`DESCRIPTION:${icsEsc("בעוד שעתיים: "+b.name)}`,"TRIGGER:-PT2H","END:VALARM","END:VEVENT"].join("\r\n")});
+  return["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//MILA HOUSE//Bookings//HE","CALSCALE:GREGORIAN","METHOD:PUBLISH",...ev,"END:VCALENDAR"].join("\r\n")+"\r\n"}
+async function openIcs(name,text){const blob=new Blob([text],{type:"text/calendar;charset=utf-8"});let w=null;try{w=window.open(URL.createObjectURL(blob),"_blank")}catch(e){}if(!w)anchorDownload(name,blob)}
+/* in-app reminders (while the app is open) */
+let actx=null;function unlockAudio(){try{if(!actx){const A=window.AudioContext||window.webkitAudioContext;if(A)actx=new A()}if(actx&&actx.state==="suspended")actx.resume()}catch(e){}}
+function chime(){try{if(!actx)return;const t0=actx.currentTime;[[880,0],[1175,.18]].forEach(([f,o])=>{const g=actx.createGain(),os=actx.createOscillator();os.type="sine";os.frequency.value=f;g.gain.setValueAtTime(.0001,t0+o);g.gain.exponentialRampToValueAtTime(.25,t0+o+.02);g.gain.exponentialRampToValueAtTime(.0001,t0+o+.6);os.connect(g).connect(actx.destination);os.start(t0+o);os.stop(t0+o+.65)})}catch(e){}}
+function notifState(){try{if(!("Notification" in window))return"התראות מערכת: לא נתמך כאן";return Notification.permission==="granted"?"התראות פעילות ✓":Notification.permission==="denied"?"התראות חסומות":"הפעלת התראות"}catch(e){return"התראות מערכת: לא נתמך כאן"}}
+async function sysNotify(title,body){try{if(!("Notification" in window)||Notification.permission!=="granted")return;const reg=navigator.serviceWorker&&await navigator.serviceWorker.getRegistration();if(reg&&reg.showNotification){await reg.showNotification(title,{body,icon:"apple-touch-icon.png",tag:body});return}new Notification(title,{body})}catch(e){}}
+const nudged=new Set(lsGet("lucia.nudged",[]));
+function showNudge(n){nudged.add(n.key);lsSet("lucia.nudged",[...nudged].slice(-300));const box=$("#nudges");if(!box)return;
+  const el=document.createElement("div");el.className="nudge "+(n.lvl||"");el.innerHTML=`<span class="grow">${n.html}</span><button class="btn sm" data-open="${esc(n.b.id)}">פתח</button><button class="x" data-act="nudge-x" aria-label="סגור">×</button>`;box.prepend(el);
+  chime();sysNotify("MILA HOUSE",n.plain)}
+function nudgeCheck(){if(!state.bookings.length)return;const now=Date.now(),t=today(),rm=(+state.cfg.remindMins||60)*60e3;let shown=0;
+  for(const b of state.bookings){if(shown>=3)break;if(isCancel(b))continue;
+    if(b.date===t&&(isEvent(b)||isSevere(b))){const st=new Date(b.date+"T"+b.time).getTime();const key="pre:"+b.id+":"+b.date+b.time;
+      if(now>=st-rm&&now<st&&!nudged.has(key)){const m=Math.max(1,Math.round((st-now)/60000)),ar=cfgArea(b.area);const al=isSevere(b)?` · 🔴 ${allergyList(b.req).join(", ")}`:"";
+        showNudge({key,b,lvl:isSevere(b)?"bad":"",html:`<b>בעוד ${m} דקות:</b> ${isEvent(b)?"אירוע ":""}${esc(b.name)} · ${b.guests} איש${ar?" · "+esc(ar.name):""}${esc(al)}`,plain:`בעוד ${m} דקות: ${b.name} · ${b.guests} איש${al}`});shown++;continue}}
+    const h=holdInfo(b);if(h&&h.expired&&b.date>=t&&now-h.until<12*3600e3){const key="hold:"+b.id+":"+b.holdUntil;if(!nudged.has(key)){showNudge({key,b,lvl:"warn",html:`<b>השמירה פגה:</b> ${esc(b.name)} · ${shortDate(b.date)} – לחזור ללקוח על המקדמה`,plain:`השמירה עד מקדמה פגה: ${b.name} (${shortDate(b.date)})`});shown++}}}}
+setInterval(nudgeCheck,60000);setTimeout(nudgeCheck,5000);document.addEventListener("visibilitychange",()=>{if(!document.hidden)nudgeCheck()});
 
 /* ================= EVENTS ================= */
 document.addEventListener("click",async ev=>{
+  unlockAudio();const ra=ev.target.closest("a[data-remind]");if(ra){const b=state.bookings.find(x=>x.id===ra.dataset.remind);if(b)setTimeout(()=>store.save({...b,remindedAt:Date.now()}).catch(()=>{}),300);return}
   const t=ev.target.closest("button,[data-act]");if(!t)return;const d=state.draft;
   if(t.dataset.tab){go(t.dataset.tab);return}
-  if(t.dataset.date){d.date=t.dataset.date;autoArea();saveDraft();render();return}
-  if(t.dataset.settime){d.time=t.dataset.settime;autoArea();saveDraft();render();return}
-  if(t.dataset.step){const k=t.dataset.step;d[k]=Math.max(k==="kids"?0:1,(+d[k]||0)+(+t.dataset.d1));if(k==="kids")d.kids=Math.min(d.kids,d.guests);$("#d-"+k).value=d[k];autoArea();saveDraft();refreshNew();return}
+  if(t.dataset.mode){setMode(t.dataset.mode,true);autoArea();saveDraft();render();return}
+  if(t.dataset.date){setDate(t.dataset.date);render();return}
+  if(t.dataset.settime){d.time=t.dataset.settime;autoArea();saveDraft();refreshNew();document.querySelectorAll(".slot").forEach(s=>s.setAttribute("aria-pressed",String(s.dataset.settime===d.time)));return}
+  if(t.dataset.g){if(setGuests(+t.dataset.g))return;const i=$("#d-guests");if(i)i.value=d.guests;autoArea();saveDraft();refreshNew();return}
+  if(t.dataset.step){const k=t.dataset.step;if(k==="guests"){if(setGuests((+d.guests||0)+(+t.dataset.d1)))return}else{d.kids=Math.max(0,Math.min(d.guests,(+d.kids||0)+(+t.dataset.d1)))}const i=$("#d-"+k);if(i)i.value=d[k];autoArea();saveDraft();refreshNew();return}
   if(t.dataset.rstep){const k=t.dataset.rstep;d.req[k]=Math.max(0,(+d.req[k]||0)+(+t.dataset.d1));$("#r-"+k).value=d.req[k];saveDraft();refreshNew();return}
-  if(t.dataset.allergy){const s=new Set(d.req.allergyTags||[]);s.has(t.dataset.allergy)?s.delete(t.dataset.allergy):s.add(t.dataset.allergy);d.req.allergyTags=[...s];saveDraft();refreshNew();return}
-  if(t.dataset.seat){const s=new Set(d.req.seatingTags||[]);s.has(t.dataset.seat)?s.delete(t.dataset.seat):s.add(t.dataset.seat);d.req.seatingTags=[...s];saveDraft();refreshNew();return}
-  if(t.dataset.area){if(t.getAttribute("aria-disabled")==="true"){toast("האזור הזה לא פנוי בשעה שנבחרה");return}d.area=t.dataset.area;d.areaManual=true;saveDraft();refreshNew();return}
+  if(t.dataset.allergy){const s=new Set(d.req.allergyTags||[]);s.has(t.dataset.allergy)?s.delete(t.dataset.allergy):s.add(t.dataset.allergy);d.req.allergyTags=[...s];d.req.allergyAsked=true;if(!d.req.allergyLevel)d.req.allergyLevel="allergy";saveDraft();render();return}
+  if(t.dataset.alevel){d.req.allergyLevel=t.dataset.alevel;saveDraft();render();return}
+  if(t.dataset.seat){const s=new Set(d.req.seatingTags||[]);s.has(t.dataset.seat)?s.delete(t.dataset.seat):s.add(t.dataset.seat);d.req.seatingTags=[...s];t.setAttribute("aria-pressed",String(s.has(t.dataset.seat)));saveDraft();refreshNew();return}
+  if(t.dataset.area){if(t.getAttribute("aria-disabled")==="true"){toast("אין מקום שם בשעה הזו");return}d.area=t.dataset.area;d.areaManual=true;saveDraft();refreshNew();return}
   if(t.dataset.pkg){d.pkg=t.dataset.pkg;saveDraft();render();return}
-  if(t.dataset.dish){const id=t.dataset.dish;d.dishes[id]=Math.max(0,(d.dishes[id]||0)+(+t.dataset.d1));if(!d.dishes[id])delete d.dishes[id];saveDraft();$("#dishes").innerHTML=dishesHtml();refreshNew();return}
+  if(t.dataset.dstatus){d.status=t.dataset.dstatus;d.statusManual=true;saveDraft();render();return}
+  if(t.dataset.cust){const c=customerIndex(d.id).get(t.dataset.cust);if(c){d.phone=c.phone||"";d.name=c.name||d.name;$("#d-phone").value=d.phone;$("#d-name").value=d.name;saveDraft();refreshNew()}return}
   if(t.dataset.day){state.calDay=t.dataset.day;if(t.classList.contains("out"))state.calMonth=t.dataset.day.slice(0,7);render();return}
   if(t.dataset.cal!==undefined){const k=+t.dataset.cal;if(!k){state.calMonth=today().slice(0,7);state.calDay=today()}else{const[y,m]=state.calMonth.split("-").map(Number);const x=new Date(y,m-1+k,1);state.calMonth=x.getFullYear()+"-"+pad(x.getMonth()+1)}render();return}
   if(t.dataset.lf){state.listFilter=t.dataset.lf;render();return}
   if(t.dataset.open){openBooking(t.dataset.open);return}
-  if(t.dataset.status){const id=$("#modal").dataset.id,b=state.bookings.find(x=>x.id===id);if(!b)return;try{await store.save({...b,status:t.dataset.status});toast("סטטוס: "+t.dataset.status)}catch(e){}return}
+  if(t.dataset.status){const id=$("#modal").dataset.id,b=state.bookings.find(x=>x.id===id);if(!b)return;try{await store.save(applyStatus({...b},t.dataset.status,b.status));toast("סטטוס: "+t.dataset.status)}catch(e){}return}
+  if(t.dataset.add==="closed"){const dt=($("#cd-date")||{}).value,nt=(($("#cd-note")||{}).value||"").trim();if(!dt){toast("בחרו תאריך");return}const c=readCfgForm();c.closedDates=[...(c.closedDates||[]).filter(x=>x.date!==dt),{date:dt,note:nt}];state.cfgEdit=c;render();return}
+  if(t.dataset.add){const c=readCfgForm();if(t.dataset.add==="pkg")c.packages.push({id:"p"+uid(),name:"",pp:0,desc:""});else c.extras.push({id:"x"+uid(),name:"",unit:"flat",price:0});state.cfgEdit=c;render();return}
+  if(t.dataset.rm){const c=readCfgForm();const[k,i]=t.dataset.rm.split("-");(k==="p"?c.packages:c.extras).splice(+i,1);state.cfgEdit=c;render();return}
   const act=t.dataset.act;if(!act)return;
   if(act==="close"){if(ev.target===t||t.classList.contains("x"))closeModal();return}
   if(act==="ask-del"){$("#delZone").innerHTML=`<div class="confirm"><span>למחוק את ההזמנה לצמיתות? (אפשר גם לסמן "בוטל")</span><button class="btn sm red" data-act="do-del">כן, מחק</button><button class="btn sm" data-act="cancel-del">חזור</button></div>`;return}
   if(act==="cancel-del"){openBooking($("#modal").dataset.id);return}
   if(act==="do-del"){const id=$("#modal").dataset.id;closeModal();try{await store.remove(id);toast("ההזמנה נמחקה")}catch(e){}return}
-  if(act==="edit"){const b=state.bookings.find(x=>x.id===$("#modal").dataset.id);if(!b)return;state.draft={...blankDraft(),...clone(b),req:{...blankDraft().req,...(b.req||{})},areaManual:true};saveDraft();go("new");return}
+  if(act==="extend-hold"){const b=state.bookings.find(x=>x.id===$("#modal").dataset.id);if(!b)return;const base=Math.max(Date.now(),+b.holdUntil||0);try{await store.save({...b,holdUntil:base+24*3600e3});toast("השמירה הוארכה ב-24 שעות")}catch(e){}return}
+  if(act==="edit"){const b=state.bookings.find(x=>x.id===$("#modal").dataset.id);if(!b)return;state.draft={...blankDraft(),...clone(b),mode:isEvent(b)?"event":"table",modeManual:true,statusManual:true,req:{...blankDraft().req,...(b.req||{})},areaManual:true};saveDraft();go("new");return}
   if(act==="copy-booking"){const b=state.bookings.find(x=>x.id===$("#modal").dataset.id);if(b)copyText(confirmText(b));return}
   if(act==="copy-draft"){copyText(confirmText(state.draft));return}
-  if(act==="new-blank"){state.draft=blankDraft();saveDraft();render();return}
+  if(act==="no-allergy"){Object.assign(d.req,{allergyTags:[],allergies:"",allergyWho:"",allergyLevel:"",allergyAsked:true});saveDraft();render();return}
+  if(act==="copy-allergy"){const a=(customerIndex(d.id).get(digits(d.phone))||{}).al;if(!a)return;d.req.allergyTags=[...new Set([...(d.req.allergyTags||[]),...a.tags])];if(a.text&&!d.req.allergies)d.req.allergies=a.text;
+    d.req.allergyLevel=a.level||"allergy";if(a.who&&!d.req.allergyWho)d.req.allergyWho=a.who;d.req.allergyAsked=true;saveDraft();render();toast("האלרגיה נוספה – לוודא עם הלקוח");return}
+  if(act==="open-day"){d.openOverride=true;fixTime();autoArea();saveDraft();render();return}
+  if(act==="print-brief"){document.body.classList.add("print-brief");setTimeout(()=>{try{window.print()}catch(e){}setTimeout(()=>document.body.classList.remove("print-brief"),800)},50);return}
+  if(act==="ics-one"){const b=state.bookings.find(x=>x.id===$("#modal").dataset.id);if(b)openIcs(`MILA HOUSE – ${b.name}.ics`,icsFor([b]));return}
+  if(act==="ics-upcoming"){const t0=today(),l=state.bookings.filter(b=>b.date>=t0&&b.date<=addDays(t0,30)&&isEvent(b)&&!isCancel(b));if(!l.length){toast("אין אירועים ב-30 הימים הקרובים");return}openIcs(`MILA HOUSE – אירועים ${shortDate(t0).replace("/","-")}.ics`,icsFor(l));return}
+  if(act==="notif-enable"){try{if("Notification" in window&&Notification.permission==="default"){await Notification.requestPermission();if(Notification.permission==="granted")sysNotify("MILA HOUSE","התראות הופעלו במכשיר הזה ✓")}else if(!("Notification" in window))toast("המכשיר הזה לא תומך בהתראות. ההתראות יופיעו בתוך המערכת.");else toast(Notification.permission==="granted"?"ההתראות כבר פעילות":"ההתראות חסומות. אפשר לפתוח בהגדרות האייפד.")}catch(e){toast("לא ניתן להפעיל התראות כאן")}render();return}
+  if(act==="nudge-x"){const n=t.closest(".nudge");if(n)n.remove();return}
+  if(act==="copy-req"){const lb=(customerIndex(d.id).get(digits(d.phone))||{}).lastB;if(!lb||!lb.req)return;const r=lb.req;
+    d.req.seatingTags=[...new Set([...(d.req.seatingTags||[]),...(r.seatingTags||[])])];if(r.seating&&!d.req.seating)d.req.seating=r.seating;if(r.notes&&!d.req.notes)d.req.notes=r.notes;
+    for(const k of["veg","vegan","gf","baby"])if(!+d.req[k]&&+r[k])d.req[k]=+r[k];if(r.access)d.req.access=true;saveDraft();render();const s4=$("#step4");if(s4)s4.open=true;toast("הבקשות הועתקו");return}
+  if(t.dataset.rmcd){const c=readCfgForm();c.closedDates=(c.closedDates||[]).filter(x=>x.date!==t.dataset.rmcd);state.cfgEdit=c;render();return}
+  if(act==="new-blank"){state.draft=blankDraft();fixTime();autoArea();saveDraft();render();return}
   if(act==="new-on-day"){state.draft={...blankDraft(),date:state.calDay};autoArea();saveDraft();go("new");return}
-  if(act==="save"){const err=canSave();if(err){toast(err);return}const c=calc(d);const rec={...clone(d),total:c.total};delete rec.areaManual;delete rec.createdBy;if(!rec.id)delete rec.id;
-    const old=d.id&&state.bookings.find(b=>b.id===d.id);if(old){rec.createdAt=old.createdAt}
-    t.disabled=true;try{const id=await store.save(rec);toast(d.id?"ההזמנה עודכנה ביומן ✓":"ההזמנה נסגרה ונשמרה ביומן ✓");state.calDay=rec.date;state.calMonth=rec.date.slice(0,7);state.draft=blankDraft();saveDraft();go("calendar");setTimeout(()=>openBooking(id),50)}catch(e){t.disabled=false}return}
-  if(act==="cfg-reset"){try{await store.saveCfg(clone(DEFAULT_CFG));toast("ההגדרות הוחזרו")}catch(e){}render();return}
-  if(act==="suggest-cake"){d.req.cake=true;if(!d.extras.includes("x2"))d.extras=[...d.extras,"x2"];saveDraft();render();toast("סומן עוגה + נוספה לתוספות");return}
+  if(act==="save"){const err=canSave();if(err){toast(err);return}const c=calc(d);const rec={...clone(d),total:c.total};
+    for(const k of["areaManual","modeManual","statusManual","createdBy"])delete rec[k];if(!evMode(d)){rec.pkg="est";rec.extras=[]}if(!rec.id)delete rec.id;
+    const old=d.id&&state.bookings.find(b=>b.id===d.id);if(old){rec.createdAt=old.createdAt;if(old.holdUntil)rec.holdUntil=old.holdUntil}applyStatus(rec,rec.status,old?old.status:null);
+    t.disabled=true;try{const id=await store.save(rec);toast(d.id?"ההזמנה עודכנה ✓":"נשמר ביומן ✓");state.calDay=rec.date;state.calMonth=rec.date.slice(0,7);state.draft=blankDraft();saveDraft();go("calendar");setTimeout(()=>openBooking(id),60)}catch(e){t.disabled=false}return}
+  if(act==="cfg-discard"){state.cfgEdit=null;render();return}
+  if(act==="suggest-cake"){d.req.cake=true;if(evMode(d)&&!d.extras.includes("x2")&&state.cfg.extras.some(x=>x.id==="x2"))d.extras=[...d.extras,"x2"];saveDraft();render();toast(evMode(d)?"סומן: עוגה (נוספה לתוספות)":"סומן: מביאים עוגה");return}
   if(act==="help"){openHelp();return}
   if(act==="export-list"){const lab={upcoming:"קרובות",events:"אירועים",pending:"ממתינות",past:"עבר",all:"הכול"}[state.listFilter]||"";
     t.disabled=true;await exportExcel(state.listRes||[],lab+(state.q.trim()?` – ${state.q.trim()}`:"")+` ${shortDate(today()).replace("/","-")}`);t.disabled=false;return}
@@ -990,50 +1276,48 @@ document.addEventListener("click",async ev=>{
 function openHelp(){lsSet("lucia.guideSeen",true);
   $("#modal").dataset.id="";
   $("#modal").innerHTML=`<div class="scrim" data-act="close"><div class="sheet" role="dialog" aria-modal="true" aria-label="מדריך שימוש">
-   <div class="row"><h2>איך עובדים עם האפליקציה</h2><button class="x" data-act="close" aria-label="סגור">×</button></div>
-   <div class="help-step"><i>1</i><div><b>לקוח מתקשר?</b><span>לוחצים "הזמנה חדשה" (הכפתור האדום), בוחרים תאריך, שעה ומספר סועדים. האפליקציה אומרת מיד אם יש מקום ובאיזה אזור.</span></div></div>
-   <div class="help-step"><i>2</i><div><b>בונים מחיר</b><span>בוחרים חבילה או "שולחן רגיל", מוסיפים תוספות או מנות — הסכום הסופי מתעדכן תמיד בצד (או למטה בטלפון).</span></div></div>
-   <div class="help-step"><i>3</i><div><b>בקשות מיוחדות</b><span>אלרגיות, צמחונים וסידורי ישיבה — לוחצים על הכפתורים המתאימים, לא צריך להקליד.</span></div></div>
-   <div class="help-step"><i>4</i><div><b>סוגרים</b><span>"סגור הזמנה ושמור ביומן" — זהו, זה נכנס ליומן המשותף וכל הצוות רואה את זה מיד.</span></div></div>
-   <div class="help-step"><i>5</i><div><b>יומן וחיפוש</b><span>בלשונית "יומן" רואים כל תאריך: כמה אנשים, כמה שווה, ומה המטבח צריך להכין. בלשונית "חיפוש" מוצאים הזמנה לפי שם או טלפון כשלקוח מתקשר לשנות.</span></div></div>
-   <div class="help-step"><i>6</i><div><b>ייצוא לאקסל</b><span>בחיפוש מורידים את הרשימה שמסוננת כרגע, ביומן את כל החודש, ובהגדרות גיבוי של כל ההזמנות. הקובץ כולל גם לשונית סיכום לפי חודש.</span></div></div>
-   <button class="btn primary lg" data-act="close">הבנתי, בואו נתחיל</button>
+   <div class="row"><h2>איך עובדים עם המערכת</h2><button class="x" data-act="close" aria-label="סגור">×</button></div>
+   <div class="help-step"><i>1</i><div><b>לקוח מתקשר</b><span>"הזמנה חדשה", ואז לפי סדר השיחה: תאריך, כמה סועדים, שעה. השעות הירוקות פנויות, והפס למעלה אומר מיד אם יש מקום.</span></div></div>
+   <div class="help-step"><i>2</i><div><b>טלפון ושם</b><span>מקלידים טלפון. אם הלקוח כבר הזמין בעבר, השם מתמלא לבד ורואים את הבקשות הקבועות שלו.</span></div></div>
+   <div class="help-step"><i>3</i><div><b>אירוע</b><span>מ-${state.cfg.eventFrom} סועדים (או בלחיצה על "אירוע / קבוצה") נפתחות חבילות, תוספות ומקדמה. בצד יש משפט מוכן להקריא ללקוח עם המחיר.</span></div></div>
+   <div class="help-step"><i>4</i><div><b>שמור עד מקדמה</b><span>תופס את התאריך ל-${state.cfg.holdHours} שעות. אם המקדמה לא שולמה עד אז, ההזמנה מופיעה במסך הבית ב"לטיפול".</span></div></div>
+   <div class="help-step"><i>5</i><div><b>שמירה ואישור</b><span>"שמור ביומן", ואז "אישור בוואטסאפ" שולח ללקוח את כל הפרטים.</span></div></div>
+   <div class="help-step"><i>6</i><div><b>יומן, חיפוש, אקסל</b><span>ביומן רואים כל יום, בחיפוש מוצאים הזמנה לפי שם או טלפון, ובהגדרות מורידים גיבוי ומשנים מחירים וחבילות.</span></div></div>
+   <button class="btn primary lg" data-act="close">הבנתי</button>
   </div></div>`;
 }
 function autoArea(){const d=state.draft;const av=availability(d);const cur=av.find(a=>a.id===d.area);
-  if(cur&&cur.fits)return;if(d.areaManual&&cur&&cur.fits)return;
-  const fit=av.filter(a=>a.fits);if(!fit.length){if(!d.areaManual)d.area=null;return}
-  // prefer the smallest exclusive room for big groups, otherwise the area with most free seats
-  const big=+d.guests>=state.cfg.eventFrom&&fit.find(a=>a.exclusive);d.area=(big||fit.sort((a,b)=>b.free-a.free)[0]).id;d.areaManual=false}
+  if(cur&&cur.fits)return;const fit=av.filter(a=>a.fits);if(!fit.length){if(!d.areaManual)d.area=null;return}d.area=fit[0].id;d.areaManual=false}
 document.addEventListener("input",ev=>{
   const el=ev.target,d=state.draft;
   if(el.id==="q"){state.q=el.value;const pos=el.selectionStart;render();const q=$("#q");q.focus();q.setSelectionRange(pos,pos);return}
-  if(el.dataset.d){const k=el.dataset.d;let v=el.type==="checkbox"?el.checked:el.value;if(["guests","kids","dur","discount","depositPaid"].includes(k))v=+v||0;d[k]=v;
-    if(["date","time","dur","guests"].includes(k))autoArea();saveDraft();if(k==="date"||k==="occasion")render();else refreshNew();return}
-  if(el.dataset.r){const k=el.dataset.r;d.req[k]=el.type==="checkbox"?el.checked:(["veg","vegan","gf","baby"].includes(k)?+el.value||0:el.value);saveDraft();refreshNew();return}
+  if(el.dataset.d){const k=el.dataset.d;let v=el.type==="checkbox"?el.checked:el.value;if(["guests","kids","dur","discount","depositPaid"].includes(k))v=+v||0;
+    if(k==="date"){if(v)setDate(v);render();return}
+    if(k==="guests"){if(v>0&&setGuests(v))return;d.guests=v}else d[k]=v;
+    if(["time","dur","guests","buyout"].includes(k))autoArea();saveDraft();if(k==="occasion"||k==="buyout")render();else refreshNew();return}
+  if(el.dataset.r){const k=el.dataset.r;const before=allergyList(d.req).length>0;d.req[k]=el.type==="checkbox"?el.checked:(["veg","vegan","gf","baby"].includes(k)?+el.value||0:el.value);
+    if(k==="allergies"){if(el.value.trim())d.req.allergyAsked=true;if(!d.req.allergyLevel)d.req.allergyLevel="allergy"}saveDraft();if(k==="allergies"&&before!==(allergyList(d.req).length>0))render();else refreshNew();return}
   if(el.dataset.extra){const s=new Set(d.extras);el.checked?s.add(el.dataset.extra):s.delete(el.dataset.extra);d.extras=[...s];saveDraft();refreshNew();return}
 });
 document.addEventListener("focusout",ev=>{
   const el=ev.target,d=state.draft;if(!el.dataset||!el.dataset.d)return;const k=el.dataset.d;
-  const clamp={guests:[1,200],kids:[0,d.guests],discount:[0,50],depositPaid:[0,999999]}[k];if(!clamp)return;
-  const v=Math.max(clamp[0],Math.min(clamp[1],+el.value||clamp[0]));if(v!==d[k]||el.value===""){d[k]=v;saveDraft();refreshNew()}
+  const clamp={guests:[1,300],kids:[0,d.guests],discount:[0,50],depositPaid:[0,999999]}[k];if(!clamp)return;
+  const v=Math.max(clamp[0],Math.min(clamp[1],+el.value||clamp[0]));if(v!==d[k]||el.value===""){d[k]=v;el.value=v;saveDraft();refreshNew()}
 });
-document.addEventListener("submit",async ev=>{ev.preventDefault();const f=ev.target;if(f.id!=="cfgForm")return;const fd=new FormData(f),c=clone(state.cfg);
-  c.areas=c.areas.map((a,i)=>({...a,name:fd.get("a-n-"+i)||a.name,cap:Math.max(1,+fd.get("a-c-"+i)||a.cap),exclusive:fd.get("a-x-"+i)==="on"}));
-  c.packages=c.packages.map((p,i)=>({...p,name:fd.get("p-n-"+i)||p.name,pp:+fd.get("p-p-"+i)||0}));
-  c.extras=c.extras.map((x,i)=>({...x,name:fd.get("e-n-"+i)||x.name,price:+fd.get("e-p-"+i)||0}));
-  for(const k of["dur","estSpend","kidsPrice","service","depositPct","eventFrom"])c[k]=+fd.get(k)||0;
-  try{await store.saveCfg(c);state.cfg={...clone(DEFAULT_CFG),...c};toast("ההגדרות נשמרו לכל הצוות ✓");render()}catch(e){}});
+document.addEventListener("submit",async ev=>{ev.preventDefault();const f=ev.target;if(f.id!=="cfgForm")return;const c=readCfgForm();
+  c.packages=c.packages.filter(p=>p.name);c.extras=c.extras.filter(x=>x.name);
+  try{await store.saveCfg(c);state.cfg=mergeCfg(c);state.cfgEdit=null;toast("ההגדרות נשמרו לכל הצוות ✓");render()}catch(e){}});
 document.addEventListener("change",ev=>{if(ev.target.id==="restoreFile"){const f=ev.target.files&&ev.target.files[0];ev.target.value="";if(f)askRestore(f)}});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("#modal").innerHTML)closeModal()});
+/* entry splash */
+(function splash(){const s=$("#splash");if(!s)return;const l=$(".logo img");if(l)s.querySelector("img").src=l.src;
+  setTimeout(()=>s.classList.add("out"),REDUCED?150:1150);setTimeout(()=>s.remove(),REDUCED?500:1900)})();
 
 const h=(location.hash||"").slice(1);if(VIEWS[h])state.tab=h;
 document.getElementById("loginForm").addEventListener("submit",ev=>{ev.preventDefault();ev.stopPropagation();
   if($("#lg-btn").dataset.mode==="retry"){location.reload();return}
   const em=$("#lg-email").value,pw=$("#lg-pass").value;if(!em.trim()||!pw){$("#lg-err").textContent="הקלידו אימייל וסיסמה";return}store.login(em,pw)});
 render();store.init();
-if(!FB_READY&&!lsGet("lucia.guideSeen",false))setTimeout(openHelp,500);
-if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
-</script>
+if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));</script>
 
 </body></html>
